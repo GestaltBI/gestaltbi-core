@@ -31,11 +31,9 @@ export class LongComponent extends BaseComponent implements OnInit {
     setTimeout((_) => {
       this.ds.getProcessed('longtable', 'longA').subscribe((data) => {
         this.rowDataP1 = data;
-        console.log('long stocazzo', data);
       });
       this.ds.getProcessed('longtable', 'longB').subscribe((data) => {
         this.rowDataP2 = data;
-        console.log('long stocazzo', data);
       });
     }, 1000);
   }

@@ -31,11 +31,9 @@ export class SyncComponent extends BaseComponent implements OnInit {
     setTimeout((_) => {
       this.ds.getProcessed('synctable', 'data1').subscribe((data) => {
         this.rowData1 = data;
-        console.log('long stocazzo', data);
       });
       this.ds.getProcessed('synctable', 'data2').subscribe((data) => {
         this.rowData2 = data;
-        console.log('long stocazzo', data);
       });
     }, 1000);
   }
