@@ -7,6 +7,7 @@ import { SmartbiService } from './../../smartbi.service';
   standalone: false,
   selector: 'sbi-l-sidenav',
   templateUrl: './l-sidenav.component.html',
+  styleUrls: ['./l-sidenav.component.scss'],
 })
 export class LSidenavComponent implements OnInit {
   modes$: Observable<any>;

@@ -7,7 +7,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideTranslateService, TranslateModule } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AgGridModule } from 'ag-grid-angular';
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { AllCommunityModule, ModuleRegistry, provideGlobalGridOptions } from 'ag-grid-community';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,9 @@ import { DatastructureModule } from './datastructure/datastructure.module';
 import { ProcessorModule } from './processor/processor.module';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
+// ag-grid v33 defaults to the new Theming API (Quartz). Opt into legacy
+// CSS theming so our class="ag-theme-alpine" + ag-theme-alpine.css apply.
+provideGlobalGridOptions({ theme: 'legacy' });
 
 @NgModule({
   declarations: [AppComponent],
