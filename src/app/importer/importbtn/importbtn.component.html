@@ -1,0 +1,4 @@
+<button color="accent" mat-raised-button (click)="fileInput.click()">
+  CARICA
+  <input #fileInput type="file" (change)="handleFileInput($event)" style="display: none;" />
+</button>

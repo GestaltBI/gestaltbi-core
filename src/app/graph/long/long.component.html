@@ -1,0 +1,23 @@
+<div fxLayout="column" fxLayoutGap="24px">
+  <mat-card class="analysis-filter" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="48px">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <span class="color-accent">{{ 'filter.periodA' | translate }}</span>
+      <sbi-filter localFilter="longA" localState="filterL">
+        <sbi-periodfilter startFrom="2020-01-01" startTo="2020-06-30"></sbi-periodfilter>
+      </sbi-filter>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <span class="color-accent">{{ 'filter.periodB' | translate }}</span>
+      <sbi-filter localFilter="longB" localState="filterR">
+        <sbi-periodfilter startFrom="2020-07-01" startTo="2020-12-31"></sbi-periodfilter>
+      </sbi-filter>
+    </div>
+  </mat-card>
+  <div echarts [theme]="theme" [options]="chartOption" [merge]="mergeOption"></div>
+</div>
+<sbi-map-legend
+  class="legend-floating legend-graph"
+  [isMap]="false"
+  tag="uatu:aggregate:long"
+  (measureChange)="updateSelectedMeasure($event)"
+></sbi-map-legend>

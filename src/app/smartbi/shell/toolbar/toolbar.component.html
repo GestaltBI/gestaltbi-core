@@ -1,0 +1,55 @@
+<mat-toolbar class="toolbar">
+  <!-- First row -->
+  <mat-toolbar-row>
+    <div fxLayoutAlign="left center ">
+      <img class="toolbar__logo" src="assets/images/GestaltBI_logo_short.svg" />
+    </div>
+    <div fxLayoutAlign="center center" fxFlex>
+      <button class="cta_top" mat-button mat-raised-button color="accent" (click)="goToSiteForm()">
+        <mat-icon svgIcon="pencil-ruler"></mat-icon>
+        {{ 'common.customize' | translate }}
+      </button>
+    </div>
+    <div fxLayoutAlign="right center">
+      <img class="toolbar__logo" src="assets/images/gestaltbi_full.svg" />
+    </div>
+  </mat-toolbar-row>
+  <!-- Second row -->
+  <mat-toolbar-row>
+    <div fxLayout="row" fxLayoutGap="24px" fxFlex="30">
+      <button mat-mini-fab color="accent" (click)="toggleLeft()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div fxLayoutAlign="none center" fxLayoutGap="12px">
+        <ng-container *ngIf="mode$ | async as mode">
+          <mat-icon svgIcon="{{ mode.icon }}"></mat-icon>
+          <span>{{ mode.label }}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="toolbar__viewselector" fxLayoutAlign="center none" fxFlex="40">
+      <mat-button-toggle-group class="dark-theme">
+        <mat-button-toggle value="left" [routerLink]="sbi.changeView('map')">
+          <mat-icon svgIcon="map-search"></mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="center" [routerLink]="sbi.changeView('graph')">
+          <mat-icon svgIcon="chart-bar"></mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="right" [routerLink]="sbi.changeView('table')">
+          <mat-icon svgIcon="table-large"></mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+    <div fxLayoutAlign="end center" fxFlex="30">
+      video-tutorial
+      <button class="spaced" mat-mini-fab color="wihte" (click)="openTutorial()">
+        <mat-icon color="accent" svgIcon="head-question-outline"></mat-icon>
+      </button>
+      <span class="spacer"></span>
+      guida
+      <button class="spaced" mat-mini-fab color="wihte" (click)="toggleRight()">
+        <mat-icon color="accent" svgIcon="book-information-variant"></mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

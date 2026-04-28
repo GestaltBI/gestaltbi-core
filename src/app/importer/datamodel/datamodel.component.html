@@ -1,0 +1,5 @@
+<mat-list role="list" *ngIf="structure">
+  <mat-list-item role="listitem" *ngFor="let header of columns">
+    <sbi-column [name]="header" [structure]="structure"></sbi-column>
+  </mat-list-item>
+</mat-list>

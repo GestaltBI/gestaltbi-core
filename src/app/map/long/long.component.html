@@ -1,0 +1,23 @@
+<div class="analysis-area" fxLayout="row" fxLayoutGap="24px">
+  <div fxFlex>
+    <mat-card class="analysis-filter">
+      <sbi-filter localFilter="longA" localState="filterL">
+        <sbi-periodfilter startFrom="2020-01-01" startTo="2020-06-30"></sbi-periodfilter>
+      </sbi-filter>
+    </mat-card>
+    <sbi-timedmap [data]="dataA" [dynamicMeasure]="selectedMeasure"></sbi-timedmap>
+  </div>
+  <div fxFlex>
+    <mat-card class="analysis-filter">
+      <sbi-filter localFilter="longB" localState="filterR">
+        <sbi-periodfilter startFrom="2020-07-01" startTo="2020-12-31"></sbi-periodfilter>
+      </sbi-filter>
+    </mat-card>
+    <sbi-timedmap [data]="dataB" [dynamicMeasure]="selectedMeasure"></sbi-timedmap>
+  </div>
+</div>
+<sbi-map-legend
+  class="legend-floating"
+  tag="uatu:aggregate:long"
+  (measureChange)="updateSelectedMeasure($event)"
+></sbi-map-legend>

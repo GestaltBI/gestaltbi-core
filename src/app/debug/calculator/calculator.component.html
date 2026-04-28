@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col">
+    <div class="row">
+      <h2>Data <span (click)="load()">load</span></h2>
+      <div style="height: 100px; overflow: auto; display: block;">
+        <table>
+          <tr>
+            <th *ngFor="let rd of proc.work.data[0] | keyvalue">{{ rd.key }}</th>
+          </tr>
+          <tr *ngFor="let row of proc.work.data">
+            <td *ngFor="let rd of row | keyvalue">{{ rd.value }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="area">
+        <h2>Blocks</h2>
+        <div class="block" *ngFor="let block of processing.process | keyvalue" (click)="calc(block.key)">
+          <div class="title">{{ block.key }} (op: {{ block.value.op }})</div>
+          <div class="requires">requires: {{ block.value.require | json }}</div>
+          <div class="content">{{ block.value.options | json }}</div>
+        </div>
+      </div>
+
+      <div class="area">
+        <h2>Calcs</h2>
+        {{ proc.done | json }}
+      </div>
+
+      <div class="area">
+        <h2>Results</h2>
+        <div>
+          {{ proc.liveCube | json }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area">
+    <h2>Cols</h2>
+    <div class="block" *ngFor="let block of cols">
+      <div class="title">{{ block }}</div>
+      <div class="content">{{ getValues(block) | json }}</div>
+    </div>
+  </div>
+</div>

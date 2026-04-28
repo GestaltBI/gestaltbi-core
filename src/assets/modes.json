@@ -1,0 +1,16 @@
+[
+  { "type": "button", "id": "long", "label": "confronto longitudinale", "icon": "ab-testing" },
+  { "type": "button", "id": "longdiff", "label": "analisi differenziale longitudinale", "icon": "vector-intersection" },
+  {
+    "type": "button",
+    "id": "longchange",
+    "label": "analisi delle forze del cambiamento longitudinale",
+    "icon": "chart-bubble"
+  },
+  { "type": "divider" },
+  { "type": "button", "id": "sync", "label": "confronto sincrono", "icon": "chart-gantt" },
+  { "type": "button", "id": "syncdiff", "label": "analisi differenziale sincrona", "icon": "align-horizontal-left" },
+
+  { "type": "divider" },
+  { "type": "button", "id": "point", "label": "analisi puntuale", "icon": "chart-timeline-variant" }
+]

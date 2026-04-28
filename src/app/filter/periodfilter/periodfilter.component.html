@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'common.startDate' | translate }}</mat-label>
+    <input [(ngModel)]="data.startDate" matInput readonly [matDatepicker]="startPicker" (click)="startPicker.open()" />
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ 'common.endDate' | translate }}</mat-label>
+    <input [(ngModel)]="data.endDate" matInput readonly [matDatepicker]="endPicker" (click)="endPicker.open()" />
+    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endPicker></mat-datepicker>
+  </mat-form-field>
+  <!-- <mat-slider></mat-slider> -->
+</div>

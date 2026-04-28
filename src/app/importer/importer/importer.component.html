@@ -1,0 +1,29 @@
+<!--<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step>-->
+<ng-template matStepLabel>Load file</ng-template>
+<!-- https://stackoverflow.com/questions/44130584/using-input-type-file-with-angular-material-2
+    <input #file matInput type="file" style="display:none;" (change)="handleFileInput($event)" formControlName="firstCtrl" required />
+    -->
+<sbi-importbtn></sbi-importbtn>
+<div>
+  <!--<button mat-button matStepperNext>Next</button>-->
+  <button mat-button (click)="open()">Import</button>
+</div>
+<!--</mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Define Data Model</ng-template>
+    <sbi-datamodel *ngIf="data" [columns]="data.meta.fields"></sbi-datamodel>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Data Check</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="open()">Import</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>-->

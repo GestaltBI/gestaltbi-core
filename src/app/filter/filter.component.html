@@ -1,0 +1,8 @@
+<div style="padding: 8px;" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+  <ng-template [style.visibility]="isGlobal ? 'visible' : 'hidden'" [cdkPortalOutlet]="selectedPortal"></ng-template>
+  <ng-content [style.visibility]="!isGlobal ? 'visible' : 'hidden'"></ng-content>
+  <div fxLayout="row" fxLayoutGap="16px">
+    <button mat-stroked-button color="accent" (click)="reset()">{{ 'common.reset' | translate }}</button>
+    <button class="clickme" mat-raised-button color="accent" (click)="save()">{{ 'common.select' | translate }}</button>
+  </div>
+</div>

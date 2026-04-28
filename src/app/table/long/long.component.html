@@ -1,0 +1,20 @@
+<div class="analysis-area" fxLayout="row" fxLayoutGap="24px">
+  <div fxFlex>
+    <mat-card class="analysis-filter">
+      <sbi-filter localFilter="longA" localState="filterL">
+        <sbi-periodfilter startFrom="2020-01-01" startTo="2020-06-30"></sbi-periodfilter>
+      </sbi-filter>
+    </mat-card>
+    <ag-grid-angular fxFill *ngIf="columnDefs" class="ag-theme-alpine" [rowData]="rowDataP1" [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+  <div fxFlex>
+    <mat-card class="analysis-filter">
+      <sbi-filter localFilter="longB" localState="filterR">
+        <sbi-periodfilter startFrom="2020-07-01" startTo="2020-12-31"></sbi-periodfilter>
+      </sbi-filter>
+    </mat-card>
+    <ag-grid-angular fxFill *ngIf="columnDefs" class="ag-theme-alpine" [rowData]="rowDataP2" [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<mat-sidenav-container class="shell">
+  <mat-sidenav class="sidenav" mode="side" position="start" opened #lside>
+    <h1>Debugger</h1>
+    <ul>
+      <li><a href="/debug/parser">parser</a></li>
+      <li><a href="/debug/calculator">calculator</a></li>
+    </ul>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div fxLayout="column" fxFill>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

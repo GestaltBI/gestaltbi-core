@@ -1,0 +1,17 @@
+<mat-card class="legend" fxLayout="row" fxLayoutAlign="none center" fxLayoutGap="32px">
+  <mat-form-field appearance="outline">
+    <mat-select [(value)]="defaultMeasure" (selectionChange)="notifyChange($event)">
+      <mat-option *ngFor="let measure of measures" [value]="measure">
+        {{ measure.column.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="isMap" fxLayout="row" fxLayoutAlign="none center" fxLayoutGap="16px">
+    <div class="legend__smallcircle"></div>
+    <div class="legend__bigcircle"></div>
+  </div>
+  <div *ngIf="isMap" fxLayout="row" fxLayoutAlign="none center" fxLayoutGap="16px">
+    <span>{{ 'common.income' | translate }}</span>
+    <div class="legend__incomebar"></div>
+  </div>
+</mat-card>

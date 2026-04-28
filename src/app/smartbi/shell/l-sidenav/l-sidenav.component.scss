@@ -1,0 +1,45 @@
+.l-sidenav {
+  min-width: 400px !important;
+  background-color: #333333;
+
+  &__header {
+    margin-top: 40px;
+  }
+
+  &__menutitle {
+    padding-left: 24px;
+    color: white;
+  }
+
+  &__menuitem {
+    cursor: pointer;
+
+    &--active {
+      color: #21d7c1 !important;
+    }
+  }
+
+  &__footer {
+    padding: 16px;
+    text-align: center;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    &contact {
+      img {
+        width: 18px;
+        height: 18px;
+        padding: 4px;
+        background-color: white;
+        border-radius: 100%;
+      }
+    }
+
+    &legal {
+      padding-top: 16px;
+    }
+  }
+}

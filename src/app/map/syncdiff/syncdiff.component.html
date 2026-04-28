@@ -1,0 +1,24 @@
+<div class="analysis-area" fxLayout="row">
+  <div fxFlex>
+    <mat-card class="analysis-filter" fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.focusA' | translate }}</span>
+        <sbi-filter localFilter="diffA" localState="filterL">
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto A101'] }"></sbi-dimfilter>
+        </sbi-filter>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.focusB' | translate }}</span>
+        <sbi-filter localFilter="diffB" localState="filterR">
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto B102'] }"></sbi-dimfilter>
+        </sbi-filter>
+      </div>
+    </mat-card>
+    <sbi-timedmap [data]="data" [fixedMeasure]="fixedMeasure" [dynamicMeasure]="selectedMeasure"></sbi-timedmap>
+  </div>
+</div>
+<sbi-map-legend
+  class="legend-floating"
+  tag="uatu:aggregate:diff"
+  (measureChange)="updateSelectedMeasure($event)"
+></sbi-map-legend>

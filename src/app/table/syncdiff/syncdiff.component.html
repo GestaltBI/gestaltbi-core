@@ -1,0 +1,21 @@
+<div class="analysis-area" fxLayout="row" fxLayoutGap="24px">
+  <div fxFlex fxLayout="column">
+    <mat-card class="analysis-filter">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.focusA' | translate }}</span>
+        <sbi-filter localFilter="changeA" localState="filterL">
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto A101'] }"></sbi-dimfilter>
+        </sbi-filter>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.focusB' | translate }}</span>
+        <sbi-filter localFilter="changeB" localState="filterR">
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto B102'] }"></sbi-dimfilter>
+        </sbi-filter>
+      </div>
+    </mat-card>
+
+    <ag-grid-angular fxFill *ngIf="columnDefs" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+</div>

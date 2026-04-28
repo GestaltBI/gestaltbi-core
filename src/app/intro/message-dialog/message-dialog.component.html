@@ -1,0 +1,13 @@
+<div class="dialog">
+  <h1 class="dialog__title">{{ data.title | translate }}</h1>
+  <p class="dialog__description">{{ data.description | translate }}</p>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button *ngIf="data.confirmation" mat-stroked-button color="accent" mat-dialog-close>
+      {{ data.buttonCancel | translate | uppercase }}
+    </button>
+    <div fxFlex *ngIf="data.confirmation"></div>
+    <button mat-raised-button color="accent" [mat-dialog-close]="true">
+      {{ data.buttonOk | translate | uppercase }}
+    </button>
+  </div>
+</div>

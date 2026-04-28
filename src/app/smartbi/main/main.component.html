@@ -1,0 +1,26 @@
+<mat-sidenav-container class="shell">
+  <mat-sidenav class="shell__lsidenav" mode="over" position="start" [opened]="lSidenavOpen" #lside>
+    <sbi-l-sidenav></sbi-l-sidenav>
+  </mat-sidenav>
+  <mat-sidenav class="shell__rsidenav" mode="over" position="end" #rside>
+    <sbi-r-sidenav></sbi-r-sidenav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div fxLayout="column" fxFill>
+      <sbi-shell-toolbar></sbi-shell-toolbar>
+      <div class="shell__contentarea" fxFlex>
+        <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
+      </div>
+      <div class="dark-theme shell__filtersarea">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <span style="text-align: center;" fxFlex>{{ 'common.parameters' | translate }}</span>
+          <button mat-icon-button (click)="toggle()">
+            <mat-icon *ngIf="filterBarOpen">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!filterBarOpen">keyboard_arrow_up</mat-icon>
+          </button>
+        </div>
+        <sbi-filter *ngIf="filterBarOpen" filterScope="global"></sbi-filter>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,65 @@
+<div class="l-sidenav dark-theme" fxLayout="column" fxFill>
+  <div class="l-sidenav__header" fxLayoutAlign="center start">
+    <img src="assets/images/gestaltbi_full_white.svg" />
+  </div>
+  <div class="l-sidenav__menu" fxLayout="column" fxLayoutAlign="center none" fxFlex>
+    <h1 class="l-sidenav__menutitle section-title">{{ 'l-sidenav.menuTitle' | translate }}</h1>
+    <mat-nav-list>
+      <ng-container *ngIf="modes$ | async as modes">
+        <ng-container *ngFor="let link of modes">
+          <mat-divider *ngIf="link.type === 'divider'"></mat-divider>
+          <mat-list-item
+            *ngIf="link.type === 'button'"
+            class="l-sidenav__menuitem"
+            routerLinkActive="l-sidenav__menuitem--active"
+            (click)="goto(link.id)"
+          >
+            <mat-icon mat-list-icon svgIcon="{{ link.icon }}"></mat-icon>
+            <a mat-line>{{ link.label }}</a>
+          </mat-list-item>
+        </ng-container>
+      </ng-container>
+      <mat-list-item style="margin-top: 24px;" class="l-sidenav__menuitem" [routerLink]="['/intro']">
+        <mat-icon mat-list-icon svgIcon="upload"></mat-icon>
+        <a mat-line>{{ 'l-sidenav.back' | translate | uppercase }}</a>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+  <div class="l-sidenav__footer" fxLayout="column" fxLayoutGap="16px">
+    <img src="/assets/images/gestaltbi_full_white.svg" />
+    <div class="l-sidenav__footercontact" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+      <img src="assets/images/web.svg" />
+      <a href="https://github.com/GestaltBI" target="_blank">github.com/GestaltBI</a>
+    </div>
+    <div class="l-sidenav__footercontact" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+      <img src="assets/images/email.svg" />
+      <a href="mailto:info@gestaltbi.com" target="_blank">info@gestaltbi.com</a>
+    </div>
+    <div class="l-sidenav__footerlegal" fxLayout="row">
+      <span fxFlex>
+        <a
+          href="https://www.iubenda.com/privacy-policy/916982/cookie-policy"
+          target="_blank"
+          class="iubenda-nostyle no-brand iubenda-embed"
+          title="Cookie Policy "
+          >Cookie Policy</a
+        >
+        <script type="text/javascript">
+          (function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);
+        </script>
+      </span>
+      <span fxFlex>
+        <a
+          href="https://www.iubenda.com/privacy-policy/916982"
+          target="_blank"
+          class="iubenda-nostyle no-brand iubenda-embed"
+          title="Privacy Policy "
+          >Privacy Policy</a
+        >
+        <script type="text/javascript">
+          (function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);
+        </script>
+      </span>
+    </div>
+  </div>
+</div>

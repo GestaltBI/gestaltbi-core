@@ -1,0 +1,12 @@
+<mat-slide-toggle *ngIf="debug" (change)="onChangeToggle()">Change Map View</mat-slide-toggle>
+<sbi-base-map
+  [lat]="lat"
+  [lng]="lng"
+  [zoom]="zoom"
+  [layout]="layout"
+  [navigation]="navigation"
+  [data]="data"
+  [toggle]="toggle"
+  [fixedMeasure]="fixedMeasure"
+  [dynamicMeasure]="dynamicMeasure"
+></sbi-base-map>

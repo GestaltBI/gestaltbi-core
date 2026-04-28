@@ -1,0 +1,24 @@
+<div class="analysis-area" fxLayout="row">
+  <div fxFlex>
+    <mat-card class="analysis-filter" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="48px">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.periodA' | translate }}</span>
+        <sbi-filter localFilter="diffA" localState="filterL">
+          <sbi-periodfilter startFrom="2020-01-01" startTo="2020-06-30"></sbi-periodfilter>
+        </sbi-filter>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.periodB' | translate }}</span>
+        <sbi-filter localFilter="diffB" localState="filterR">
+          <sbi-periodfilter startFrom="2020-07-01" startTo="2020-12-31"></sbi-periodfilter>
+        </sbi-filter>
+      </div>
+    </mat-card>
+    <sbi-timedmap [data]="data" [fixedMeasure]="fixedMeasure" [dynamicMeasure]="selectedMeasure"></sbi-timedmap>
+  </div>
+</div>
+<sbi-map-legend
+  class="legend-floating"
+  tag="uatu:aggregate:diff"
+  (measureChange)="updateSelectedMeasure($event)"
+></sbi-map-legend>

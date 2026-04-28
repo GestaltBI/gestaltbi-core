@@ -1,0 +1,19 @@
+::ng-deep {
+  .mat-tab-group {
+    .mat-tab-header {
+      border-top: none;
+    }
+    .mat-tab-label {
+      min-width: 0;
+    }
+  }
+}
+
+.carousel {
+  &__arrowleft {
+    margin-bottom: 48px;
+  }
+  &__arrowright {
+    margin-bottom: 48px;
+  }
+}

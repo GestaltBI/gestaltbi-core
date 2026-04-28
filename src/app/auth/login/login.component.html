@@ -1,0 +1,57 @@
+<div fxLayout="row" fxFill>
+  <div fxFlex="50" class="struct-background"></div>
+  <div fxFlex="50" fxLayout="column">
+    <div fxFlex fxLayoutAlign="center center">
+      <img src="assets/images/gestaltbi_full.svg" />
+    </div>
+    <div fxFlex fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <sbi-carousel [maxWidth]="600">
+        <sbi-carousel-item icon="new-box">
+          <mat-card class="margin-default" fxLayout="column" fxLayoutAlign="center none" fxLayoutGap="16px">
+            <div fxLayout="row" fxLayoutGap="20px">
+              <mat-icon svgIcon="currency-eur-off"></mat-icon>
+              <p [innerHTML]="'auth.carousel.slide1.text1' | translate"></p>
+            </div>
+            <div fxLayout="row" fxLayoutGap="20px">
+              <mat-icon svgIcon="wifi-off"></mat-icon>
+              <p [innerHTML]="'auth.carousel.slide1.text2' | translate"></p>
+            </div>
+            <div fxLayout="row" fxLayoutGap="20px">
+              <mat-icon svgIcon="auto-fix"></mat-icon>
+              <p [innerHTML]="'auth.carousel.slide1.text3' | translate"></p>
+            </div>
+          </mat-card>
+        </sbi-carousel-item>
+        <sbi-carousel-item icon="scale-balance">
+          <mat-card class="margin-default" fxLayout="column" fxLayoutAlign="center none">
+            <h3 class="slide-title">{{ 'auth.carousel.slide2.text1' | translate }}</h3>
+            <p [innerHTML]="'auth.carousel.slide2.text2' | translate"></p>
+          </mat-card>
+        </sbi-carousel-item>
+        <sbi-carousel-item icon="find-replace">
+          <mat-card class="margin-default" fxLayout="column" fxLayoutAlign="center none">
+            <h3 class="slide-title">{{ 'auth.carousel.slide3.text1' | translate }}</h3>
+            <p [innerHTML]="'auth.carousel.slide3.text2' | translate"></p>
+          </mat-card>
+        </sbi-carousel-item>
+        <sbi-carousel-item icon="earth">
+          <mat-card class="margin-default" fxLayout="column" fxLayoutAlign="center none">
+            <h3 class="slide-title">{{ 'auth.carousel.slide4.text1' | translate }}</h3>
+            <p [innerHTML]="'auth.carousel.slide4.text2' | translate"></p>
+          </mat-card>
+        </sbi-carousel-item>
+        <sbi-carousel-item icon="image-filter-center-focus-strong">
+          <mat-card class="margin-default" fxLayout="column" fxLayoutAlign="center none">
+            <h3 class="slide-title">{{ 'auth.carousel.slide5.text1' | translate }}</h3>
+            <p [innerHTML]="'auth.carousel.slide5.text2' | translate"></p>
+          </mat-card>
+        </sbi-carousel-item>
+      </sbi-carousel>
+    </div>
+    <div fxFlex fxLayoutAlign="center center">
+      <button mat-raised-button color="accent" class="logbtn" routerLink="/data/long/map">
+        {{ 'common.login' | translate }}
+      </button>
+    </div>
+  </div>
+</div>

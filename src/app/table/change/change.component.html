@@ -1,0 +1,20 @@
+<div class="analysis-area" fxLayout="row">
+  <div fxFlex>
+    <mat-card class="analysis-filter" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="48px">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.periodA' | translate }}</span>
+        <sbi-filter localFilter="changeA" localState="filterL">
+          <sbi-periodfilter startFrom="2020-01-01" startTo="2020-06-30"></sbi-periodfilter>
+        </sbi-filter>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span class="color-accent">{{ 'filter.periodB' | translate }}</span>
+        <sbi-filter localFilter="changeB" localState="filterR">
+          <sbi-periodfilter startFrom="2020-07-01" startTo="2020-12-31"></sbi-periodfilter>
+        </sbi-filter>
+      </div>
+    </mat-card>
+    <ag-grid-angular fxFill *ngIf="columnDefs" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs">
+    </ag-grid-angular>
+  </div>
+</div>

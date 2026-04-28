@@ -1,0 +1,62 @@
+<div fxLayout="column" fxLayoutGap="24px">
+  <mat-card class="analysis-filter">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <span class="color-accent">{{ 'filter.focusA' | translate }}</span>
+
+      <sbi-filter localFilter="focusA" localState="filterL">
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto A101'] }"></sbi-dimfilter>
+      </sbi-filter>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <span class="color-accent">{{ 'filter.focusB' | translate }}</span>
+
+      <sbi-filter localFilter="focusB" localState="filterR">
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto B102'] }"></sbi-dimfilter>
+      </sbi-filter>
+    </div>
+  </mat-card>
+  <div fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div fxFlex="50" fxLayout="column" fxLayoutAlign="center">
+        <h2 fxFlex fxLayoutAlign="center center">{{ 'graph.sync.barTitle' | translate }}</h2>
+        <div fxFlex echarts [merge]="barMergeOption" [theme]="theme" [options]="barChartOption" class="chart"></div>
+      </div>
+      <div fxFlex fxLayout="column" fxLayoutAlign="center">
+        <h2 fxFlex fxLayoutAlign="center center">{{ 'graph.sync.pieTitle' | translate }}</h2>
+        <div fxFlex echarts [merge]="pieMergeOption" [theme]="theme" [options]="pieChartOption" class="chart"></div>
+      </div>
+    </div>
+
+    <div fxFlex fxLayout="column" fxLayoutAlign="center">
+      <h2 fxFlex fxLayoutAlign="center center">{{ 'graph.sync.sankeyTitle' | translate }}</h2>
+      <div fxFlex fxLayout="row" fxLayoutAlign="center">
+        <div
+          fxFlex
+          echarts
+          [theme]="theme"
+          [merge]="sankeyMergeOptionA"
+          [options]="sankeyChartOption"
+          class="chart"
+        ></div>
+        <div
+          fxFlex
+          echarts
+          [theme]="theme"
+          [merge]="sankeyMergeOptionB"
+          [options]="sankeyChartOption"
+          class="chart"
+        ></div>
+      </div>
+    </div>
+
+    <div fxLayoutGap="30px" fxLayout="column" fxLayoutAlign="end">
+      <sbi-map-legend
+        fxLayoutAlign="end"
+        [isMap]="false"
+        tag="uatu:aggregate:sync"
+        (measureChange)="updateSelectedMeasure($event)"
+      ></sbi-map-legend>
+      <!--    <div fxFlex echarts [theme]="theme" [merge]="bubbleMergeOption" [options]="bubbleChartOption" class="chart"></div>-->
+    </div>
+  </div>
+</div>

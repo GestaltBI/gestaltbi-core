@@ -1,0 +1,15 @@
+<div class="analysis-area" fxLayout="row">
+  <div fxFlex>
+    <mat-card class="analysis-filter">
+      <sbi-filter localFilter="default" localState="default">
+        <sbi-periodfilter startFrom="2020-01-01" startTo="2020-12-31"></sbi-periodfilter>
+      </sbi-filter>
+    </mat-card>
+    <sbi-timedmap #aMap [data]="data" [dynamicMeasure]="selectedMeasure"></sbi-timedmap>
+  </div>
+</div>
+<sbi-map-legend
+  class="legend-floating"
+  tag="uatu:aggregate:point"
+  (measureChange)="updateSelectedMeasure($event)"
+></sbi-map-legend>

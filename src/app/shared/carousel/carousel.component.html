@@ -1,0 +1,24 @@
+<div class="carousel" fxLayout="row" fxLayoutAlign="none center">
+  <button class="carousel__arrowleft" mat-icon-button (click)="scrollLeft()" [disabled]="!showLeftArrow">
+    <mat-icon svgIcon="chevron-left"></mat-icon>
+  </button>
+  <mat-tab-group
+    #tabGroup
+    headerPosition="below"
+    mat-align-tabs="center"
+    color="accent"
+    [(selectedIndex)]="selectedIndex"
+    (selectedIndexChange)="onSelectedIndexChange($event)"
+    [ngStyle]="{ 'max-width.px': maxWidth }"
+  >
+    <mat-tab *ngFor="let item of getItems()">
+      <ng-template mat-tab-label>
+        <mat-icon color="accent" svgIcon="{{ item.icon }}"></mat-icon>
+      </ng-template>
+      <ng-template [ngTemplateOutlet]="item.templateRef"></ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <button class="carousel__arrowright" mat-icon-button (click)="scrollRight()" [disabled]="!showRightArrow">
+    <mat-icon svgIcon="chevron-right"></mat-icon>
+  </button>
+</div>

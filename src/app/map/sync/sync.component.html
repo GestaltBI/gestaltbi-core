@@ -1,0 +1,23 @@
+<div class="analysis-area" fxLayout="row" fxLayoutGap="24px">
+  <div fxFlex>
+    <mat-card class="analysis-filter">
+      <sbi-filter localFilter="syncA" localState="filterL">
+        <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto A101'] }"></sbi-dimfilter>
+      </sbi-filter>
+    </mat-card>
+    <sbi-timedmap [data]="data1" [dynamicMeasure]="selectedMeasure"></sbi-timedmap>
+  </div>
+  <div fxFlex>
+    <mat-card class="analysis-filter">
+      <sbi-filter localFilter="syncB" localState="filterR">
+        <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto B102'] }"></sbi-dimfilter>
+      </sbi-filter>
+    </mat-card>
+    <sbi-timedmap [data]="data2" [dynamicMeasure]="selectedMeasure"></sbi-timedmap>
+  </div>
+</div>
+<sbi-map-legend
+  class="legend-floating"
+  tag="uatu:aggregate:sync"
+  (measureChange)="updateSelectedMeasure($event)"
+></sbi-map-legend>

@@ -1,0 +1,68 @@
+{
+  "columns": [
+    {
+      "column": "id",
+      "target": "id"
+    },
+    {
+      "column": "Data di vendita (*)",
+      "target": "uatu:date"
+    },
+    {
+      "column": "Cliente (*)",
+      "target": "smartbi:customer"
+    },
+    {
+      "column": "Paese di vendita (*)",
+      "target": "smartbi:delivery_country"
+    },
+    {
+      "column": "Regione di vendita (*)",
+      "target": "smartbi:delivery_region"
+    },
+    {
+      "column": "Provincia di vendita (*)",
+      "target": "smartbi:delivery_pc"
+    },
+    {
+      "column": "Citt� di vendita (*)",
+      "target": "smartbi:delivery_city"
+    },
+    {
+      "column": "CAP di vendita",
+      "target": "smartbi:delivery_postcode"
+    },
+    {
+      "column": "Codice Prodotto (*)",
+      "target": "smartbi:product_code"
+    },
+    {
+      "column": "Nome Prodotto (*)",
+      "target": "smartbi:product_name"
+    },
+    {
+      "column": "Famiglia prodotto (*)",
+      "target": "smartbi:product_family"
+    },
+    {
+      "column": "Sotto-famiglia prodotto",
+      "target": "smartbi:product_category"
+    },
+    {
+      "column": "Quantit� vendute (*)",
+      "target": "smartbi:sold_quant"
+    },
+    {
+      "column": "Prezzo di vendita (*)",
+      "target": "smartbi:sold_price"
+    },
+    {
+      "column": "Costo unitario (*)",
+      "target": "smartbi:unit_cost"
+    },
+    {
+      "column": "Fornitore",
+      "target": "smartbi:provider"
+    }
+  ]
+}

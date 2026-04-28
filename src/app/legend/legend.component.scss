@@ -1,0 +1,20 @@
+.legend {
+  &__smallcircle {
+    width: 12px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.32);
+    border-radius: 50%;
+  }
+  &__bigcircle {
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.32);
+    border-radius: 50%;
+  }
+  &__incomebar {
+    width: 96px;
+    height: 32px;
+    background: linear-gradient(90deg, #eb5757 0%, #f2c94c 48.76%, #27ae60 100%);
+    border-radius: 8px;
+  }
+}

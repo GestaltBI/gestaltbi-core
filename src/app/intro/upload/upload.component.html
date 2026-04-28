@@ -1,0 +1,20 @@
+<mat-card
+  class="upload upload__card"
+  sbiDragAndDrop
+  (fileDropped)="onFileDropped($event)"
+  fxLayout="column"
+  fxLayoutAlign="none center"
+>
+  <h2 class="upload__title" [innerHTML]="'intro.upload.title' | translate"></h2>
+  <div
+    class="upload__box"
+    [class.upload__box--active]="mouseOvered"
+    (mouseover)="mouseOvered = true"
+    (mouseout)="mouseOvered = false"
+    fxFlex
+  >
+    <h3 class="upload__title" style="margin-top: 140px;">{{ 'intro.dragHere' | translate }}</h3>
+  </div>
+  <h3 class="upload__title">{{ 'intro.fromPC' | translate }}</h3>
+  <sbi-importbtn class="upload__button" (dataLoaded)="dataLoaded($event)"></sbi-importbtn>
+</mat-card>

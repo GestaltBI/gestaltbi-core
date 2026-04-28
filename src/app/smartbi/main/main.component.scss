@@ -1,0 +1,32 @@
+.shell {
+  background-color: #e5e5e5;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  &__lsidenav {
+    border-radius: 0px 16px 16px 0px;
+  }
+  &__rsidenav {
+    border-radius: 16px 0px 0px 16px;
+  }
+  &__contentarea {
+    background-color: inherit;
+    margin: 16px 16px 0px 16px;
+    padding-bottom: 32px;
+    overflow: auto;
+  }
+  &__filtersarea {
+    width: 100%;
+    z-index: 15000;
+    position: fixed;
+    bottom: 0;
+    border-radius: 16px 16px 0px 0px;
+  }
+}
+
+.logo {
+  height: 32px;
+  padding: 24px 16px 24px 16px;
+}

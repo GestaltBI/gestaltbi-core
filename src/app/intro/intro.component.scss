@@ -1,0 +1,36 @@
+
+.intro {
+  padding: 16px 44px 44px 44px;
+
+  &__title {
+    font-weight: 700;
+  }
+
+  &__logo {
+    height: 32px;
+  }
+
+  &__closebutton {
+    cursor: pointer;
+    span {
+      margin-top: 2px;
+    }
+  }
+
+  &__contactcard {
+    background-color: #21d7c1;
+    text-align: center;
+    h1 {
+      color: white;
+      font-weight: 700;
+    }
+    button {
+      border-radius: 28px;
+      color: #21d7c1;
+    }
+  }
+}
+
+.mat-card {
+  padding: 32px !important;
+}

@@ -1,0 +1,10 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  .field {
+    flex: 1 1 100px;
+  }
+  .name {
+    flex: 1 0 160px;
+  }
+}

@@ -1,0 +1,467 @@
+{
+  "type": "structure",
+  "version": "1.0",
+  "name": "smartbi",
+  "columns": [
+    {
+      "column": "id",
+      "type": "int",
+      "multi": false,
+      "required": true,
+      "tags": ["uatu:id"]
+    },
+    {
+      "column": "uatu:date",
+      "type": "date",
+      "multi": false,
+      "required": true,
+      "tags": ["sbi:i:mappable", "uatu:date", "gcx:date", "uatu:timedimension"]
+    },
+    {
+      "column": "smartbi:customer",
+      "type": "string",
+      "multi": false,
+      "required": true,
+      "tags": ["sbi:i:mappable", "gcx:search", "uatu:dimension"]
+    },
+    {
+      "column": "smartbi:provider",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:search"],
+      "multi": false,
+      "required": true
+    },
+    {
+      "column": "smartbi:product_code",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:search", "uatu:dimension"],
+      "aggregation": [
+        {
+          "type": "concat",
+          "target": "smartbi:product_code:concat"
+        }
+      ],
+      "multi": false,
+      "required": true
+    },
+    {
+      "column": "smartbi:product_code:concat",
+      "type": "string",
+      "tags": ["sbi:i:mappable"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:product_name",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:search"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:product_family",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:search", "uatu:dimension"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:product_category",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:search"],
+      "multi": true,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_address",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:address"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_street",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:street"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_city",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:city"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_pc",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:province", "uatu:dimension"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_region",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:region", "uatu:dimension"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_country",
+      "type": "string",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:country"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_province_lon",
+      "type": "number",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:lon", "uatu:dimension:geo"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_province_lat",
+      "type": "number",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:lat", "uatu:dimension:geo"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_region_lon",
+      "type": "number",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:lon", "uatu:dimension:geo"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:delivery_region_lat",
+      "type": "number",
+      "tags": ["sbi:i:mappable", "gcx:geo", "gcx:lat", "uatu:dimension:geo"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:sold_quant",
+      "type": "number",
+      "tags": ["sbi:i:mappable", "uatu:measure", "uatu:aggregable"],
+      "aggregation": [
+        {
+          "type": "sum",
+          "target": "smartbi:sold_quant:sum"
+        },
+        {
+          "type": "avg",
+          "target": "smartbi:sold_quant:avg"
+        }
+      ],
+      "multi": false,
+      "required": true
+    },
+    {
+      "column": "smartbi:sold_quant:sum",
+      "type": "number",
+      "tags": ["uatu:measure", "uatu:aggregate:sync", "uatu:aggregate", "uatu:aggregate:point"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:sold_quant:avg",
+      "type": "number",
+      "tags": ["uatu:measure", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_ro",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "ok", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_ro:cum",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:change", "uatu:aggregate:diff", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_revenue",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "ok", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_cost",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "ok", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_cost:cum",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:change", "ok", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_quant",
+      "type": "number",
+      "tags": ["uatu:measure", "ok", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_quant:cum",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:change"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_price",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:diff", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_price:cum",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:change", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:sold_price",
+      "type": "number:currency",
+      "tags": ["sbi:i:mappable", "uatu:measure", "uatu:aggregable", "uatu:aggregate"],
+      "aggregation": [
+        {
+          "type": "avg",
+          "target": "smartbi:sold_price:avg"
+        }
+      ],
+      "multi": false,
+      "required": true
+    },
+    {
+      "column": "smartbi:calc:sold_price:avg",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:sold_price:avg",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:long", "uatu:aggregate:sync", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:cumulative_price_avg",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:unit_cost",
+      "type": "number:currency",
+      "tags": ["sbi:i:mappable", "uatu:measure", "uatu:aggregable", "uatu:aggregate"],
+      "aggregation": [
+        {
+          "type": "avg",
+          "target": "smartbi:unit_cost:avg"
+        }
+      ],
+      "multi": false,
+      "required": true
+    },
+    {
+      "column": "smartbi:unit_cost:avg",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:sync", "uatu:aggregate", "uatu:aggregate:point"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:cumulative_sold",
+      "type": "number",
+      "tags": ["uatu:measure", "uatu:aggregable", "uatu:aggregate:long"],
+      "aggregation": [
+        {
+          "type": "last",
+          "target": "smartbi:calc:cumulative_sold"
+        }
+      ],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_cumulative_sold",
+      "type": "number",
+      "tags": ["uatu:measure", "uatu:aggregate:diff"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_revenue",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregable", "uatu:aggregate"],
+      "multi": false,
+      "aggregation": [
+        {
+          "type": "sum",
+          "target": "smartbi:calc:daily_revenue:sum"
+        },
+        {
+          "type": "avg",
+          "target": "smartbi:calc:daily_revenue:avg"
+        }
+      ],
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_revenue:sum",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:sync", "uatu:aggregate", "uatu:aggregate:point"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_revenue:avg",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_cost",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregable", "uatu:aggregate"],
+      "multi": false,
+      "aggregation": [
+        {
+          "type": "sum",
+          "target": "smartbi:calc:daily_cost:sum"
+        },
+        {
+          "type": "avg",
+          "target": "smartbi:calc:daily_cost:avg"
+        }
+      ],
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_cost:sum",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:sync", "uatu:aggregate", "uatu:aggregate:point"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_cost:avg",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_total",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_ro",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregable"],
+      "multi": false,
+      "aggregation": [
+        {
+          "type": "sum",
+          "target": "smartbi:calc:daily_ro:sum"
+        },
+        {
+          "type": "avg",
+          "target": "smartbi:calc:daily_ro:avg"
+        }
+      ],
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_ro:sum",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:sync", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:daily_ro:avg",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:cumulative_revenue",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregable", "uatu:aggregate:long"],
+      "aggregation": [
+        {
+          "type": "last",
+          "target": "smartbi:calc:cumulative_revenue"
+        }
+      ],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_cumulative_revenue",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:diff"],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:cumulative_ro",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregable", "uatu:aggregate:long"],
+      "aggregation": [
+        {
+          "type": "last",
+          "target": "smartbi:calc:cumulative_ro"
+        }
+      ],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:cumulative_cost",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregable", "uatu:aggregate:long"],
+      "aggregation": [
+        {
+          "type": "last",
+          "target": "smartbi:calc:cumulative_cost"
+        }
+      ],
+      "multi": false,
+      "required": false
+    },
+    {
+      "column": "smartbi:calc:diff_cumulative_cost",
+      "type": "number:currency",
+      "tags": ["uatu:measure", "uatu:aggregate:diff"],
+      "multi": false,
+      "required": false
+    }
+  ]
+}

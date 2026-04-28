@@ -1,0 +1,75 @@
+{
+  "name": "gestaltbi-core",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint",
+    "format": "prettier --write \"src/**/*.{ts,html,scss,json}\""
+  },
+  "dependencies": {
+    "@angular/animations": "^21.0.0",
+    "@angular/cdk": "^21.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/material": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
+    "ag-grid-angular": "^33.0.0",
+    "ag-grid-community": "^33.0.0",
+    "echarts": "^6.0.0",
+    "maplibre-gl": "^5.0.0",
+    "moment": "^2.30.1",
+    "ngx-echarts": "^21.0.0",
+    "ngx-papaparse": "^8.0.0",
+    "olap-cube-js": "^0.16.1",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.6.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-eslint/builder": "^21.0.0",
+    "@angular-eslint/eslint-plugin": "^21.0.0",
+    "@angular-eslint/eslint-plugin-template": "^21.0.0",
+    "@angular-eslint/schematics": "^21.0.0",
+    "@angular-eslint/template-parser": "^21.0.0",
+    "@angular/build": "^21.0.0",
+    "@angular/cli": "^21.0.0",
+    "@angular/compiler-cli": "^21.0.0",
+    "@types/jasmine": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "husky": "^9.0.0",
+    "jasmine-core": "^5.0.0",
+    "karma": "^6.4.0",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.0",
+    "karma-jasmine": "^5.1.0",
+    "karma-jasmine-html-reporter": "^2.1.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "~5.9.0"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,html,scss,json}": [
+      "prettier --write"
+    ],
+    "src/**/*.ts": [
+      "eslint --fix"
+    ]
+  }
+}
