@@ -79,6 +79,15 @@
     "graph": "Grafico",
     "table": "Tabella"
   },
+  "modes": {
+    "long": "Longitudinale",
+    "longdiff": "Longitudinale · differenza",
+    "longchange": "Longitudinale · forze del cambiamento",
+    "sync": "Sincronica",
+    "syncdiff": "Sincronica · differenza",
+    "syncchange": "Sincronica · forze del cambiamento",
+    "point": "Analisi puntuale"
+  },
   "toolbar": {
     "tagline": "la forma all'origine del significato",
     "openMenu": "Apri menu",

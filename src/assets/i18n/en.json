@@ -79,6 +79,15 @@
     "graph": "Chart",
     "table": "Table"
   },
+  "modes": {
+    "long": "Longitudinal",
+    "longdiff": "Longitudinal · diff",
+    "longchange": "Longitudinal · change forces",
+    "sync": "Synchronic",
+    "syncdiff": "Synchronic · diff",
+    "syncchange": "Synchronic · change forces",
+    "point": "Point analysis"
+  },
   "toolbar": {
     "tagline": "the shape at the origin of meaning",
     "openMenu": "Open menu",
