@@ -39,6 +39,13 @@
       <mat-icon>auto_awesome</mat-icon>
       <span>{{ 'common.customize' | translate }}</span>
     </button>
+    <button
+      class="toolbar__icon"
+      (click)="toggleTheme()"
+      [attr.aria-label]="'toolbar.toggleTheme' | translate"
+    >
+      <mat-icon>{{ themeService.theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
     <button class="toolbar__icon" (click)="openTutorial()" [attr.aria-label]="'toolbar.tutorial' | translate">
       <mat-icon>play_circle</mat-icon>
     </button>

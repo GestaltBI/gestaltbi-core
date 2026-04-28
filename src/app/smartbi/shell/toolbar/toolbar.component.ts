@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { ThemeService } from '../../../core/theme.service';
 import { environment } from './../../../../environments/environment';
 import { EmbedComponent } from './../../../shared/embed/embed.component';
 import { SmartbiService } from './../../smartbi.service';
@@ -23,7 +24,12 @@ export class ToolbarComponent implements OnInit {
     public sbi: SmartbiService,
     public dialog: MatDialog,
     private _sanitizer: DomSanitizer,
+    public themeService: ThemeService,
   ) {}
+
+  toggleTheme() {
+    this.themeService.toggle();
+  }
 
   ngOnInit(): void {
     this.ar.paramMap.subscribe((params) => {

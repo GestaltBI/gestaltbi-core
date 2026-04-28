@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
+import { ThemeService } from './core/theme.service';
+
 @Component({
   standalone: false,
   selector: 'sbi-root',
@@ -8,11 +10,17 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private translate: TranslateService) {
+  constructor(
+    private translate: TranslateService, //
+    private themeService: ThemeService,
+  ) {
     // ngx-translate v17: defaultLanguage sets the fallback but does not
     // auto-switch the active language. Force it explicitly so the pipe
     // resolves keys instead of rendering them literally.
     this.translate.addLangs(['it', 'en']);
     this.translate.use('en');
+
+    // Resolve theme: stored preference > OS preference > light.
+    this.themeService.init();
   }
 }
