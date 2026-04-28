@@ -1,39 +1,51 @@
-<div class="l-sidenav dark-theme" fxLayout="column" fxFill>
-  <div class="l-sidenav__header" fxLayoutAlign="center start">
-    <img src="assets/images/gestaltbi-logo.png" alt="GestaltBI" style="height: 96px;" />
-  </div>
-  <div class="l-sidenav__menu" fxLayout="column" fxLayoutAlign="center none" fxFlex>
-    <h1 class="l-sidenav__menutitle section-title">{{ 'l-sidenav.menuTitle' | translate }}</h1>
-    <mat-nav-list>
-      <ng-container *ngIf="modes$ | async as modes">
-        <ng-container *ngFor="let link of modes">
-          <mat-divider *ngIf="link.type === 'divider'"></mat-divider>
-          <mat-list-item
-            *ngIf="link.type === 'button'"
-            class="l-sidenav__menuitem"
-            routerLinkActive="l-sidenav__menuitem--active"
-            (click)="goto(link.id)"
-          >
-            <mat-icon mat-list-icon svgIcon="{{ link.icon }}"></mat-icon>
-            <a mat-line>{{ link.label }}</a>
-          </mat-list-item>
-        </ng-container>
-      </ng-container>
-      <mat-list-item style="margin-top: 24px;" class="l-sidenav__menuitem" [routerLink]="['/intro']">
-        <mat-icon mat-list-icon svgIcon="upload"></mat-icon>
-        <a mat-line>{{ 'l-sidenav.back' | translate | uppercase }}</a>
-      </mat-list-item>
-    </mat-nav-list>
-  </div>
-  <div class="l-sidenav__footer" fxLayout="column" fxLayoutGap="16px">
-    <img src="assets/images/gestaltbi-logo.png" alt="GestaltBI" style="height: 48px;" />
-    <div class="l-sidenav__footercontact" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-      <img src="assets/images/web.svg" />
-      <a href="https://github.com/GestaltBI" target="_blank">github.com/GestaltBI</a>
+<nav class="lsidenav" aria-label="Modes">
+  <header class="lsidenav__head">
+    <img class="lsidenav__mark" src="assets/images/gestaltbi-logo.png" alt="" />
+    <div class="lsidenav__brand">
+      <h2 class="lsidenav__name">GestaltBI</h2>
+      <p class="lsidenav__tagline">la forma all'origine del significato</p>
     </div>
-    <div class="l-sidenav__footercontact" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-      <img src="assets/images/email.svg" />
-      <a href="mailto:info@gestaltbi.com" target="_blank">info@gestaltbi.com</a>
-    </div>
+  </header>
+
+  <div class="lsidenav__menutitle eyebrow">{{ 'l-sidenav.menuTitle' | translate }}</div>
+
+  <ol class="lsidenav__modes" *ngIf="modes$ | async as modes">
+    <ng-container *ngFor="let link of modes; let i = index">
+      <li class="lsidenav__divider" *ngIf="link.type === 'divider'" aria-hidden="true"></li>
+      <li
+        class="lsidenav__mode"
+        *ngIf="link.type === 'button'"
+        routerLinkActive="lsidenav__mode--active"
+        (click)="goto(link.id)"
+        tabindex="0"
+        role="link"
+      >
+        <span class="lsidenav__mode-icon" aria-hidden="true">
+          <mat-icon svgIcon="{{ link.icon }}"></mat-icon>
+        </span>
+        <span class="lsidenav__mode-label">{{ link.label }}</span>
+        <span class="lsidenav__mode-arrow" aria-hidden="true">→</span>
+      </li>
+    </ng-container>
+  </ol>
+
+  <div class="lsidenav__back">
+    <a class="lsidenav__backlink" [routerLink]="['/intro']">
+      <mat-icon>arrow_back</mat-icon>
+      <span>{{ 'l-sidenav.back' | translate }}</span>
+    </a>
   </div>
-</div>
+
+  <footer class="lsidenav__foot">
+    <div class="lsidenav__contact">
+      <a href="https://github.com/GestaltBI" target="_blank" rel="noopener">
+        <mat-icon>language</mat-icon>
+        github.com/GestaltBI
+      </a>
+      <a href="mailto:info@gestaltbi.com" target="_blank" rel="noopener">
+        <mat-icon>mail</mat-icon>
+        info&#64;gestaltbi.com
+      </a>
+    </div>
+  </footer>
+</nav>

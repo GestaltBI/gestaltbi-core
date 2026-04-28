@@ -1,29 +1,27 @@
-<div class="r-sidenav">
-  <button mat-icon-button (click)="closeSidenav()">
-    <mat-icon>close</mat-icon>
-  </button>
-  <div class="r-sidenav__header" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="24px">
-    <h1 class="r-sidenav__title color-accent" [innerHtml]="'wiki.' + mode + '.title' | translate"></h1>
-    <p [innerHtml]="'wiki.' + mode + '.description' | translate"></p>
+<aside class="rsidenav" aria-label="Glossario">
+  <header class="rsidenav__head">
+    <span class="rsidenav__eyebrow eyebrow">{{ 'common.glossary' | translate }}</span>
+    <button class="rsidenav__close" (click)="closeSidenav()" aria-label="Chiudi">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="rsidenav__intro" *ngIf="mode">
+    <h1 class="rsidenav__title" [innerHtml]="'wiki.' + mode + '.title' | translate"></h1>
+    <p class="rsidenav__lede prose" [innerHtml]="'wiki.' + mode + '.description' | translate"></p>
   </div>
-  <div class="r-sidenav__glossary">
-    <div fxLayout="row" fxLayoutAlign="center none" fxLayoutGap="8px">
-      <mat-icon svgIcon="book-information-variant"></mat-icon>
-      <span class="r-sidenav__glossarytitle">{{ 'common.glossary' | translate }}</span>
-    </div>
-    <ng-container *ngIf="terms$ | async as terms">
-      <mat-accordion fxFill>
-        <mat-expansion-panel *ngFor="let term of terms">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <b>
-                {{ term.name }}
-              </b>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <p [innerHtml]="term.description"></p>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </ng-container>
+
+  <div class="rsidenav__terms" *ngIf="terms$ | async as terms">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let term of terms; let i = index" class="rsidenav__panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="rsidenav__index">{{ i < 9 ? '0' + (i + 1) : (i + 1) }}</span>
+            <span class="rsidenav__termname">{{ term.name }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="rsidenav__termbody" [innerHtml]="term.description"></p>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
-</div>
+</aside>

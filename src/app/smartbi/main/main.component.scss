@@ -1,32 +1,103 @@
+// =============================================================================
+// Outer shell. Three vertical zones in the main column:
+//   1. Toolbar (fixed)
+//   2. Viewport (the mode×view portal renders here, full available space)
+//   3. Filter bar (collapsed = thin status row, expanded = filters above)
+// Sidenavs are slide-in overlays; the layout doesn't shift when they open.
+// =============================================================================
+
 .shell {
-  background-color: #e5e5e5;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
+  background: var(--bg);
+
   &__lsidenav {
-    border-radius: 0px 16px 16px 0px;
+    border: 0 !important;
+    background: var(--surface) !important;
   }
   &__rsidenav {
-    border-radius: 16px 0px 0px 16px;
+    border: 0 !important;
+    background: var(--surface) !important;
   }
-  &__contentarea {
-    background-color: inherit;
-    margin: 16px 16px 0px 16px;
-    padding-bottom: 32px;
+
+  &__content {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+    background: var(--bg);
+  }
+
+  &__viewport {
     overflow: auto;
+    padding: var(--space-lg) var(--space-lg) var(--space-md);
+    container-type: inline-size;
   }
-  &__filtersarea {
-    width: 100%;
-    z-index: 15000;
-    position: fixed;
-    bottom: 0;
-    border-radius: 16px 16px 0px 0px;
+
+  // —— Filter bar: thin row that expands when toggled ————————————————
+  &__filterbar {
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    transition: box-shadow var(--motion-base) var(--ease-out-quart);
+
+    &--open {
+      box-shadow: 0 -8px 24px oklch(20% 0.05 245 / 0.06);
+    }
+
+    &-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--shell-statusbar-h);
+      padding: 0 var(--space-lg);
+    }
+
+    &-eyebrow {
+      color: var(--ink-muted);
+    }
+
+    &-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      padding: var(--space-xs) var(--space-sm);
+      border: 0;
+      background: transparent;
+      color: var(--ink-soft);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: var(--r-md);
+      transition: background-color var(--motion-fast) var(--ease-out-quart),
+        color var(--motion-fast) var(--ease-out-quart);
+
+      .mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover {
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+    }
+
+    &-body {
+      padding: var(--space-md) var(--space-lg) var(--space-lg);
+      border-top: 1px solid var(--rule);
+      animation: slide-down var(--motion-base) var(--ease-out-quart);
+    }
   }
 }
 
-.logo {
-  height: 32px;
-  padding: 24px 16px 24px 16px;
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

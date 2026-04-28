@@ -1,40 +1,66 @@
-
 .download {
   &__card {
-    height: 660px;
-    padding: 32px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: var(--space-lg);
   }
+
   &__content {
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-lg);
+    align-items: stretch;
   }
+
   &__title {
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 36px;
-    text-align: center;
-    margin-bottom: 0px;
-  }
-  &__subtitle {
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 28px;
-    text-align: center;
-  }
-  &__divider {
-    height: 100%;
-    border-left: 8px dashed #b2eee7;
-  }
-  &__gridlabel {
-    width: 90px;
-    padding-left: 8px;
+    font-family: var(--font-display);
+    font-size: var(--text-md);
     font-weight: 500;
+    color: var(--ink-soft);
+    text-align: center;
+    margin: 0;
+    font-variation-settings: 'opsz' 16;
   }
+
+  &__subtitle {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink);
+    text-align: center;
+    letter-spacing: -0.005em;
+    margin: 0 0 var(--space-sm);
+    font-variation-settings: 'opsz' 14;
+    text-transform: uppercase;
+  }
+
+  &__divider {
+    width: 1px;
+    background: var(--rule);
+  }
+
+  &__gridlabel {
+    width: 96px;
+    padding-left: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+    line-height: var(--leading-snug);
+  }
+
   &__gridicon {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    opacity: 0.85;
   }
+
   &__button {
-    width: 112px;
-    height: 48px;
+    align-self: center;
+    height: 44px;
+    min-width: 160px;
   }
 }

@@ -1,79 +1,66 @@
-
 .upload {
   &__card {
-    height: 660px;
-    padding: 32px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: var(--space-md);
   }
+
   &__title {
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 36px;
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-weight: 500;
+    color: var(--ink-soft);
     text-align: center;
-    margin-bottom: 0px;
+    margin: 0;
+    font-variation-settings: 'opsz' 16;
   }
+
   &__box {
-    width: 100%;
-    border-width: 8px;
-    border-style: dashed;
-    border-radius: 8px;
-    border-color: #b2eee7;
-    margin: 36px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    border: 2px dashed var(--rule-strong);
+    border-radius: var(--r-md);
+    background: color-mix(in oklch, var(--accent), var(--bg) 96%);
+    color: var(--ink-muted);
+    transition: border-color var(--motion-base) var(--ease-out-quart),
+      background-color var(--motion-base) var(--ease-out-quart),
+      transform var(--motion-base) var(--ease-out-quart);
+    cursor: pointer;
+
+    h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 500;
+      color: var(--ink-soft);
+      margin: 0;
+      letter-spacing: -0.01em;
+      font-variation-settings: 'opsz' 20;
+    }
+
     &--active {
-      border-color: #21d7c1;
+      border-color: var(--accent);
+      background: color-mix(in oklch, var(--accent), var(--bg) 88%);
+      color: var(--accent-strong);
+      transform: scale(1.005);
+      h3 {
+        color: var(--accent-strong);
+      }
     }
   }
+
   &__button {
-    margin-top: 28px;
+    display: flex;
+    justify-content: center;
   }
 }
 
 .fileover {
-  animation: shake 1s;
-  animation-iteration-count: infinite;
-}
-
-@keyframes shake {
-  0% {
-    transform: translate(1px, 1px) rotate(0deg);
-  }
-
-  10% {
-    transform: translate(-1px, -2px) rotate(-1deg);
-  }
-
-  20% {
-    transform: translate(-3px, 0px) rotate(1deg);
-  }
-
-  30% {
-    transform: translate(3px, 2px) rotate(0deg);
-  }
-
-  40% {
-    transform: translate(1px, -1px) rotate(1deg);
-  }
-
-  50% {
-    transform: translate(-1px, 2px) rotate(-1deg);
-  }
-
-  60% {
-    transform: translate(-3px, 1px) rotate(0deg);
-  }
-
-  70% {
-    transform: translate(3px, 1px) rotate(-1deg);
-  }
-
-  80% {
-    transform: translate(-1px, -1px) rotate(1deg);
-  }
-
-  90% {
-    transform: translate(1px, 2px) rotate(0deg);
-  }
-
-  100% {
-    transform: translate(1px, -2px) rotate(-1deg);
-  }
+  border-color: var(--accent) !important;
+  background: color-mix(in oklch, var(--accent), var(--bg) 80%) !important;
 }

@@ -81,3 +81,37 @@ When adding a new visualization, prefer extending these rather than wiring servi
 - Imports are auto-sorted via `prettier-plugin-import-sort` using the `module` style (configured in `.importsortrc`).
 - The repo's lazy-loaded feature modules each own their submodules (e.g. `SmartbiModule` imports `MapModule`, `GraphModule`, `TableModule`, `FilterModule`, `TimedmapModule`, `ImporterModule`, `ShellModule`).
 - `ProcessorModule` and registry-style modules do their wiring in the **module constructor**, not in `providers`. When adding a new op, filter, or visualization, register it there.
+
+## Design Context
+
+### Users
+
+**Primary**: Italian SMB / family-business owners. Not BI specialists, not analysts — they're the person who actually runs the company and wants to understand their numbers without a consultant standing next to them. Italian, daytime business hours, desktop or large laptop.
+
+**Job**: Look at this week / month / region / product line, figure out what's working, decide what to do. The product needs to *teach* the numbers, not just display them.
+
+**Emotional goal**: "I get it." Confidence in interpretation.
+
+### Brand Personality
+
+**Three words**: Confident · Expressive · Opinionated. Italian editorial tradition (Domus, Olivetti, Memphis-era Sottsass, Pirelli, Italian financial press) — generous with type and color, deliberate with placement, pedagogical without being patronizing.
+
+**Tagline**: *"la forma all'origine del significato"* — good visual form is what produces understanding. The design has to back that up.
+
+### Aesthetic Direction
+
+**Bold / saturated** with the rainbow as a power tool, not wallpaper. The G-mark logo's full spectrum (orange→red→yellow→green→teal→blue) appears only at moments of emphasis: active state, hero metric, key CTA, change-direction indicator, focused chart. Everywhere else carries on neutrals tinted toward the brand hue range.
+
+**Theme**: light. Daytime SMB use. Carefully-tuned warm neutrals (OKLCH, chroma 0.005–0.015), never pure white or gray.
+
+**Anti-references**: generic SaaS dashboards (Mixpanel/Segment), corporate financial software (SAP), Anglo-Saxon clinical minimalism (Linear/Vercel), friendly pastel SaaS, reflex AI-design tells (gradient text, side-stripe borders, generic card grids, glassmorphism).
+
+### Design Principles
+
+1. **Numbers first, chrome last.** Data is the hero. Decoration that doesn't reveal meaning gets cut.
+2. **Color as signal, not surface.** Saturated brand color only encodes — active, focus, change, alert, hero. Neutrals carry the structure. 60-30-10 by visual weight.
+3. **Italian, not Anglo-Saxon.** Expressive type, confident size jumps (≥1.25 ratio), no apologetic minimalism. The interface has opinions.
+4. **Pedagogical layout.** Gestalt principles literally apply — proximity, similarity, continuity, common fate. Every grouping helps the owner *interpret* the numbers, not just see them.
+5. **One memorable moment per view.** The bold/saturated register fires once per screen, on the focal point. Maximalism distributed evenly is noise; maximalism with focus is design.
+
+See `.impeccable.md` for the full version of this section.

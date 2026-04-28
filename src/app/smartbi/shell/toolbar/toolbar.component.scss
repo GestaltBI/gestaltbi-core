@@ -1,38 +1,191 @@
+// =============================================================================
+// Top command bar. One row, three zones: left (brand), center (mode + view
+// switcher), right (focal CTA + utility icons). The spectrum CTA is the
+// "one memorable moment" of this surface.
+// =============================================================================
+
 .toolbar {
-  background: none;
-  &__logo {
-    max-height: 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-lg);
+  height: var(--shell-toolbar-h);
+  padding: 0 var(--space-lg);
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  z-index: 20;
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    min-width: 0;
   }
-  &__viewselector {
-    mat-button-toggle-group {
-      mat-button-toggle:first-child {
-        border-radius: 16px 0px 0px 16px;
+  &__center {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    justify-content: center;
+  }
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    justify-content: flex-end;
+  }
+
+  // —— Menu trigger ————————————————————————————————————————————
+  &__menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-radius: var(--r-md);
+    transition: background-color var(--motion-fast) var(--ease-out-quart),
+      color var(--motion-fast) var(--ease-out-quart);
+
+    .mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+    &:hover {
+      background: var(--surface-2);
+      color: var(--ink);
+    }
+  }
+
+  // —— Brand ————————————————————————————————————————————————————
+  &__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: var(--ink);
+    min-width: 0;
+
+    &:hover {
+      color: var(--ink);
+    }
+  }
+
+  &__mark {
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  &__wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    min-width: 0;
+  }
+  &__wordmark-name {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-variation-settings: 'opsz' 18, 'wdth' 95;
+    color: var(--ink);
+  }
+  &__wordmark-tagline {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--ink-muted);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // —— Mode label + view switcher ——————————————————————————————
+  &__mode {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--space-md);
+    height: 40px;
+    border-radius: var(--r-pill);
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+  &__mode-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 14;
+    text-transform: lowercase;
+  }
+
+  &__views {
+    .mat-button-toggle {
+      .mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        margin-right: var(--space-2xs);
       }
-      mat-button-toggle:last-child {
-        border-radius: 0px 16px 16px 0px;
+      span {
+        font-size: var(--text-sm);
       }
+    }
+  }
+
+  // —— Right side ————————————————————————————————————————————————
+  &__cta {
+    box-shadow: 0 6px 18px oklch(60% 0.18 38 / 0.32);
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-radius: var(--r-md);
+    transition: background-color var(--motion-fast) var(--ease-out-quart),
+      color var(--motion-fast) var(--ease-out-quart);
+
+    .mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+    &:hover {
+      background: var(--surface-2);
+      color: var(--ink);
     }
   }
 }
 
-.mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
-.mat-button-toggle-group-appearance-standard {
-  border-radius: 16px;
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+// Compact viewports: hide the tagline and the view-switcher labels
+@container (max-width: 1100px) {
+  .toolbar__wordmark-tagline {
+    display: none;
+  }
+  .toolbar__views .mat-button-toggle span {
+    display: none;
+  }
 }
-
-.cta_top {
-  border-radius: 24px;
-  text-transform: uppercase;
-  height: 48px;
-  font-family: 'Roboto';
-  font-size: 14px;
-}
-
-.spacer {
-  width: 40px;
-}
-.spaced {
-  margin: 16px;
+@container (max-width: 800px) {
+  .toolbar__mode {
+    display: none;
+  }
+  .toolbar__cta span {
+    display: none;
+  }
 }

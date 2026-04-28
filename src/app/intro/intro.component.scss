@@ -1,36 +1,211 @@
+// =============================================================================
+// Intro / first-impression page. Editorial layout: oversized display headline
+// pulls weight, two paths (upload / template) framed as numbered acts, then
+// a single contact moment at the bottom.
+// =============================================================================
 
 .intro {
-  padding: 16px 44px 44px 44px;
+  min-height: 100vh;
+  background: var(--bg);
+  padding: var(--space-xl) clamp(var(--space-lg), 5vw, var(--space-3xl));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
 
-  &__title {
-    font-weight: 700;
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  &__logo {
-    height: 32px;
+  &__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: var(--ink);
+  }
+  &__mark {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+  &__brand-name {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-variation-settings: 'opsz' 18, 'wdth' 95;
   }
 
-  &__closebutton {
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding: var(--space-xs) var(--space-sm);
+    border: 0;
+    background: transparent;
+    color: var(--ink-muted);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
     cursor: pointer;
-    span {
-      margin-top: 2px;
+    border-radius: var(--r-md);
+    transition: color var(--motion-fast) var(--ease-out-quart),
+      background-color var(--motion-fast) var(--ease-out-quart);
+
+    .mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+    &:hover {
+      color: var(--ink);
+      background: var(--surface-2);
     }
   }
 
-  &__contactcard {
-    background-color: #21d7c1;
-    text-align: center;
-    h1 {
-      color: white;
-      font-weight: 700;
-    }
-    button {
-      border-radius: 28px;
-      color: #21d7c1;
+  // —— Hero ————————————————————————————————————————————————————
+  &__hero {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+
+    .eyebrow {
+      color: var(--ink-muted);
     }
   }
-}
 
-.mat-card {
-  padding: 32px !important;
+  &__display {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: 'opsz' 96, 'wdth' 95;
+
+    em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--accent);
+      font-variation-settings: 'opsz' 96, 'wdth' 100;
+    }
+  }
+
+  &__lede {
+    font-size: var(--text-base);
+    line-height: var(--leading-base);
+    color: var(--ink-soft);
+    margin: var(--space-sm) 0 0;
+    max-width: 56ch;
+  }
+
+  // —— Two paths ————————————————————————————————————————————————
+  &__paths {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: var(--space-xl);
+  }
+
+  &__path {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-lg);
+    padding: var(--space-xl);
+    transition: border-color var(--motion-base) var(--ease-out-quart),
+      box-shadow var(--motion-base) var(--ease-out-quart);
+
+    &:hover {
+      border-color: var(--ink-faint);
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  &__path-tag {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--ink-faint);
+    font-feature-settings: 'tnum' on;
+    letter-spacing: 0.02em;
+  }
+
+  &__path-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-variation-settings: 'opsz' 36, 'wdth' 95;
+    margin: 0;
+  }
+
+  &__path-desc {
+    font-size: var(--text-md);
+    color: var(--ink-soft);
+    margin: 0 0 var(--space-sm);
+    line-height: var(--leading-base);
+  }
+
+  &__path--upload {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--accent), var(--bg) 92%),
+      var(--bg)
+    );
+  }
+
+  // —— Footer contact —————————————————————————————————————————————
+  &__foot {
+    margin-top: auto;
+    padding: var(--space-xl);
+    border-radius: var(--r-lg);
+    background: var(--ink);
+    color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+  }
+  &__foot-msg {
+    flex: 1;
+    min-width: 280px;
+  }
+  &__foot-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--bg);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--space-xs);
+    font-variation-settings: 'opsz' 32;
+  }
+  &__foot-text {
+    color: oklch(80% 0.014 245);
+    font-size: var(--text-md);
+    margin: 0;
+    line-height: var(--leading-base);
+  }
+
+  &__foot .btn--solid {
+    background: var(--bg);
+    color: var(--ink);
+    .mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  &__foot .btn--solid:hover {
+    background: var(--surface);
+  }
 }

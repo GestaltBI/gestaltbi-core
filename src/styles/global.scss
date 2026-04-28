@@ -1,52 +1,38 @@
-$margin-default: 16px;
-$color-accent: #21d7c1;
+// =============================================================================
+// Layout utilities and legacy class names kept for components that rely on
+// them. Token-driven; no hard-coded values.
+// =============================================================================
 
-html,
-body {
-  height: 100%;
-  background-color: #e5e5e5;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-.struct-background {
-  background-image: url(../assets/images/struct_background.jpg);
-  background-size: cover;
-}
-
-.margin-default {
-  margin: $margin-default;
-}
-
+// —— Legacy utility classes (still referenced by some templates) ———————————
 .color-accent {
-  color: $color-accent;
+  color: var(--accent);
 }
-
 .section-title {
-  font-size: 28px !important;
-  font-weight: 500 !important;
-  color: #333333;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: var(--letter-tight);
+  color: var(--ink);
+  line-height: var(--leading-tight);
+  font-variation-settings: 'opsz' 24;
 }
-
 .section-title-centered {
   @extend .section-title;
   text-align: center;
 }
-
 .slide-title {
-  @extend .color-accent;
+  color: var(--accent);
+  font-weight: 600;
 }
-
 .slide-description-small {
-  font-size: 12px;
-  line-height: 14px;
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-muted);
 }
 
+// —— Legend positioning ————————————————————————————————————————————————————
 .analysis-area {
-  height: calc(100vh - 306px); // 290
+  height: calc(100vh - var(--shell-toolbar-h) - var(--shell-statusbar-h) - var(--space-xl));
 }
 
 .analysis-filter {
@@ -60,70 +46,41 @@ body {
 }
 
 .legend-graph {
-  width: 225px;
+  width: 240px;
 }
 
-// Fix for Material Icons
-button.mat-menu-item {
-  line-height: 24px !important;
+// —— Background pattern (intro / login) ———————————————————————————————————
+.struct-background {
+  background-image: url(../assets/images/struct_background.jpg);
+  background-size: cover;
 }
 
-a.mat-menu-item > mat-icon {
-  margin-bottom: 14px;
-}
-
-.mat-icon svg {
-  height: 24px;
-  width: 24px;
-}
-
-.mat-step-icon-content .mat-icon svg {
-  height: 100%;
-  width: 100%;
-}
-
-.color-wiki {
-  color: red;
-}
-
+// —— Color-coded indicators (kept simple) —————————————————————————————————
 .dot {
-  height: 15px;
-  width: 15px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   display: inline-block;
-  margin-right: 5px;
+  margin-right: var(--space-2xs);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Quicksand', sans-serif !important;
+// —— Layout primitives —————————————————————————————————————————————————————
+.stack {
+  display: flex;
+  flex-direction: column;
 }
-
-::ng-deep {
-  .color-accent,
-  .slide-title {
-    color: #21d7c1;
-    font-weight: bold !important;
-  }
-  mat-card[_ngcontent-kdw-c241] {
-    height: 400px;
-  }
-  .mat-button-toggle-standalone.mat-button-toggle-appearance-standard,
-  .mat-button-toggle-group-appearance-standard {
-    border-radius: 16px !important;
-    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-      0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
-  }
+.row {
+  display: flex;
+  flex-direction: row;
 }
-
-.mat-card {
-  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-  display: block;
-  position: relative !important;
-  padding: 12px !important;
-  border-radius: 16px !important;
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
 }

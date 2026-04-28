@@ -5,22 +5,25 @@
   <mat-sidenav class="shell__rsidenav" mode="over" position="end" #rside>
     <sbi-r-sidenav></sbi-r-sidenav>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <div fxLayout="column" fxFill>
-      <sbi-shell-toolbar></sbi-shell-toolbar>
-      <div class="shell__contentarea" fxFlex>
-        <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
+
+  <mat-sidenav-content class="shell__content">
+    <sbi-shell-toolbar></sbi-shell-toolbar>
+
+    <main class="shell__viewport">
+      <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
+    </main>
+
+    <section class="shell__filterbar" [class.shell__filterbar--open]="filterBarOpen">
+      <div class="shell__filterbar-toggle">
+        <span class="shell__filterbar-eyebrow eyebrow">{{ 'common.parameters' | translate }}</span>
+        <button class="shell__filterbar-trigger" (click)="toggle()" [attr.aria-expanded]="filterBarOpen">
+          <span>{{ filterBarOpen ? 'Nascondi' : 'Modifica' }}</span>
+          <mat-icon>{{ filterBarOpen ? 'expand_more' : 'expand_less' }}</mat-icon>
+        </button>
       </div>
-      <div class="dark-theme shell__filtersarea">
-        <div fxLayout="row" fxLayoutAlign="center center">
-          <span style="text-align: center;" fxFlex>{{ 'common.parameters' | translate }}</span>
-          <button mat-icon-button (click)="toggle()">
-            <mat-icon *ngIf="filterBarOpen">keyboard_arrow_down</mat-icon>
-            <mat-icon *ngIf="!filterBarOpen">keyboard_arrow_up</mat-icon>
-          </button>
-        </div>
-        <sbi-filter *ngIf="filterBarOpen" filterScope="global"></sbi-filter>
+      <div class="shell__filterbar-body" *ngIf="filterBarOpen">
+        <sbi-filter filterScope="global"></sbi-filter>
       </div>
-    </div>
+    </section>
   </mat-sidenav-content>
 </mat-sidenav-container>
