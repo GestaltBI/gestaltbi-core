@@ -4,10 +4,16 @@
 // instead of an icon-per-term grid.
 // =============================================================================
 
+:host {
+  display: block;
+  width: 420px;
+  height: 100%;
+}
+
 .rsidenav {
   display: flex;
   flex-direction: column;
-  width: 420px;
+  width: 100%;
   min-height: 100%;
   padding: var(--space-xl) var(--space-lg);
   background: var(--surface);

@@ -4,10 +4,16 @@
 // The hover/active state is full-row tint, never a side stripe.
 // =============================================================================
 
+:host {
+  display: block;
+  width: var(--shell-side-w);
+  height: 100%;
+}
+
 .lsidenav {
   display: flex;
   flex-direction: column;
-  width: var(--shell-side-w);
+  width: 100%;
   min-height: 100%;
   padding: var(--space-xl) var(--space-lg);
   background: var(--surface);

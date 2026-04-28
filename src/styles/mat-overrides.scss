@@ -131,6 +131,13 @@
 .mat-drawer-content {
   background: transparent !important;
 }
+// Material drawer wraps content in a scroll container with default padding.
+// Reset it — our sidenav components handle their own padding & scroll.
+.mat-drawer-inner-container,
+.mat-sidenav-inner-container {
+  padding: 0 !important;
+  overflow-x: hidden;
+}
 
 // —— Lists ——————————————————————————————————————————————————————————————————
 .mat-mdc-list-item {
