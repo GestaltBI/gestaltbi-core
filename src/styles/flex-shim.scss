@@ -1,0 +1,111 @@
+// Compatibility shim for @angular/flex-layout (deprecated, removed).
+// Covers only the attribute combinations actually used in this project's
+// templates. Not a general-purpose reimplementation.
+
+[fxLayout='row'] {
+  display: flex;
+  flex-direction: row;
+}
+[fxLayout='column'] {
+  display: flex;
+  flex-direction: column;
+}
+[fxLayout='row wrap'] {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+[fxFill] {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+[fxFlex] {
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+[fxFlex='20'] {
+  flex: 1 1 20%;
+  max-width: 20%;
+}
+[fxFlex='30'] {
+  flex: 1 1 30%;
+  max-width: 30%;
+}
+[fxFlex='40'] {
+  flex: 1 1 40%;
+  max-width: 40%;
+}
+[fxFlex='50'] {
+  flex: 1 1 50%;
+  max-width: 50%;
+}
+
+// fxLayoutAlign: first token = main axis (justify), second = cross axis (align).
+[fxLayoutAlign='center'] {
+  justify-content: center;
+}
+[fxLayoutAlign='center center'] {
+  justify-content: center;
+  align-items: center;
+}
+[fxLayoutAlign='center start'] {
+  justify-content: center;
+  align-items: flex-start;
+}
+[fxLayoutAlign='center none'] {
+  justify-content: center;
+}
+[fxLayoutAlign='none center'] {
+  align-items: center;
+}
+[fxLayoutAlign='end'] {
+  justify-content: flex-end;
+}
+[fxLayoutAlign='end center'] {
+  justify-content: flex-end;
+  align-items: center;
+}
+[fxLayoutAlign='left center'],
+[fxLayoutAlign='left center '] {
+  justify-content: flex-start;
+  align-items: center;
+}
+[fxLayoutAlign='right center'] {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+// fxLayoutGap maps directly to CSS gap (works for both row and column).
+[fxLayoutGap='8px'] {
+  gap: 8px;
+}
+[fxLayoutGap='12px'] {
+  gap: 12px;
+}
+[fxLayoutGap='16px'] {
+  gap: 16px;
+}
+[fxLayoutGap='20px'] {
+  gap: 20px;
+}
+[fxLayoutGap='24px'] {
+  gap: 24px;
+}
+[fxLayoutGap='30px'] {
+  gap: 30px;
+}
+[fxLayoutGap='32px'] {
+  gap: 32px;
+}
+[fxLayoutGap='40px'] {
+  gap: 40px;
+}
+[fxLayoutGap='48px'] {
+  gap: 48px;
+}
