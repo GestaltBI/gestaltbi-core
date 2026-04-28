@@ -13,8 +13,9 @@ import { Measure } from 'src/app/shared/measure';
 export class BaseMapComponent implements OnInit, AfterViewInit {
   map: maplibregl.Map;
 
-  // initial setup props
-  style = 'https://demotiles.maplibre.org/style.json';
+  // OpenFreeMap is free, key-less, OSM-derived. The "positron" style is
+  // a low-saturation neutral basemap that lets data layers stand out.
+  style = 'https://tiles.openfreemap.org/styles/positron';
   @Input() lat: number;
   @Input() lng: number;
   @Input() zoom: number;

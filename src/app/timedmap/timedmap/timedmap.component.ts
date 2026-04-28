@@ -34,10 +34,6 @@ export class TimedmapComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.data !== undefined) {
-      this.data = 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson';
-      throw new Error('GeoJson is undefined, using demo');
-    }
     this.layout = 'colored';
   }
 

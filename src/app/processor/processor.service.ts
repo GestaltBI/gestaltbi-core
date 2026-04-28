@@ -40,7 +40,13 @@ export class ProcessorService {
       getDataStructureFor: (tag) => this.dss.getDataStructureFor(tag),
       getDimensionHierarchies: () => this.dss.getDimensionHierarchies(),
     };
-    const fetcher: ExternalFetcher = (url) => this.http.get(url);
+    // Relative paths (e.g. "geo/it_p_c.geojson" from processing.json) resolve
+    // against the active config source — `assets/` for the bundled config or
+    // the jsDelivr base for /gh/<org>/<repo>. Absolute URLs pass through.
+    const fetcher: ExternalFetcher = (url) => {
+      const isAbsolute = /^(https?:|\/)/.test(url);
+      return this.http.get(isAbsolute ? url : this.cs.url(url));
+    };
 
     this.proc = new Processor({
       columnDirectory,

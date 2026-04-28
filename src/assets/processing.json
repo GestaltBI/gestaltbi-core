@@ -274,7 +274,7 @@
         "geocoding": [
           {
             "col": "smartbi:delivery_pc",
-            "file": "/assets/geo/it_p_c.geojson",
+            "file": "geo/it_p_c.geojson",
             "field": "DEN",
             "columns": {
               "lon": "smartbi:delivery_province_lon",
@@ -292,7 +292,7 @@
         "geocoding": [
           {
             "col": "smartbi:delivery_pc",
-            "file": "/assets/geo/it_p_c.geojson",
+            "file": "geo/it_p_c.geojson",
             "field": "DEN",
             "columns": {
               "lon": "smartbi:delivery_province_lon",
