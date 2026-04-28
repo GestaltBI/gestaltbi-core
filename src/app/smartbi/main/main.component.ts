@@ -3,6 +3,7 @@ import { AfterViewChecked, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ConfigSourceService } from '../../core/config-source.service';
 import { GraphService } from './../../graph/graph.service';
 import { ImporterService } from './../../importer/importer.service';
 import { ProcessorService } from './../../processor/processor.service';
@@ -32,6 +33,7 @@ export class MainComponent implements OnInit, AfterViewChecked {
     public sbi: SmartbiService,
     private ps: ProcessorService,
     private gs: GraphService,
+    private cs: ConfigSourceService,
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,7 @@ export class MainComponent implements OnInit, AfterViewChecked {
       this.ps.workOn(data);
     });
     if (!this.ps.loaded) {
-      this.is.launch(false, 'assets/mocks/data.csv');
+      this.is.launch(false, this.cs.url('data.csv'));
     }
     this.sbi.toggleLeft.subscribe((data) => {
       this.lside.toggle();

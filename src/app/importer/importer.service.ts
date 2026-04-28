@@ -4,6 +4,7 @@ import { Papa, ParseResult } from 'ngx-papaparse';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { ConfigSourceService } from '../core/config-source.service';
 import { DatastructureService } from './../datastructure/datastructure.service';
 import { DialogComponent } from './dialog/dialog.component';
 
@@ -24,6 +25,7 @@ export class ImporterService {
     private papa: Papa, //
     private http: HttpClient,
     private ds: DatastructureService,
+    private cs: ConfigSourceService,
   ) {}
 
   launch(enforceMapping: boolean = false, mock?): void {
@@ -80,7 +82,7 @@ export class ImporterService {
     if (this.mapping) {
       return of(this.mapping);
     } else {
-      return this.http.get('assets/mapping.json').pipe(
+      return this.http.get(this.cs.url('mapping.json')).pipe(
         tap((m) => {
           this.mapping = m;
         }),

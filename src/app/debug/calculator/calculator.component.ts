@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
+import { ConfigSourceService } from '../../core/config-source.service';
 import { ImporterService } from './../../importer/importer.service';
 import { AggregatorService } from './../../processor/aggregator.service';
 import { ProcessorService } from './../../processor/processor.service';
@@ -22,10 +23,11 @@ export class CalculatorComponent implements OnInit {
     public proc: ProcessorService,
     public i: ImporterService,
     public as: AggregatorService,
+    private cs: ConfigSourceService,
   ) {}
 
   ngOnInit(): void {
-    this.http.get('/assets/processing.json').subscribe((data) => {
+    this.http.get(this.cs.url('processing.json')).subscribe((data) => {
       this.processing = data;
     });
   }

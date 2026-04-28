@@ -12,7 +12,7 @@ export class DownloadComponent {
   download(): void {
     const link = document.createElement('a');
     link.setAttribute('type', 'hidden');
-    link.href = 'assets/mocks/data_template.csv';
+    link.href = 'assets/data_template.csv';
     link.download = 'data.csv';
     document.body.appendChild(link);
     link.click();

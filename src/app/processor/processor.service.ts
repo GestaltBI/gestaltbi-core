@@ -7,7 +7,9 @@ import {
   Processor,
 } from '@gestaltbi/stream';
 import { type Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
+import { ConfigSourceService } from '../core/config-source.service';
 import { DatastructureService } from './../datastructure/datastructure.service';
 import { DataService } from './data.service';
 import { FilterService } from './filter.service';
@@ -31,6 +33,7 @@ export class ProcessorService {
   constructor(
     private http: HttpClient, //
     private dss: DatastructureService,
+    private cs: ConfigSourceService,
   ) {
     const columnDirectory: ColumnDirectory = {
       getColumnsFor: (tag) => this.dss.getColumnsFor(tag),
@@ -45,9 +48,13 @@ export class ProcessorService {
       processes: { process: {} },
     });
 
-    this.http.get<ProcessConfig>('assets/processing.json').subscribe((data) => {
-      this.proc.processes = data;
-    });
+    // Re-fetch processing.json whenever the config source changes
+    // (initial load, /gh/<org>/<repo> switch, etc).
+    this.cs.source$
+      .pipe(switchMap((base) => this.http.get<ProcessConfig>(base + 'processing.json')))
+      .subscribe((data) => {
+        this.proc.processes = data;
+      });
   }
 
   setFilterService(fs: FilterService) {

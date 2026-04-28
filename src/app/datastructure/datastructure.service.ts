@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { ConfigSourceService } from '../core/config-source.service';
 
 export class ColumnStructure {
   label: string;
@@ -22,30 +25,31 @@ export class DatastructureService {
 
   constructor(
     private http: HttpClient, //
+    private cs: ConfigSourceService,
   ) {
-    console.log('new shit');
+    // Reload whenever the config source changes (e.g. /gh/<org>/<repo>).
+    // APP_INITIALIZER handles the first load; this kicks in for subsequent
+    // source switches.
+    let initial = true;
+    this.cs.source$.subscribe(() => {
+      if (initial) {
+        initial = false;
+        return;
+      }
+      this.autoload();
+    });
   }
 
   autoload(): Promise<any> {
     return Promise.all([
-      this.http
-        .get('assets/it.json')
-        .toPromise()
-        .then((data) => {
-          this.lang = data;
-          //return data;
-        }),
-      this.http
-        .get('assets/structure.json')
-        .toPromise()
-        .then((data) => {
-          this.datastructure = data;
-          //return data;
-        }),
-    ]).then((x) => {
-      console.log('done dling');
+      firstValueFrom(this.http.get(this.cs.url('it.json'))).then((data) => {
+        this.lang = data;
+      }),
+      firstValueFrom(this.http.get(this.cs.url('structure.json'))).then((data) => {
+        this.datastructure = data;
+      }),
+    ]).then(() => {
       this.prepareData();
-      console.log('done preparing');
     });
   }
 
@@ -129,7 +133,7 @@ export class DatastructureService {
   }
 
   langMap(language: string): any {
-    return this.http.get('assets/' + language + '.json').pipe(
+    return this.http.get(this.cs.url(language + '.json')).pipe(
       map((data) => {
         const ret = this.getDataStructureFor('sbi:i:mappable');
         ret.columns.forEach((col) => {
