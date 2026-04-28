@@ -1,21 +1,18 @@
-import { Inject } from '@angular/core';
 import moment from 'moment';
 
-import { FilterService } from '../filter.service';
-import { AbstractOp } from '../op';
+import { AbstractOp } from '../op.js';
 
-@Inject({})
 export class Format extends AbstractOp {
   public run(df: any): any {
     const ret = df[0];
-    ret.map((row) => {
+    ret.map((row: any) => {
       if (this.options.dateTag) {
-        this.dss.getColumnsFor(this.options.dateTag).forEach((col) => {
+        this.columnDirectory.getColumnsFor(this.options.dateTag).forEach((col) => {
           row[col] = this.parseDate(row[col]);
         });
       }
       if (this.options.numberTag) {
-        this.dss.getColumnsFor(this.options.numberTag).forEach((col) => {
+        this.columnDirectory.getColumnsFor(this.options.numberTag).forEach((col) => {
           if (Object.keys(row).indexOf(col) >= 0) {
             row[col] = this.cleanNumber(row[col]);
           }
@@ -25,15 +22,14 @@ export class Format extends AbstractOp {
     return ret;
   }
 
-  parseDate(date): any {
+  parseDate(date: any): Date {
     return moment(date, this.options.dateFormat).toDate();
   }
 
-  cleanNumber(num) {
+  cleanNumber(num: any): number | any {
     if (typeof num === 'string') {
       return parseFloat(num.replace('.', '').replace(',', '.').replace('€', '').replace('$', '').trim());
-    } else {
-      return num;
     }
+    return num;
   }
 }

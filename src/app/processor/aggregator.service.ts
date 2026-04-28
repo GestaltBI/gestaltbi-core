@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 
 import { DatastructureService } from './../datastructure/datastructure.service';
-import { IAggregatorService } from './aggregator.interface';
 import { ProcessorService } from './processor.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AggregatorService implements IAggregatorService {
-  dimensions: any[];
+export class AggregatorService {
+  dimensions: any[] = [];
 
   constructor(
     private ps: ProcessorService, //
     private ds: DatastructureService,
   ) {}
 
-  initialize(data) {
+  initialize(data: any) {
     this.ps.initializeAggregator(data);
     this.prepareDimensions();
   }
@@ -29,7 +27,7 @@ export class AggregatorService implements IAggregatorService {
     return this.dimensions;
   }
 
-  getDimensionMembers(dimension): any[] {
+  getDimensionMembers(dimension: string): any[] {
     return this.ps.getDimensionMembers(dimension);
   }
 }

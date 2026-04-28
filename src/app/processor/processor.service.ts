@@ -1,193 +1,128 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import Cube from 'olap-cube-js';
-import { BehaviorSubject, Observable, ReplaySubject, Subject, combineLatest, forkJoin, interval } from 'rxjs';
-import { of } from 'rxjs';
-import { map, tap, timeout } from 'rxjs/operators';
+import {
+  type ColumnDirectory,
+  type ExternalFetcher,
+  type ProcessConfig,
+  Processor,
+} from '@gestaltbi/stream';
+import { type Observable } from 'rxjs';
 
 import { DatastructureService } from './../datastructure/datastructure.service';
 import { DataService } from './data.service';
 import { FilterService } from './filter.service';
-import { OpRegistryService } from './op.registry.service';
 
+/**
+ * Angular adapter over `@gestaltbi/stream`'s Processor. Wires
+ * DatastructureService as the ColumnDirectory and HttpClient as the
+ * external resource fetcher; loads the process graph from
+ * `assets/processing.json` at startup.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class ProcessorService {
-  processes: any;
-  start: any;
-  work: any;
+  private proc: Processor;
+  mode: string | undefined;
 
-  mode: string;
-
-  cube: Cube;
-
-  workObs: Observable<any>;
-
-  done = [];
-  private localFilterSet: Map<string, any> = new Map<string, any>();
-
-  localFilterObs: Map<string, Observable<any>> = new Map<string, Observable<any>>();
-  localFilterSub: Map<string, Subject<any>> = new Map<string, Subject<any>>();
-
-  fs: FilterService;
-  ds: DataService;
+  fs: FilterService | undefined;
+  ds: DataService | undefined;
 
   constructor(
     private http: HttpClient, //
-    private ops: OpRegistryService,
     private dss: DatastructureService,
   ) {
-    this.http.get('assets/processing.json').subscribe((data) => {
-      this.processes = data;
-    });
-  }
+    const columnDirectory: ColumnDirectory = {
+      getColumnsFor: (tag) => this.dss.getColumnsFor(tag),
+      getDataStructureFor: (tag) => this.dss.getDataStructureFor(tag),
+      getDimensionHierarchies: () => this.dss.getDimensionHierarchies(),
+    };
+    const fetcher: ExternalFetcher = (url) => this.http.get(url);
 
-  get loaded() {
-    return this.start !== undefined;
+    this.proc = new Processor({
+      columnDirectory,
+      fetcher,
+      processes: { process: {} },
+    });
+
+    this.http.get<ProcessConfig>('assets/processing.json').subscribe((data) => {
+      this.proc.processes = data;
+    });
   }
 
   setFilterService(fs: FilterService) {
     this.fs = fs;
   }
-
   setDataService(ds: DataService) {
     this.ds = ds;
   }
 
   setMode(mode: string) {
     this.mode = mode;
+    this.proc.setMode(mode);
   }
 
-  initializeAggregator(data: any) {
-    const h = this.dss.getDimensionHierarchies();
-    console.log(h);
-    console.log(data);
-    this.cube = new Cube(h);
-    this.cube.addFacts(data);
+  get loaded(): boolean {
+    return this.proc.loaded;
   }
 
-  workOn(dataframe: any) {
-    this.start = dataframe;
-    this.work = dataframe;
-    this.workObs = of(this.work.data);
-    this.initializeAggregator(dataframe.data);
-    this.done = [];
+  get work(): any {
+    return this.proc.work;
   }
 
-  clear() {
-    this.done = [];
-    this.work = this.start;
+  get start(): any {
+    return this.proc.start;
+  }
+
+  get done(): string[] {
+    return this.proc.done;
+  }
+
+  initializeAggregator(data: any): void {
+    this.proc.initializeAggregator(data);
+  }
+
+  workOn(dataframe: any): void {
+    this.proc.workOn(dataframe);
+  }
+
+  clear(): void {
+    this.proc.clear();
   }
 
   getProcesses(): string[] {
-    return Object.keys(this.processes.process);
+    return this.proc.getProcesses();
   }
 
-  process(name: string, identifier = 'default') {
-    if (this.processes?.process[name]?.require) {
-      this.processes.process[name].require.forEach(async (req) => {
-        if (this.done.indexOf(req) < 0) {
-          this.process(req, identifier);
-        }
-      });
-    }
-    this.localFilterObs.set(identifier, this.doProcess(name, identifier));
+  process(name: string, identifier = 'default'): void {
+    this.proc.process(name, identifier);
   }
 
-  private doProcess(name: string, identifier = 'default'): Observable<any> | Subject<any> {
-    if (name) {
-      let processOpts = this.processes?.process[name]?.options;
-      if (processOpts) {
-        processOpts.identifier = identifier;
-      } else {
-        processOpts = {};
-        if (identifier) {
-          processOpts.identifier = identifier;
-        }
-      }
-      const inst = this.ops.instantiate(this.processes?.process[name]?.op, processOpts);
-
-      const obss = [];
-      obss.push(this.localFilterObs.get(identifier));
-      obss.push(inst.getExternal());
-
-      return combineLatest(obss).pipe(
-        tap((data) => {
-          console.log('pre', name, data);
-        }),
-        map((data) => {
-          return inst?.run(data);
-        }),
-        tap((data) => {
-          console.log('post', name, data);
-        }),
-      );
-    }
+  getProcessed(processed: string | null = null, identifier = 'default'): Observable<any> {
+    return this.proc.getProcessed(processed, identifier);
   }
 
-  getProcessed(processed: string = null, identifier = 'default'): Observable<any> {
-    let bs = new Subject();
-    if (this.start) {
-      bs = new BehaviorSubject(this.start.data);
-    }
-    this.localFilterSub.set(identifier, bs);
-    this.localFilterObs.set(identifier, bs.asObservable());
-    this.localFilterSet.set(identifier, {});
-    this.localFilterSet.set('default', {});
-    this.process(processed, identifier);
-    return this.localFilterObs.get(identifier);
+  clearStreams(): void {
+    this.proc.clearStreams();
   }
 
-  clearStreams() {
-    this.localFilterSub.clear();
-    this.localFilterObs.clear();
-    this.localFilterSet.clear();
+  getDimensionMembers(dimension: string): any[] {
+    return this.proc.getDimensionMembers(dimension);
   }
 
-  getDimensionMembers(dimension: string) {
-    if (this.start) {
-      return [
-        ...new Set(
-          this.start.data.map((x) => {
-            return x[dimension];
-          }),
-        ),
-      ];
-    } else {
-      return [];
-    }
+  liveCube(): any {
+    return this.proc.liveCube();
   }
 
-  public liveCube() {
-    return this.cube.dice().getCells();
+  setFilter(filter: any, identifier = 'default'): void {
+    this.proc.setFilter(filter, identifier);
   }
 
-  setFilter(filter: any, identifier = 'default') {
-    const ff = this.localFilterSet.get(identifier) || {};
-    this.deepAssign(ff, filter);
-    this.localFilterSet.set(identifier, ff);
-    if (identifier !== 'default') {
-      this.localFilterSub.get(identifier).next(this.start.data);
-    } else {
-      for (const k of this.localFilterSub.keys()) {
-        this.localFilterSub.get(k).next(this.start.data);
-      }
-    }
+  getFilter(identifier = 'default'): any {
+    return this.proc.getFilter(identifier);
   }
 
-  getFilter(identifier = 'default') {
-    return this.localFilterSet.get(identifier);
-  }
-
-  deepAssign(target, sources) {
-    for (const k of Object.keys(sources)) {
-      target[k] = sources[k];
-    }
-    return target;
-  }
-
-  getProcessInfo(process) {
-    return this.processes?.process[process]?.options;
+  getProcessInfo(name: string): any {
+    return this.proc.getProcessInfo(name);
   }
 }

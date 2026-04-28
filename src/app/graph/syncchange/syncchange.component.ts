@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import type { EChartsOption } from 'echarts';
-import { Deviation } from 'src/app/processor/deviation';
+import { Deviation } from '@gestaltbi/stream';
 
 import { GraphBaseComponent } from '../graph-base-component';
 

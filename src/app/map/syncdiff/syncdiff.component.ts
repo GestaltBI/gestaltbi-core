@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponentWithLegend } from 'src/app/legend/base-component-with-legend';
-import { GeoDeviation } from 'src/app/processor/geodeviation';
+import { GeoDeviation } from '@gestaltbi/stream';
 import { Measure } from 'src/app/shared/measure';
 
 @Component({

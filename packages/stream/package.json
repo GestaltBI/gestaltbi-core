@@ -1,0 +1,42 @@
+{
+  "name": "@gestaltbi/stream",
+  "version": "0.1.0",
+  "description": "Framework-agnostic streaming data-processing pipeline. Compose named ops over RxJS observables with JSON-defined process graphs. Powers the GestaltBI client and is intended for use behind a rete.js visual editor.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md"],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "prepack": "npm run clean && npm run build"
+  },
+  "peerDependencies": {
+    "moment": "^2.30.0",
+    "olap-cube-js": "^0.16.0",
+    "rxjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GestaltBI/gestaltbi-core.git",
+    "directory": "packages/stream"
+  },
+  "keywords": ["rxjs", "pipeline", "stream-processing", "olap", "etl", "dataflow", "gestaltbi"]
+}

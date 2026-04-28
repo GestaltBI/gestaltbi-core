@@ -1,17 +1,18 @@
+import { combineLatest, type Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Observable, combineLatest } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import type { OpContext } from './op.js';
+import { Enhance } from './ops/enhance.js';
 
-import { Enhance } from './op/enhance';
-
+/**
+ * Joins two streams on `aggField`, optionally pads, then applies an Enhance
+ * pass to compute derived fields. Used by the diff/change visualizations.
+ */
 export class Deviation {
   stream1: Observable<any[]>;
   stream2: Observable<any[]>;
   prefixes: any[];
   fields: any[];
-
-  data0: any;
-  data1: any;
 
   outStream: Observable<any[]>;
 
@@ -20,16 +21,17 @@ export class Deviation {
     stream2: Observable<any[]>,
     prefixes: any[],
     fields: any[],
-    aggField: string = 'smartbi:product_code',
+    aggField = 'smartbi:product_code',
+    ctx?: OpContext,
   ) {
     this.stream1 = stream1;
     this.stream2 = stream2;
     this.prefixes = prefixes;
     this.fields = fields;
+
     this.outStream = combineLatest([this.stream1, this.stream2])
       .pipe(
         map((data) => {
-          console.log('combined', data);
           let data0 = this.pimp(this.prefixes[0], data[0], aggField);
           let data1 = this.pimp(this.prefixes[1], data[1], aggField);
 
@@ -39,23 +41,20 @@ export class Deviation {
             data0 = dataP;
           }
 
-          const allData = data0
-            .map((e, i) => {
+          return data0
+            .map((e: any, i: number) => {
               if (aggField === 'idx') {
                 return [e, data1[i] || {}];
               } else {
-                return [e, data1.filter((x) => x[aggField] === e[aggField])[0] || {}];
+                return [e, data1.filter((x: any) => x[aggField] === e[aggField])[0] || {}];
               }
             })
-            .map((x) => {
-              return Object.assign(x[0], x[1]);
-            });
-          return allData;
+            .map((x: any) => Object.assign(x[0], x[1]));
         }),
       )
       .pipe(
         map((data) => {
-          return new Enhance({ columns: this.fields }, null, null).run([data, {}]);
+          return new Enhance({ columns: this.fields }, ctx as OpContext).run([data, {}]);
         }),
       );
   }
@@ -64,9 +63,9 @@ export class Deviation {
     return this.outStream;
   }
 
-  pimp(prefix, list, keep) {
+  pimp(prefix: string, list: any[], keep: string): any[] {
     const nlist = JSON.parse(JSON.stringify(list));
-    return nlist.map((x) => {
+    return nlist.map((x: any) => {
       for (const k of Object.keys(x)) {
         if (k !== keep) {
           x[prefix + ':' + k] = x[k];

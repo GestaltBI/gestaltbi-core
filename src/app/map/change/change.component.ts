@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { BaseComponentWithLegend } from 'src/app/legend/base-component-with-legend';
-import { GeoDeviation } from 'src/app/processor/geodeviation';
-import { Aggregate } from 'src/app/processor/op/aggregate';
+import { Aggregate, GeoDeviation } from '@gestaltbi/stream';
 import { Measure } from 'src/app/shared/measure';
 
 @Component({

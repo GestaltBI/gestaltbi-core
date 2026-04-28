@@ -3,7 +3,7 @@ import type { EChartsOption } from 'echarts';
 import { combineLatest, pipe } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { ColumnStructure } from 'src/app/datastructure/datastructure.service';
-import { Deviation } from 'src/app/processor/deviation';
+import { Deviation } from '@gestaltbi/stream';
 import { Measure } from 'src/app/shared/measure';
 
 import { GraphService } from './../graph.service';

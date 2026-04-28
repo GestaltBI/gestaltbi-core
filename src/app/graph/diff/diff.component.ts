@@ -1,7 +1,7 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import type { EChartsOption } from 'echarts';
 import { combineLatest } from 'rxjs';
-import { Deviation } from 'src/app/processor/deviation';
+import { Deviation } from '@gestaltbi/stream';
 import { BaseComponent } from 'src/app/shared/base-component';
 import { Measure } from 'src/app/shared/measure';
 

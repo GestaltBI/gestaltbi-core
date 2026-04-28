@@ -3,7 +3,7 @@ import { combineLatest } from 'rxjs';
 import { BaseComponent } from 'src/app/shared/base-component';
 
 import { DatastructureService } from './../../datastructure/datastructure.service';
-import { Deviation } from './../../processor/deviation';
+import { Deviation } from '@gestaltbi/stream';
 import { ProcessorService } from './../../processor/processor.service';
 import { Utils } from './../utils';
 

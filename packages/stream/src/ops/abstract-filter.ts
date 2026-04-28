@@ -1,7 +1,7 @@
-import { AbstractOp } from '../op';
+import { AbstractOp } from '../op.js';
 
 export abstract class AbstractFilter extends AbstractOp {
-  protected doFilter(x, filter) {
+  protected doFilter(x: any, filter: any): boolean {
     let go = true;
     for (const k of Object.keys(filter)) {
       let canFilter = true;

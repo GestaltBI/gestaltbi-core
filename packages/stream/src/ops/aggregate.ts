@@ -1,18 +1,15 @@
-import { Inject } from '@angular/core';
+import { AbstractOp } from '../op.js';
 
-import { AbstractOp } from '../op';
-
-@Inject({})
 export class Aggregate extends AbstractOp {
   ac = '__aggregate_col__';
 
-  run(df: any) {
+  run(df: any): any {
     const aggFields = this.options.groupby;
-    const aggs = this.dss.getDataStructureFor('uatu:aggregable');
+    const aggs = this.columnDirectory.getDataStructureFor('uatu:aggregable');
     const data: any[] = df[0];
-    const pagg = {};
-    const adata = data.map((x) => {
-      const f = aggFields.map((z) => x[z]).join('$$');
+    const pagg: Record<string, any> = {};
+    data.map((x) => {
+      const f = aggFields.map((z: string) => x[z]).join('$$');
       x[this.ac] = f;
       pagg[f] = {};
       for (const col of aggs.columns) {
@@ -22,7 +19,7 @@ export class Aggregate extends AbstractOp {
       }
       return x;
     });
-    const pret = data.reduce((pv, cv, ci, a) => {
+    const pret = data.reduce((pv, cv) => {
       for (const col of aggs.columns) {
         for (const agg of col.aggregation) {
           pv[cv[this.ac]][agg.target] = this.agg(agg.type, pv[cv[this.ac]][agg.target], cv[col.column]);
@@ -30,11 +27,11 @@ export class Aggregate extends AbstractOp {
       }
       return pv;
     }, pagg);
-    const fret = [];
-    for (const agg of Object.keys(pret)) {
-      const dd = pret[agg];
-      const ks = agg.split('$$');
-      aggFields.forEach((e, i) => {
+    const fret: any[] = [];
+    for (const aggKey of Object.keys(pret)) {
+      const dd = pret[aggKey];
+      const ks = aggKey.split('$$');
+      aggFields.forEach((e: string, i: number) => {
         dd[e] = ks[i];
       });
       for (const col of aggs.columns) {
@@ -47,7 +44,7 @@ export class Aggregate extends AbstractOp {
     return fret;
   }
 
-  neuter(type) {
+  neuter(type: string): any {
     switch (type) {
       case 'sum':
         return 0;
@@ -64,25 +61,15 @@ export class Aggregate extends AbstractOp {
     }
   }
 
-  agg(type, target, value) {
+  agg(type: string, target: any, value: any): any {
     switch (type) {
       case 'sum':
         return target + parseFloat(value);
       case 'avg':
-        target.push(parseFloat(value));
-        return target;
       case 'last':
-        target.push(parseFloat(value));
-        return target;
       case 'first':
-        target.push(parseFloat(value));
-        return target;
       case 'max':
-        target.push(parseFloat(value));
-        return target;
       case 'min':
-        target.push(parseFloat(value));
-        return target;
       case 'median':
         target.push(parseFloat(value));
         return target;
@@ -94,31 +81,26 @@ export class Aggregate extends AbstractOp {
     }
   }
 
-  finalize(type, target) {
+  finalize(type: string, target: any): any {
     switch (type) {
       case 'avg':
-        const sum = target.reduce((a, b) => a + b, 0);
+        const sum = target.reduce((a: number, b: number) => a + b, 0);
         return sum / target.length;
       case 'last':
         return target[target.length - 1];
       case 'first':
         return target[0];
       case 'max':
-        return Math.max(target);
+        return Math.max(...target);
       case 'min':
-        return Math.min(target);
+        return Math.min(...target);
       case 'median':
         if (target.length % 2 === 0) {
           const idxh = target.length / 2;
           const idxl = idxh - 1;
-
-          const vh = target[idxh];
-          const vl = target[idxl];
-
-          return (vh + vl) / 2;
+          return (target[idxh] + target[idxl]) / 2;
         } else {
-          const idxh = (target.length - 1) / 2;
-          return target[idxh];
+          return target[(target.length - 1) / 2];
         }
       case 'concat':
         return target.join(', ');

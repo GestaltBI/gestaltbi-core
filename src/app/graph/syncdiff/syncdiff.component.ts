@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Deviation } from 'src/app/processor/deviation';
+import { Deviation } from '@gestaltbi/stream';
 import { Measure } from 'src/app/shared/measure';
 
 import { GraphBaseComponent } from '../graph-base-component';

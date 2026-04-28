@@ -1,20 +1,17 @@
-import { Inject } from '@angular/core';
+import { AbstractOp } from '../op.js';
 
-import { AbstractOp } from '../op';
-
-@Inject({})
 export class Geojsonify extends AbstractOp {
   geoj: any;
 
-  public run(df: any): void {
+  public run(df: any): any {
     this.geoj = {
       type: 'FeatureCollection',
       features: [],
     };
-    const geoLon = this.dss.getColumnsFor('gcx:lon');
-    const geoLat = this.dss.getColumnsFor('gcx:lat');
-    const features = [];
-    df[0].forEach((row) => {
+    const geoLon = this.columnDirectory.getColumnsFor('gcx:lon');
+    const geoLat = this.columnDirectory.getColumnsFor('gcx:lat');
+    const features: any[] = [];
+    df[0].forEach((row: any) => {
       features.push({
         type: 'Feature',
         properties: this.numberify(row),
@@ -28,10 +25,10 @@ export class Geojsonify extends AbstractOp {
     return this.geoj;
   }
 
-  public extractGeoJsonRange(object: any) {
-    const properties = {};
+  public extractGeoJsonRange(object: any): void {
+    const properties: Record<string, { min: number; max: number }> = {};
 
-    object.features.forEach((feature) => {
+    object.features.forEach((feature: any) => {
       for (const key of Object.keys(feature.properties)) {
         if (!isNaN(feature.properties[key])) {
           if (properties[key] === undefined) {
@@ -54,15 +51,12 @@ export class Geojsonify extends AbstractOp {
     object.properties = properties;
   }
 
-  numberify(row) {
-    const nrow = {};
+  numberify(row: any): any {
+    const nrow: Record<string, any> = {};
     for (const k of Object.keys(row)) {
       const pv = row[k];
-      let nv = pv;
-      nv = Number.parseFloat(row[k]);
-      if (isNaN(nv)) {
-        nv = pv;
-      }
+      let nv: any = Number.parseFloat(row[k]);
+      if (isNaN(nv)) nv = pv;
       nrow[k] = nv;
     }
     return nrow;

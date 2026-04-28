@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DatastructureService } from './../../datastructure/datastructure.service';
-import { Deviation } from './../../processor/deviation';
+import { Deviation } from '@gestaltbi/stream';
 import { BaseComponent } from './../../shared/base-component';
 import { Utils } from './../utils';
 
