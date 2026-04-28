@@ -11,13 +11,13 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: 'https://registry.npmjs.org'
           cache: npm
 
       - run: npm ci
@@ -25,8 +25,29 @@ jobs:
       - name: Build package
         run: npm -w @gestaltbi/stream run build
 
-      - name: Publish to npm
+      # --- npmjs.org -----------------------------------------------------
+      - name: Configure npm for npmjs.org
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish to npmjs.org
         working-directory: packages/stream
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # --- GitHub Packages ----------------------------------------------
+      - name: Configure npm for GitHub Packages
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@gestaltbi'
+
+      - name: Publish to GitHub Packages
+        working-directory: packages/stream
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
