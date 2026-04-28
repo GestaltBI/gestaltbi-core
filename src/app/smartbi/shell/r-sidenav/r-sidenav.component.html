@@ -11,7 +11,7 @@
     <p class="rsidenav__lede prose" [innerHtml]="'wiki.' + mode + '.description' | translate"></p>
   </div>
 
-  <div class="rsidenav__terms" *ngIf="terms$ | async as terms">
+  <div class="rsidenav__terms" *ngIf="terms?.length">
     <mat-accordion>
       <mat-expansion-panel *ngFor="let term of terms; let i = index" class="rsidenav__panel">
         <mat-expansion-panel-header>

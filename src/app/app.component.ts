@@ -13,6 +13,6 @@ export class AppComponent {
     // auto-switch the active language. Force it explicitly so the pipe
     // resolves keys instead of rendering them literally.
     this.translate.addLangs(['it', 'en']);
-    this.translate.use('it');
+    this.translate.use('en');
   }
 }

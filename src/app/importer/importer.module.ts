@@ -4,6 +4,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedModule } from './../shared/shared.module';
 import { ColumnComponent } from './column/column.component';
@@ -21,7 +22,7 @@ import { ImporterComponent } from './importer/importer.component';
     DialogComponent,
     ImportbtnComponent,
   ],
-  imports: [MatButtonModule, MatIconModule, MatListModule, MatDialogModule, MatSelectModule],
+  imports: [MatButtonModule, MatIconModule, MatListModule, MatDialogModule, MatSelectModule, TranslateModule],
   providers: [
     ImporterService, //
   ],

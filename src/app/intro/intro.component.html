@@ -4,41 +4,33 @@
       <img class="intro__mark" src="assets/images/gestaltbi-logo.png" alt="" />
       <span class="intro__brand-name">GestaltBI</span>
     </a>
-    <button class="intro__close" (click)="back()" aria-label="Chiudi">
+    <button class="intro__close" (click)="back()" [attr.aria-label]="'common.close' | translate">
       <span>{{ 'common.close' | translate }}</span>
       <mat-icon>close</mat-icon>
     </button>
   </header>
 
   <section class="intro__hero" data-reveal="1">
-    <span class="eyebrow">{{ 'intro.title' | translate }}</span>
+    <span class="eyebrow">{{ 'intro.welcome' | translate }}</span>
     <h1 class="intro__display">
-      la forma <em>all'origine</em><br />
-      del significato.
+      <span>{{ 'intro.heroLine1' | translate }}</span>
+      <span [innerHtml]="'intro.heroLine2' | translate"></span>
     </h1>
-    <p class="intro__lede prose">
-      Smettila di leggere fogli e tabelle. GestaltBI rivela la storia che i tuoi numeri stanno
-      raccontando — pattern, eccezioni, opportunità — perché tu possa decidere meglio.
-    </p>
+    <p class="intro__lede prose">{{ 'intro.lede' | translate }}</p>
   </section>
 
   <section class="intro__paths" data-reveal="2">
     <article class="intro__path intro__path--upload">
-      <span class="intro__path-tag">01</span>
-      <h2 class="intro__path-title">Carica i tuoi dati</h2>
-      <p class="intro__path-desc">
-        Trascina un file CSV o usa il selettore. Trasformiamo il tuo schema in dimensioni e
-        misure, automaticamente.
-      </p>
+      <span class="intro__path-tag">{{ 'intro.pathUploadTag' | translate }}</span>
+      <h2 class="intro__path-title">{{ 'intro.pathUploadTitle' | translate }}</h2>
+      <p class="intro__path-desc">{{ 'intro.pathUploadDesc' | translate }}</p>
       <sbi-upload></sbi-upload>
     </article>
 
     <article class="intro__path intro__path--download">
-      <span class="intro__path-tag">02</span>
-      <h2 class="intro__path-title">Parti dal modello</h2>
-      <p class="intro__path-desc">
-        Scarica il template che fa per te. Compilalo e torna qui per visualizzare.
-      </p>
+      <span class="intro__path-tag">{{ 'intro.pathTemplateTag' | translate }}</span>
+      <h2 class="intro__path-title">{{ 'intro.pathTemplateTitle' | translate }}</h2>
+      <p class="intro__path-desc">{{ 'intro.pathTemplateDesc' | translate }}</p>
       <sbi-download></sbi-download>
     </article>
   </section>
@@ -46,10 +38,8 @@
   <footer class="intro__foot" data-reveal="3">
     <img class="intro__foot-mark" src="assets/images/gestaltbi-logo-white.png" alt="" />
     <div class="intro__foot-msg">
-      <h3 class="intro__foot-title">Una versione su misura?</h3>
-      <p class="intro__foot-text">
-        Adattiamo GestaltBI al tuo modello di business — settori, KPI, integrazioni.
-      </p>
+      <h3 class="intro__foot-title">{{ 'intro.footTitle' | translate }}</h3>
+      <p class="intro__foot-text">{{ 'intro.footText' | translate }}</p>
     </div>
     <button class="btn btn--lg intro__foot-cta" (click)="goToSiteForm()">
       <span>{{ 'common.contactus' | translate }}</span>

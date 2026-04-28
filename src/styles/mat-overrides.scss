@@ -89,6 +89,25 @@
   color: var(--bg) !important;
 }
 
+// Inner content wrapper for each mat-button-toggle. Default is a plain inline
+// span that doesn't align icon and text — flex it.
+.mat-button-toggle-label-content {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  line-height: 1 !important;
+  padding: 0 var(--space-sm) !important;
+
+  .mat-icon {
+    flex-shrink: 0;
+  }
+}
+.mat-button-toggle-button {
+  display: inline-flex !important;
+  align-items: center;
+  height: 100%;
+}
+
 // —— Form fields ————————————————————————————————————————————————————————————
 .mat-mdc-form-field {
   font-family: var(--font-body) !important;

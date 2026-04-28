@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { SmartbiService } from './../../smartbi.service';
@@ -12,14 +11,15 @@ import { SmartbiService } from './../../smartbi.service';
 export class LSidenavComponent implements OnInit {
   modes$: Observable<any>;
 
-  constructor(private router: Router, private sbi: SmartbiService) {}
+  constructor(public sbi: SmartbiService) {}
 
   ngOnInit(): void {
     this.modes$ = this.sbi.getModes();
   }
 
-  goto(mode: string) {
-    this.router.navigate(this.sbi.changeMode(mode));
+  onPick() {
+    // Routing happens via the routerLink directive on the row itself.
+    // We just close the sidenav once the user has made a choice.
     this.sbi.throwToggleLeft();
   }
 }

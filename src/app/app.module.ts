@@ -28,10 +28,10 @@ ModuleRegistry.registerModules([AllCommunityModule]);
     AgGridModule,
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    provideTranslateService({ defaultLanguage: 'it' }),
+    provideTranslateService({ defaultLanguage: 'en' }),
     provideTranslateHttpLoader({ prefix: './assets/i18n/', suffix: '.json' }),
   ],
   bootstrap: [AppComponent],

@@ -1,5 +1,5 @@
 <button class="btn btn--solid" type="button" (click)="fileInput.click()">
   <mat-icon>folder_open</mat-icon>
-  <span>Sfoglia file</span>
+  <span>{{ 'common.browse' | translate }}</span>
   <input #fileInput type="file" accept=".csv,text/csv" (change)="handleFileInput($event)" hidden />
 </button>

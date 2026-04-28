@@ -1,13 +1,13 @@
 <header class="toolbar" role="banner">
   <div class="toolbar__left">
-    <button class="toolbar__menu" (click)="toggleLeft()" aria-label="Apri menu">
+    <button class="toolbar__menu" (click)="toggleLeft()" [attr.aria-label]="'toolbar.openMenu' | translate">
       <mat-icon>menu</mat-icon>
     </button>
     <a class="toolbar__brand" routerLink="/intro" aria-label="GestaltBI home">
       <img src="assets/images/gestaltbi-logo.png" alt="" class="toolbar__mark" />
       <span class="toolbar__wordmark">
         <span class="toolbar__wordmark-name">GestaltBI</span>
-        <span class="toolbar__wordmark-tagline">la forma all'origine del significato</span>
+        <span class="toolbar__wordmark-tagline">{{ 'toolbar.tagline' | translate }}</span>
       </span>
     </a>
   </div>
@@ -19,17 +19,17 @@
       </div>
     </ng-container>
     <mat-button-toggle-group class="toolbar__views">
-      <mat-button-toggle [routerLink]="sbi.changeView('map')" aria-label="Mappa">
+      <mat-button-toggle [routerLink]="sbi.changeView('map')" [attr.aria-label]="'view.map' | translate">
         <mat-icon>map</mat-icon>
-        <span>Mappa</span>
+        <span>{{ 'view.map' | translate }}</span>
       </mat-button-toggle>
-      <mat-button-toggle [routerLink]="sbi.changeView('graph')" aria-label="Grafico">
+      <mat-button-toggle [routerLink]="sbi.changeView('graph')" [attr.aria-label]="'view.graph' | translate">
         <mat-icon>monitoring</mat-icon>
-        <span>Grafico</span>
+        <span>{{ 'view.graph' | translate }}</span>
       </mat-button-toggle>
-      <mat-button-toggle [routerLink]="sbi.changeView('table')" aria-label="Tabella">
+      <mat-button-toggle [routerLink]="sbi.changeView('table')" [attr.aria-label]="'view.table' | translate">
         <mat-icon>view_list</mat-icon>
-        <span>Tabella</span>
+        <span>{{ 'view.table' | translate }}</span>
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
@@ -39,10 +39,10 @@
       <mat-icon>auto_awesome</mat-icon>
       <span>{{ 'common.customize' | translate }}</span>
     </button>
-    <button class="toolbar__icon" (click)="openTutorial()" aria-label="Tutorial">
+    <button class="toolbar__icon" (click)="openTutorial()" [attr.aria-label]="'toolbar.tutorial' | translate">
       <mat-icon>play_circle</mat-icon>
     </button>
-    <button class="toolbar__icon" (click)="toggleRight()" aria-label="Glossario">
+    <button class="toolbar__icon" (click)="toggleRight()" [attr.aria-label]="'toolbar.guide' | translate">
       <mat-icon>menu_book</mat-icon>
     </button>
   </div>

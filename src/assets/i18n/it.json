@@ -1,55 +1,31 @@
 {
-  "auth": {
-    "carousel": {
-      "slide1": {
-        "text1": "<span class=\"slide-title\">GRATUITO</span>: potrai utilizzare Gestalt gratuitamente tutte le volte che vuoi.",
-        "text2": "<span class=\"slide-title\">SICURO</span>: i tuoi dati sono al sicuro. La demo di Gestalt è un’applicazione che non trattiene i dati.",
-        "text3": "<span class=\"slide-title\">SEMPLICE</span>: per testare le sue funzionalità, mettiamo a disposizione un dataset di prova, ma potrai anche sperimentare con i tuoi dati compilando il modello CSV"
-      },
-      "slide2": {
-        "text1": "Oltre il budget: un sistema di valutazione delle performance dinamico e moderno",
-        "text2": "Quando aumenta l’incertezza, gli obiettivi di budget perdono il loro significato di benchmark per effettuare valutazioni affidabili della performance.<br>Occorrono dunque riferimenti dinamici, relativi, evitando processi onerosi e spesso poco efficaci, come il budget è in molte circostanze.<br>Gestalt non richiede inutili e onerose previsioni e offre <b>un sistema di valutazione della performance su base comparata</b>, grazie ai confronti longitudinali (come variano le performance nel tempo) e ai confronti sincroni di zone, prodotti, clienti o una combinazione di questi."
-      },
-      "slide3": {
-        "text1": "Oltre l’osservazione: individuare le forze del cambiamento",
-        "text2": "Osservare come cambiano le performance economiche non basta, occorre individuare le cause. L’analisi delle forze di cambiamento di Gestalt ti aiuta a <b>capire cosa fa cambiare il tuo risultato economico, svelando così le leve su cui agire</b> in ogni momento per un miglioramento continuo.<br>Nessuna BI lo fa.<br>Per questo abbiamo realizzato la Performance Intelligence"
-      },
-      "slide4": {
-        "text1": "Oltre i grafici: la rappresentazione cartografica per guidare l’azione",
-        "text2": "La rappresentazione grafica organizza la conoscenza trasformando i dati in informazioni. Gestalt ti offre visualizzazioni grafiche e tabellari, ma con la rappresentazione cartografica fa un passo ancora più avanti.<br> <b>Le mappe, infatti, consentono di leggere un fenomeno all’interno del suo ecosistema</b> e diventano così uno strumento attraverso cui l’azienda può progettare interventi di miglioramento sul territorio."
-      },
-      "slide5": {
-        "text1": "Oltre la paralisi d’analisi: focus su ciò che conta",
-        "text2": "I tradizionali sistemi di business intelligence offrono talmente tante possibilità da creare nell’utente smarrimento, perdite di tempo e difficoltà ad individuare dati actionable. Un processo di cambiamento ha bisogno di una mappa che indichi la strada in modo chiaro, focalizzando l’attenzione su ciò che conta. Per questo <b>Gestalt ha selezionato le analisi più rilevanti della performance economica della tua azienda.</b><br>Noi diamo valore al tuo tempo."
-      }
-    }
-  },
   "common": {
-    "close": "chiudi",
+    "close": "Chiudi",
     "contactus": "Contattaci",
     "download": "Scarica",
-    "endDate": "data fine",
-    "glossary": "glossario",
-    "income": "margine lordo",
-    "login": "Prova",
-    "parameters": "Parametri",
+    "endDate": "Data fine",
+    "glossary": "Glossario",
+    "income": "Margine lordo",
+    "parameters": "Filtri",
     "reset": "Reset",
-    "select": "Seleziona",
-    "startDate": "data inizio",
-    "ok": "Ok",
-    "cancel": "Cancel",
+    "select": "Applica",
+    "startDate": "Data inizio",
+    "ok": "OK",
+    "cancel": "Annulla",
     "analyze": "Analizza",
-    "customize": "personalizza Gestalt"
+    "customize": "Personalizza GestaltBI",
+    "browse": "Sfoglia file",
+    "or": "oppure"
   },
   "errors": {
     "file": {
       "invalid": {
-        "description": "controlla di aver selezionato il file corretto e di aver compilato correttamente la tabella",
-        "title": "file non conforme"
+        "description": "Controlla di aver selezionato il file corretto e di aver compilato la tabella nel modo giusto.",
+        "title": "File non riconosciuto"
       },
       "tooManyRows": {
-        "description": "hai inserito più di 250 righe di dati, oltre questo limite i tempi di caricamento potrebbero aumentare di molto",
-        "title": "ATTENZIONE"
+        "description": "Hai inserito più di 250 righe. Oltre questo limite i tempi di caricamento aumentano sensibilmente.",
+        "title": "Attenzione"
       }
     }
   },
@@ -66,7 +42,7 @@
     "sync": {
       "barTitle": "top clienti",
       "barTooltipClient": "cliente",
-      "bubbleSize": "Margine Lordo",
+      "bubbleSize": "Margine lordo",
       "bubbleX": "Prezzo",
       "bubbleY": "Volumi",
       "pieTitle": "top prodotti",
@@ -74,261 +50,129 @@
     }
   },
   "intro": {
-    "contactA": "personalizza il set di dati e<br>definisci l'equazione della performance",
-    "contactB": "automatizza il caricamento dei tuoi dati<br>integra Gestalt con i tuoi sistemi informativi",
-    "download": {
-      "products": {
-        "list": [
-          {
-            "icon": "tag-alt.svg",
-            "text": "codice del<br>prodotto"
-          },
-          {
-            "icon": "layer-group.svg",
-            "text": "famiglia del<br>prodotto"
-          },
-          {
-            "icon": "user-circle.svg",
-            "text": "nominativo<br>del cliente"
-          },
-          {
-            "icon": "map-pin.svg",
-            "text": "luogo della<br>consegna"
-          },
-          {
-            "icon": "calendar-alt.svg",
-            "text": "data della<br>vendita"
-          },
-          {
-            "icon": "gold.svg",
-            "text": "quantità<br>vendute"
-          },
-          {
-            "icon": "receipt.svg",
-            "text": "prezzo di<br>vendita"
-          },
-          {
-            "icon": "book-reader.svg",
-            "text": "costo<br>unitario"
-          }
-        ],
-        "title": "la tua è una società<br>di <span class=\"color-accent\">prodotti<span>?"
-      },
-      "services": {
-        "list": [
-          {
-            "icon": "tag-alt.svg",
-            "text": "codice del<br>servizio"
-          },
-          {
-            "icon": "layer-group.svg",
-            "text": "tipologia<br>del servizio"
-          },
-          {
-            "icon": "user-circle.svg",
-            "text": "nominativo<br>del cliente"
-          },
-          {
-            "icon": "map-pin.svg",
-            "text": "luogo di<br>svolgimento"
-          },
-          {
-            "icon": "calendar-alt.svg",
-            "text": "data della<br>vendita"
-          },
-          {
-            "icon": "gold.svg",
-            "text": "ore di<br>servizio"
-          },
-          {
-            "icon": "receipt.svg",
-            "text": "tariffa<br>oraria"
-          },
-          {
-            "icon": "book-reader.svg",
-            "text": "costo unitario<br> orario"
-          }
-        ],
-        "title": "la tua è una società<br>di <span class=\"color-accent\">servizi<span>?"
-      },
-      "subtitle": "scarica il file modello e compilalo<br>seguendo le indicazioni riportate",
-      "title": "per elaborare le analisi<br>abbiamo bisogno di questi dati"
-    },
-    "dragHere": "trascinalo in quest'area",
-    "fileLoadedCorrectlyDesc": "clicca sul pulsante in basso per proseguire",
-    "fileLoadedCorrectlyTitle": "file caricato correttamente",
-    "fromPC": "o inseriscilo dal computer",
-    "title": "Carica e analizza i tuoi dati",
-    "upload": {
-      "title": "una volta compilato il modello<br>carica qui il file"
-    }
+    "welcome": "Benvenuto",
+    "heroLine1": "La forma all'",
+    "heroLine2": "<em>origine</em> del significato.",
+    "lede": "Smetti di leggere righe e colonne. GestaltBI fa emergere la storia che i tuoi numeri stanno raccontando — i pattern, le eccezioni, le opportunità — perché tu possa decidere meglio.",
+    "pathUploadTag": "01",
+    "pathUploadTitle": "Carica i tuoi dati",
+    "pathUploadDesc": "Trascina un CSV o sceglilo dal computer. Trasformiamo il tuo schema in dimensioni e misure, automaticamente.",
+    "pathTemplateTag": "02",
+    "pathTemplateTitle": "Parti dal modello",
+    "pathTemplateDesc": "Scegli il modello adatto alla tua azienda. Compilalo offline e torna qui quando sei pronto a visualizzare.",
+    "footTitle": "Vuoi una versione costruita intorno alla tua azienda?",
+    "footText": "Adattiamo GestaltBI ai tuoi settori, ai tuoi KPI, alle tue integrazioni — così le domande che ti fai ogni mattina arrivano già caricate.",
+    "downloadCta": "Scarica il modello",
+    "uploadHint": "CSV · separato da virgole",
+    "fromPC": "Dal tuo computer",
+    "dragHere": "Trascina il tuo CSV qui",
+    "fileLoadedCorrectlyTitle": "File caricato correttamente",
+    "fileLoadedCorrectlyDesc": "Clicca sul pulsante qui sotto per proseguire.",
+    "title": "Benvenuto"
   },
   "l-sidenav": {
-    "back": "carica e analizza i tuoi dati",
-    "menuTitle": "tipologie di analisi"
+    "back": "Carica e analizza i tuoi dati",
+    "menuTitle": "Tipi di analisi"
+  },
+  "view": {
+    "map": "Mappa",
+    "graph": "Grafico",
+    "table": "Tabella"
+  },
+  "toolbar": {
+    "tagline": "la forma all'origine del significato",
+    "openMenu": "Apri menu",
+    "tutorial": "Tutorial",
+    "guide": "Glossario"
   },
   "wiki": {
     "change": {
-      "description": "Questa analisi consente di individuare gli effetti delle principali forze del cambiamento (costi, prezzi e volumi) e spiegarti perchè il margine lordo (margine lordo) di un determinato <b class='color-accent'>oggetto</b> di analisi sia cambiato da un periodo. Ad esempio, se in un territorio l’aumento della <b class='color-accent'>performance</b> può essere stato determinato soprattutto da un aumento delle quantità, in un altro potrebbe essere stato generato da una diminuzione dei costi o da una combinazione favorevole di più fattori. Cercare di disporre di questa analisi attraverso interrogazioni multiple al database sarebbe molto difficile se non impossibile. Uno specifico modello è in grado di effettuare in modo automatico questa analisi.",
+      "title": "Analisi dinamica delle forze del cambiamento di un determinato oggetto di analisi",
+      "description": "Questa analisi consente di individuare gli effetti delle principali forze del cambiamento (costi, prezzi e volumi) e ti spiega perché il margine lordo di un determinato <b class='color-accent'>oggetto</b> di analisi sia cambiato da un periodo all'altro. Ad esempio, in un territorio l'aumento della <b class='color-accent'>performance</b> può essere stato determinato soprattutto da un aumento delle quantità; in un altro potrebbe essere stato generato da una diminuzione dei costi o da una combinazione favorevole di più fattori. Cercare di disporre di questa analisi attraverso interrogazioni multiple al database sarebbe difficile se non impossibile. Uno specifico modello la effettua in modo automatico.",
       "terms": [
-        {
-          "description": "Un aspetto originale di Gestalt è che esso spiega la variazione del margine lordo in funzione dei principali fattori che l’hanno determinata. Nello specifico caso, spiega la variazione del margine lordo (qualunque sia l’oggetto) in termini di variazione delle quantità vendute, di variazione dei prezzi di vendita e di variazione dei costi. Quest’analisi - che non è presente nelle tradizionali BI - consente di scomporre razionalmente il problema nelle sue principali componenti, dando quindi un indirizzo forte alla comprensione dei fenomeni ed evitando così di cadere nella cosiddetta “paralisi da analisi”. Le forze del cambiamento sono rilevate con un sofisticato algoritmo che non ha bisogno di disporre, come nelle tradizionali analisi di budget, di valori programmati o di valori di budget rispetto ai quali confrontare i dati consuntivi.",
-          "name": "Le forze del cambiamento"
-        },
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        }
-      ],
-      "title": "Analisi dinamica delle forze del cambiamento di un determinato oggetto di analisi"
+        { "name": "Le forze del cambiamento", "description": "$wiki.terms.changeForces" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+      ]
     },
     "diff": {
-      "description": "L’analisi differenziale rappresenta le differenze di <b class='color-accent'>performance</b>.Può trattarsi di differenze relative a uno stesso <b class='color-accent'>oggetto</b> di analisi in due periodo diversi o, anche, delle differenze di performance fra due oggetti di analisi diversi, ma in relazione a uno stesso periodo. Le analisi differenziali sono utili perché presentano esclusivamente ciò che è rilevante, cioè solo quello che è cambiato fra le due due unità di analisi esaminate.",
+      "title": "Analisi differenziale",
+      "description": "L'analisi differenziale rappresenta le differenze di <b class='color-accent'>performance</b>. Possono essere differenze relative a uno stesso <b class='color-accent'>oggetto</b> di analisi in due periodi diversi, oppure differenze fra due oggetti di analisi distinti nello stesso periodo. Le analisi differenziali sono utili perché presentano esclusivamente ciò che è rilevante: solo quello che è cambiato fra le due unità esaminate.",
       "terms": [
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        },
-        {
-          "description": "Quando un oggetto di analisi è posto a confronto con un altro, le loro differenze possono far nascere, come detto, seri problemi di comparabilità. Tuttavia, se l’analista fosse in grado di tenere conto di queste diversità, allora i dati esterni fornirebbero un riferimento per la valutazione della performance che avrebbe il pregio di essere un’importante fonte per comprendere le forze del miglioramento o del peggioramento della performance. Le analisi compratale, infatti, contengono per definizione elementi di diversità più numerosi di quelli rilevabili da un’analisi longitudinale (che si riferisce a un unico oggetto) e consentono pertanto, almeno potenzialmente, un apprendimento più ricco, con spunti di riflessione che non potrebbero non emergere da un’analisi longitudinale. Interventi preliminari di normalizzazione possono essere molto utili per svolgere queste analisi (per esempio dovendo confrontare due aree geografiche con un numero di clienti e di venditori diversi, si potrebbe effettuare il confronto attraverso quozienti).",
-          "name": "I confronti con un oggetto diverso"
-        }
-      ],
-      "title": "Analisi differenziale"
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" },
+        { "name": "I confronti con un oggetto diverso", "description": "$wiki.terms.comparisonsDifferent" }
+      ]
     },
     "long": {
-      "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance in termini di margine lordo, prezzi, costi e volumi e con riferimento a un oggetto liberamente scelto ma anche di confrontare l’evoluzione di questi risultati in relazione a due diversi periodi di tempo. Non più fotogrammi isolati, ma filmati dinamici.",
+      "title": "Confronto longitudinale di uno stesso oggetto di analisi",
+      "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance — margine lordo, prezzi, costi e volumi — per un oggetto liberamente scelto, ma anche di confrontare l'evoluzione di questi risultati su due periodi di tempo diversi. Non più fotogrammi isolati, ma filmati dinamici.",
       "terms": [
-        {
-          "description": "Si parla di analisi longitudinali quando la performance di uno stesso “oggetto” è comparata nel tempo. Ad esempio, analizzare le variazioni di margine lordo fra il mese di febbraio e quello di marzo in relazione a un certo gruppo di clienti o una determinata area geografica o a una determinata combinazione di prodotti o, anche, a una combinazione di tutte questi elementi. <br>Le analisi sincrone o sincroniche, come ricorda il termine, si riferiscono invece ad un unico periodo temporale e, pertanto, devono avere a riferimento due “oggetti” diversi. In questo caso è necessario garantire la comparabilità degli oggetti, garantire cioè che l’analisi della performance abbia un significato economico. Comparare ad esempio il margine lordo del mese di gennaio di un certo prodotto con quello di un certo cliente non avrebbe alcun significato economico e non potrebbe costituire uno spunto di apprendimento o di miglioramento. Al contrario comparare fra loro il margine di due clienti diversi potrebbe essere un’occasione per interessanti riflessioni. Le analisi longitudinali e quelle sincroniche sono un modo alternativo rispetto a quello, tipico del budget, di valutare la performance: non più gli scostamenti rispetto a valori obiettivo fondati su ipotesi che con il tempo diventano del tutto irrealistiche, ma per confronto, per comparazione sia nel tempo, sia fra unità di analisi comparabili.",
-          "name": "Le analisi longitudinali e le analisi sincrone"
-        },
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        }
-      ],
-      "title": "Confronto longitudinale di una stesso oggetto di analisi"
+        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+      ]
     },
     "longchange": {
-      "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance in termini di margine lordo, prezzi, costi e volumi e con riferimento a un oggetto liberamente scelto ma anche di confrontare l’evoluzione di questi risultati in relazione a due diversi periodi di tempo. Non più fotogrammi isolati, ma filmati dinamici.",
+      "title": "Confronto longitudinale di uno stesso oggetto di analisi",
+      "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance — margine lordo, prezzi, costi e volumi — per un oggetto liberamente scelto, ma anche di confrontare l'evoluzione di questi risultati su due periodi di tempo diversi. Non più fotogrammi isolati, ma filmati dinamici.",
       "terms": [
-        {
-          "description": "Si parla di analisi longitudinali quando la performance di uno stesso “oggetto” è comparata nel tempo. Ad esempio, analizzare le variazioni di margine lordo fra il mese di febbraio e quello di marzo in relazione a un certo gruppo di clienti o una determinata area geografica o a una determinata combinazione di prodotti o, anche, a una combinazione di tutte questi elementi. <br>Le analisi sincrone o sincroniche, come ricorda il termine, si riferiscono invece ad un unico periodo temporale e, pertanto, devono avere a riferimento due “oggetti” diversi. In questo caso è necessario garantire la comparabilità degli oggetti, garantire cioè che l’analisi della performance abbia un significato economico. Comparare ad esempio il margine lordo del mese di gennaio di un certo prodotto con quello di un certo cliente non avrebbe alcun significato economico e non potrebbe costituire uno spunto di apprendimento o di miglioramento. Al contrario comparare fra loro il margine di due clienti diversi potrebbe essere un’occasione per interessanti riflessioni. Le analisi longitudinali e quelle sincroniche sono un modo alternativo rispetto a quello, tipico del budget, di valutare la performance: non più gli scostamenti rispetto a valori obiettivo fondati su ipotesi che con il tempo diventano del tutto irrealistiche, ma per confronto, per comparazione sia nel tempo, sia fra unità di analisi comparabili.",
-          "name": "Le analisi longitudinali e le analisi sincrone"
-        },
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        }
-      ],
-      "title": "Confronto longitudinale di una stesso oggetto di analisi"
+        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+      ]
     },
     "longdiff": {
-      "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance in termini di margine lordo, prezzi, costi e volumi e con riferimento a un oggetto liberamente scelto ma anche di confrontare l’evoluzione di questi risultati in relazione a due diversi periodi di tempo. Non più fotogrammi isolati, ma filmati dinamici.",
+      "title": "Confronto longitudinale di uno stesso oggetto di analisi",
+      "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance — margine lordo, prezzi, costi e volumi — per un oggetto liberamente scelto, ma anche di confrontare l'evoluzione di questi risultati su due periodi di tempo diversi. Non più fotogrammi isolati, ma filmati dinamici.",
       "terms": [
-        {
-          "description": "Si parla di analisi longitudinali quando la performance di uno stesso “oggetto” è comparata nel tempo. Ad esempio, analizzare le variazioni di margine lordo fra il mese di febbraio e quello di marzo in relazione a un certo gruppo di clienti o una determinata area geografica o a una determinata combinazione di prodotti o, anche, a una combinazione di tutte questi elementi. <br>Le analisi sincrone o sincroniche, come ricorda il termine, si riferiscono invece ad un unico periodo temporale e, pertanto, devono avere a riferimento due “oggetti” diversi. In questo caso è necessario garantire la comparabilità degli oggetti, garantire cioè che l’analisi della performance abbia un significato economico. Comparare ad esempio il margine lordo del mese di gennaio di un certo prodotto con quello di un certo cliente non avrebbe alcun significato economico e non potrebbe costituire uno spunto di apprendimento o di miglioramento. Al contrario comparare fra loro il margine di due clienti diversi potrebbe essere un’occasione per interessanti riflessioni. Le analisi longitudinali e quelle sincroniche sono un modo alternativo rispetto a quello, tipico del budget, di valutare la performance: non più gli scostamenti rispetto a valori obiettivo fondati su ipotesi che con il tempo diventano del tutto irrealistiche, ma per confronto, per comparazione sia nel tempo, sia fra unità di analisi comparabili.",
-          "name": "Le analisi longitudinali e le analisi sincrone"
-        },
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        }
-      ],
-      "title": "Confronto longitudinale di una stesso oggetto di analisi"
+        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+      ]
     },
     "point": {
-      "description": "La logica di Gestalt è quella di guidare il management verso la comprensione della <b class='color-accent'>performance</b> e dei suoi cambiamenti. Lo strumento suggerisce infatti una sorta di gerarchia dell’analisi evitando così quella che abbiamo definito “paralisi da analisi”. A valle di questo tipo di indagine ciascun utente prosegue poi sviluppando quelle indagini che, di volta in volta, riterrà più opportune. Si tratta evidentemente di indagini, puntuali, mirate, tipiche della business intelligence. Si sceglie un determinato <b class='color-accent'>oggetto</b> e lo si analizza per trovare conferme o per scoprire nuove informazioni da cui ripartire con una nuova analisi.",
+      "title": "Analisi puntuale",
+      "description": "La logica di GestaltBI è guidare il management verso la comprensione della <b class='color-accent'>performance</b> e dei suoi cambiamenti. Lo strumento suggerisce una gerarchia delle analisi per evitare la cosiddetta \"paralisi da analisi\". A valle di questa gerarchia ciascun utente prosegue sviluppando le indagini che, di volta in volta, ritiene più opportune. Si tratta di indagini puntuali, mirate, tipiche della business intelligence: si sceglie un determinato <b class='color-accent'>oggetto</b> e lo si analizza, sia per trovare conferme sia per scoprire nuove informazioni da cui ripartire.",
       "terms": [
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        }
-      ],
-      "title": "Analisi puntuale"
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+      ]
     },
     "sync": {
-      "description": "Con questa analisi puoi mettere a confronto, in relazione a un determinato periodo, la <b class='color-accent'>performance</b> di determinati clienti, prodotti, territori (o una combinazione di questi) con quella di altri clienti, prodotti territori. Più gli <b class='color-accent'>oggetti</b> posti a confronto sono fra loro comparabili, maggiore risulta l’apprendimento che deriva da questo tipo di analisi. Abbinando infatti quest’analisi con quella delle forze del cambiamento è possibile capire quali sono i motivi che determinano miglioramenti o peggioramenti della performance. In assenza di valori di budget attendibili, i confronti sincroni di performance fra oggetti di analisi diversi (ad esempio aree geografiche sotto responsabilità manageriali diverse) possono diventare uno degli elementi in base ai quali distribuire gli incentivi.",
+      "title": "Confronto sincrono della performance fra due oggetti di analisi diversi",
+      "description": "Con questa analisi puoi mettere a confronto, in relazione a un determinato periodo, la <b class='color-accent'>performance</b> di determinati clienti, prodotti o territori (o una combinazione di questi) con quella di un altro insieme. Più gli <b class='color-accent'>oggetti</b> a confronto sono comparabili, maggiore è l'apprendimento. Abbinando questa analisi a quella delle forze del cambiamento puoi capire i motivi che determinano miglioramenti o peggioramenti della performance. In assenza di valori di budget attendibili, i confronti sincroni fra unità di responsabilità diverse possono diventare uno degli elementi su cui distribuire gli incentivi.",
       "terms": [
-        {
-          "description": "Si parla di analisi longitudinali quando la performance di uno stesso “oggetto” è comparata nel tempo. Ad esempio, analizzare le variazioni di margine lordo fra il mese di febbraio e quello di marzo in relazione a un certo gruppo di clienti o una determinata area geografica o a una determinata combinazione di prodotti o, anche, a una combinazione di tutte questi elementi. <br>Le analisi sincrone o sincroniche, come ricorda il termine, si riferiscono invece ad un unico periodo temporale e, pertanto, devono avere a riferimento due “oggetti” diversi. In questo caso è necessario garantire la comparabilità degli oggetti, garantire cioè che l’analisi della performance abbia un significato economico. Comparare ad esempio il margine lordo del mese di gennaio di un certo prodotto con quello di un certo cliente non avrebbe alcun significato economico e non potrebbe costituire uno spunto di apprendimento o di miglioramento. Al contrario comparare fra loro il margine di due clienti diversi potrebbe essere un’occasione per interessanti riflessioni. Le analisi longitudinali e quelle sincroniche sono un modo alternativo rispetto a quello, tipico del budget, di valutare la performance: non più gli scostamenti rispetto a valori obiettivo fondati su ipotesi che con il tempo diventano del tutto irrealistiche, ma per confronto, per comparazione sia nel tempo, sia fra unità di analisi comparabili.",
-          "name": "Le analisi longitudinali e le analisi sincrone"
-        },
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        },
-        {
-          "description": "Quando un oggetto di analisi è posto a confronto con un altro, le loro differenze possono far nascere, come detto, seri problemi di comparabilità. Tuttavia, se l’analista fosse in grado di tenere conto di queste diversità, allora i dati esterni fornirebbero un riferimento per la valutazione della performance che avrebbe il pregio di essere un’importante fonte per comprendere le forze del miglioramento o del peggioramento della performance. Le analisi compratale, infatti, contengono per definizione elementi di diversità più numerosi di quelli rilevabili da un’analisi longitudinale (che si riferisce a un unico oggetto) e consentono pertanto, almeno potenzialmente, un apprendimento più ricco, con spunti di riflessione che non potrebbero non emergere da un’analisi longitudinale. Interventi preliminari di normalizzazione possono essere molto utili per svolgere queste analisi (per esempio dovendo confrontare due aree geografiche con un numero di clienti e di venditori diversi, si potrebbe effettuare il confronto attraverso quozienti).",
-          "name": "I confronti con un oggetto diverso"
-        }
-      ],
-      "title": "Confronto sincrono della performance fra due oggetti di analisi diversi"
+        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" },
+        { "name": "I confronti con un oggetto diverso", "description": "$wiki.terms.comparisonsDifferent" }
+      ]
     },
     "syncchange": {
-      "description": "Questa analisi consente di individuare gli effetti delle principali forze del cambiamento (costi, prezzi e volumi) e spiegarti perchè il margine lordo (margine lordo) di un determinato <b class='color-accent'>oggetto</b> di analisi sia cambiato da un periodo. Ad esempio, se in un territorio l’aumento della <b class='color-accent'>performance</b> può essere stato determinato soprattutto da un aumento delle quantità, in un altro potrebbe essere stato generato da una diminuzione dei costi o da una combinazione favorevole di più fattori. Cercare di disporre di questa analisi attraverso interrogazioni multiple al database sarebbe molto difficile se non impossibile. Uno specifico modello è in grado di effettuare in modo automatico questa analisi.",
+      "title": "Analisi dinamica delle forze del cambiamento di un determinato oggetto di analisi",
+      "description": "Questa analisi consente di individuare gli effetti delle principali forze del cambiamento (costi, prezzi e volumi) e ti spiega perché il margine lordo di un determinato <b class='color-accent'>oggetto</b> di analisi sia cambiato da un periodo all'altro. Ad esempio, in un territorio l'aumento della <b class='color-accent'>performance</b> può essere stato determinato soprattutto da un aumento delle quantità; in un altro potrebbe essere stato generato da una diminuzione dei costi o da una combinazione favorevole di più fattori. Cercare di disporre di questa analisi attraverso interrogazioni multiple al database sarebbe difficile se non impossibile. Uno specifico modello la effettua in modo automatico.",
       "terms": [
-        {
-          "description": "Un aspetto originale di Gestalt è che esso spiega la variazione del margine lordo in funzione dei principali fattori che l’hanno determinata. Nello specifico caso, spiega la variazione del margine lordo (qualunque sia l’oggetto) in termini di variazione delle quantità vendute, di variazione dei prezzi di vendita e di variazione dei costi. Quest’analisi - che non è presente nelle tradizionali BI - consente di scomporre razionalmente il problema nelle sue principali componenti, dando quindi un indirizzo forte alla comprensione dei fenomeni ed evitando così di cadere nella cosiddetta “paralisi da analisi”. Le forze del cambiamento sono rilevate con un sofisticato algoritmo che non ha bisogno di disporre, come nelle tradizionali analisi di budget, di valori programmati o di valori di budget rispetto ai quali confrontare i dati consuntivi.",
-          "name": "Le forze del cambiamento"
-        },
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        }
-      ],
-      "title": "Analisi dinamica delle forze del cambiamento di un determinato oggetto di analisi"
+        { "name": "Le forze del cambiamento", "description": "$wiki.terms.changeForces" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+      ]
     },
     "syncdiff": {
-      "description": "L’analisi differenziale rappresenta le differenze di <b class='color-accent'>performance</b>.Può trattarsi di differenze relative a uno stesso <b class='color-accent'>oggetto</b> di analisi in due periodo diversi o, anche, delle differenze di performance fra due oggetti di analisi diversi, ma in relazione a uno stesso periodo. Le analisi differenziali sono utili perché presentano esclusivamente ciò che è rilevante, cioè solo quello che è cambiato fra le due due unità di analisi esaminate.",
+      "title": "Analisi differenziale",
+      "description": "L'analisi differenziale rappresenta le differenze di <b class='color-accent'>performance</b>. Possono essere differenze relative a uno stesso <b class='color-accent'>oggetto</b> di analisi in due periodi diversi, oppure differenze fra due oggetti di analisi distinti nello stesso periodo. Le analisi differenziali sono utili perché presentano esclusivamente ciò che è rilevante: solo quello che è cambiato fra le due unità esaminate.",
       "terms": [
-        {
-          "description": "Esistono, come noto, molti indicatori economici di performance. I più significativi sono certamente quelli che si riferiscono alla redditività dell’impresa - cioè al rapporto fra il margine lordo di in un certo periodo e il capitale mediamente investito nel periodo - come il ROI, il RONA o il ROE – o, per le società quotate, il rendimento azionario. Ad esclusione del rendimento azionario, si tratta comunque di indicatori caratterizzati da una frequenza di misurazione che è tipicamente annuale. Quando si ha a che fare con sistemi gestionali progettati per favorire l’apprendimento e il miglioramento su base continuativa, l’utilizzo di questi indicatori è sconsigliato. Questo sia perché (1) la redditività di un’impresa non cambia in modo apprezzabile all’interno di periodi brevi, sia perché (2) sarebbe molto difficile, se non impossibile, ricondurre gli effetti delle quotidiane attività gestionali ai cambiamenti di redditività dell’impresa o del rendimento azionario. Come ben noto, feedback poco frequenti e non in grado di spiegare i collegamenti fra azioni e risultati producono demotivazione e inibiscono l’apprendimento. <br>Il principale indicatore sintetico di performance per periodi limitatamente brevi è il margine lordo o profitto, cioè la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso, anche un solo mese può essere un periodo di tempo significativo. Alcune imprese, infatti, redigono conti economici mensili. Periodi temporali più brevi, però, non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività svolte e questo frazionamento – necessario a individuare i ricavi e i costi di competenza del periodo - è impegnativo, costoso e anche poco attendibile qaundo il periodo è molto breve. <br>Un indicatore economico sintetico che conserva la sua rilevanza anche se utilizzato giornalmente è il margine lordo generato dalla vendita dei prodotti, cioè la differenza fra i ricavi e il costo dei beni venduti. Per il principio di competenza, questi due valori devono infatti essere rilevati entrambi contemporaneamente e contestualmente a ogni vendita. Ciascuna transazione aggiorna dunque, anche più volte in un giorno, il valore di questo indicatore. Il margine lordo è pertanto l’indicatore che GestaltBI ha scelto come vertice della piramide dalla quale iniziare il processo di analisi. È infatti il quoziente che trova il miglior fit con un principio di rilevanza, di oggettività e di utilizzabilità.",
-          "name": "La performance economica"
-        },
-        {
-          "description": "Il management non può limitarsi ad analizzare esclusivamente la performance dell’impresa nel suo complesso, sebbene sia certamente questo  uno obiettivo importante. Sono infatti le analisi più mirate e specifiche che consentono di capire come migliorare la performance complessiva, cioè quali sono i problemi che frenano la crescita dei ricavi o che non limitano quella dei costi o entrambe le cose. Un “oggetto” di analisi economica è una qualunque entità per la quale il management ritiene interessante disporre di informazioni economiche. Alcuni di questi “oggetti” sono di interesse permanente, come ad esempio i reparti o le funzioni o le divisioni di un’impresa (dunque i cosiddetti centri di responsabilità) ma anche i singoli prodotti lo sono spesso. Tali oggetti fanno dunque parte della cosiddetta reportistica ufficiale. Di essi le imprese rilevano in modo sistematico i costi e (quando possibile) i ricavi. Ma la comprensione dei fenomeni richiede anche un’attenzione specifica che cambia nel tempo in funzione di numerosi fattori ambientali e competitivi che mutano e che occorre identificare e comprendere. Il management ha pertanto bisogno di uno strumento che consenta di definire flessibilmente un qualunque oggetto di analisi componendo tra loro variabili come: area geografica, cliente, prodotto .... Una specifica combinazione di queste variabili di scelta definisce l’oggetto di analisi economica del nostro sistema. Un oggetto è, pertanto, è un subset dei dati.",
-          "name": "Gli oggetti delle analisi economiche"
-        },
-        {
-          "description": "Quando un oggetto di analisi è posto a confronto con un altro, le loro differenze possono far nascere, come detto, seri problemi di comparabilità. Tuttavia, se l’analista fosse in grado di tenere conto di queste diversità, allora i dati esterni fornirebbero un riferimento per la valutazione della performance che avrebbe il pregio di essere un’importante fonte per comprendere le forze del miglioramento o del peggioramento della performance. Le analisi compratale, infatti, contengono per definizione elementi di diversità più numerosi di quelli rilevabili da un’analisi longitudinale (che si riferisce a un unico oggetto) e consentono pertanto, almeno potenzialmente, un apprendimento più ricco, con spunti di riflessione che non potrebbero non emergere da un’analisi longitudinale. Interventi preliminari di normalizzazione possono essere molto utili per svolgere queste analisi (per esempio dovendo confrontare due aree geografiche con un numero di clienti e di venditori diversi, si potrebbe effettuare il confronto attraverso quozienti).",
-          "name": "I confronti con un oggetto diverso"
-        }
-      ],
-      "title": "Analisi differenziale"
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" },
+        { "name": "I confronti con un oggetto diverso", "description": "$wiki.terms.comparisonsDifferent" }
+      ]
+    },
+    "terms": {
+      "changeForces": "Un aspetto originale di GestaltBI è che spiega la variazione del margine lordo in funzione dei principali fattori che l'hanno determinata. Nel caso specifico, scompone il cambiamento del margine lordo (qualunque sia l'oggetto) in variazione delle quantità vendute, variazione dei prezzi di vendita e variazione dei costi. Questa scomposizione — assente nelle BI tradizionali — separa razionalmente il problema nelle sue componenti principali, dando una direzione forte all'interpretazione ed evitando la cosiddetta \"paralisi da analisi\". Le forze del cambiamento sono rilevate da un algoritmo sofisticato che non richiede — come nelle analisi di budget tradizionali — valori obiettivo predefiniti rispetto ai quali confrontare i consuntivi.",
+      "economicPerformance": "Esistono molti indicatori economici di performance. I più significativi sono quelli che si riferiscono alla redditività dell'impresa — il rapporto fra il margine lordo di un certo periodo e il capitale mediamente investito — come ROI, RONA o ROE; per le società quotate, il rendimento azionario. Esclusi i rendimenti azionari, questi indicatori si misurano tipicamente su base annuale. Quando l'obiettivo è un sistema gestionale che favorisce apprendimento e miglioramento continui, non sono ideali: (1) la redditività non cambia in modo apprezzabile in periodi brevi, e (2) sarebbe difficile, se non impossibile, ricondurre gli effetti delle attività gestionali quotidiane ai cambiamenti di redditività o di rendimento azionario. Feedback poco frequenti che non collegano azioni e risultati demotivano e inibiscono l'apprendimento.<br>Il principale indicatore di performance di breve periodo è il margine lordo o profitto: la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso anche un solo mese può essere un intervallo significativo. Alcune imprese redigono conti economici mensili. Periodi più brevi però non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività che è impegnativo, costoso e poco attendibile quando il periodo è molto breve.<br>Un indicatore sintetico che mantiene la sua rilevanza anche giornalmente è il margine lordo generato dalla vendita dei prodotti: ricavi meno costo dei beni venduti. Per il principio di competenza i due valori vengono rilevati simultaneamente a ogni vendita. Ogni transazione aggiorna l'indicatore, anche più volte in un giorno. Il margine lordo è quindi l'indicatore che GestaltBI ha scelto come vertice della piramide da cui iniziare l'analisi: è il quoziente che meglio fitta i principi di rilevanza, oggettività e utilizzabilità.",
+      "analysisObjects": "Il management non può limitarsi ad analizzare la performance dell'impresa nel suo complesso, sebbene sia certamente un obiettivo importante. Sono le analisi più mirate e specifiche che rivelano come migliorare la performance complessiva — quali problemi frenano la crescita dei ricavi o ostacolano il contenimento dei costi, o entrambi. Un \"oggetto\" di analisi economica è qualunque entità per la quale il management ritiene utile disporre di informazioni economiche. Alcuni oggetti sono di interesse permanente — reparti, funzioni, divisioni (i cosiddetti centri di responsabilità); spesso anche i singoli prodotti. Sono parte della reportistica ufficiale, dove le imprese tracciano sistematicamente costi e (quando possibile) ricavi. Ma la comprensione richiede un'attenzione specifica che cambia nel tempo con i fattori ambientali e competitivi. Il management ha bisogno di uno strumento che definisca flessibilmente qualunque oggetto di analisi componendo variabili come area geografica, cliente, prodotto, ecc. Una specifica combinazione di queste definisce l'oggetto di analisi nel nostro sistema. Un oggetto è, in essenza, un sottoinsieme dei dati.",
+      "longitudinalSynchronic": "Si parla di analisi longitudinale quando la performance di uno stesso \"oggetto\" è comparata nel tempo. Ad esempio, analizzare la variazione del margine lordo fra febbraio e marzo per un certo gruppo di clienti, un'area geografica, una combinazione di prodotti, o qualunque combinazione di questi.<br>Le analisi sincrone, al contrario, si riferiscono a un singolo periodo e devono quindi confrontare due \"oggetti\" diversi. Qui è essenziale garantire che gli oggetti siano comparabili — cioè che il confronto di performance abbia un significato economico. Comparare il margine di gennaio di un prodotto con quello di un cliente non avrebbe alcun significato economico e non offrirebbe alcun apprendimento. Comparare il margine di due clienti diversi, invece, può essere un'occasione ricca di riflessione. Le analisi longitudinali e sincrone sono un'alternativa alla valutazione della performance via budget: non più scostamenti da valori obiettivo costruiti su ipotesi che invecchiano, ma confronto — nel tempo, o fra unità di analisi comparabili.",
+      "comparisonsDifferent": "Quando un oggetto di analisi è confrontato con un altro, le loro differenze possono sollevare seri problemi di comparabilità. Se però l'analista è in grado di tenere conto di queste differenze, i dati esterni forniscono un riferimento per la valutazione della performance — una fonte importante per comprendere le forze del miglioramento o del peggioramento. Le analisi comparative, per definizione, contengono più elementi di diversità di quelle longitudinali (che si riferiscono a un solo oggetto) e quindi consentono potenzialmente un apprendimento più ricco, con riflessioni che da una sola analisi longitudinale non potrebbero emergere. Interventi preliminari di normalizzazione possono essere utili (ad esempio, comparare due aree geografiche con numeri diversi di clienti e venditori attraverso quozienti)."
     }
   }
 }

@@ -1,3 +1,178 @@
 {
-  "TEST": "Hello World EN"
+  "common": {
+    "close": "Close",
+    "contactus": "Get in touch",
+    "download": "Download",
+    "endDate": "End date",
+    "glossary": "Glossary",
+    "income": "Gross margin",
+    "parameters": "Filters",
+    "reset": "Reset",
+    "select": "Apply",
+    "startDate": "Start date",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "analyze": "Analyze",
+    "customize": "Customize GestaltBI",
+    "browse": "Browse files",
+    "or": "or"
+  },
+  "errors": {
+    "file": {
+      "invalid": {
+        "description": "Check that you picked the right file and that the table is filled in correctly.",
+        "title": "File not recognized"
+      },
+      "tooManyRows": {
+        "description": "More than 250 rows detected. Beyond this limit, loading times grow significantly.",
+        "title": "Heads up"
+      }
+    }
+  },
+  "filter": {
+    "focusA": "Focus A",
+    "focusB": "Focus B",
+    "periodA": "Period A",
+    "periodB": "Period B"
+  },
+  "graph": {
+    "day": "day",
+    "focus": "Focus",
+    "period": "Period",
+    "sync": {
+      "barTitle": "top customers",
+      "barTooltipClient": "customer",
+      "bubbleSize": "Gross margin",
+      "bubbleX": "Price",
+      "bubbleY": "Volume",
+      "pieTitle": "top products",
+      "sankeyTitle": "top territories"
+    }
+  },
+  "intro": {
+    "welcome": "Welcome",
+    "heroLine1": "The shape at the",
+    "heroLine2": "<em>origin</em> of meaning.",
+    "lede": "Stop reading rows and columns. GestaltBI surfaces the story your numbers are telling — the patterns, the exceptions, the openings — so you can decide better.",
+    "pathUploadTag": "01",
+    "pathUploadTitle": "Upload your data",
+    "pathUploadDesc": "Drop a CSV or pick one from your machine. We turn your schema into dimensions and measures automatically.",
+    "pathTemplateTag": "02",
+    "pathTemplateTitle": "Start from a template",
+    "pathTemplateDesc": "Pick the template that fits your business. Fill it in offline and bring it back here when you're ready to visualize.",
+    "footTitle": "Want a version built around your business?",
+    "footText": "We adapt GestaltBI to your sectors, KPIs, integrations — so the questions you ask each morning come pre-loaded.",
+    "downloadCta": "Get the template",
+    "uploadHint": "CSV · comma-separated",
+    "fromPC": "From your machine",
+    "dragHere": "Drop your CSV here",
+    "fileLoadedCorrectlyTitle": "File loaded successfully",
+    "fileLoadedCorrectlyDesc": "Click the button below to continue.",
+    "title": "Welcome"
+  },
+  "l-sidenav": {
+    "back": "Load and analyze your data",
+    "menuTitle": "Analysis modes"
+  },
+  "view": {
+    "map": "Map",
+    "graph": "Chart",
+    "table": "Table"
+  },
+  "toolbar": {
+    "tagline": "the shape at the origin of meaning",
+    "openMenu": "Open menu",
+    "tutorial": "Tutorial",
+    "guide": "Glossary"
+  },
+  "wiki": {
+    "change": {
+      "title": "Dynamic analysis of the change forces for a chosen analysis object",
+      "description": "This analysis surfaces the effects of the main forces of change (costs, prices, volumes) and explains why the gross margin of a given <b class='color-accent'>analysis object</b> shifted from one period to the next. For example, in one territory a rise in <b class='color-accent'>performance</b> may be driven mostly by larger volumes; in another it may be the result of falling costs, or a favorable combination of both. Building this analysis through repeated database queries would be hard if not impossible. A dedicated model performs it automatically.",
+      "terms": [
+        { "name": "The forces of change", "description": "$wiki.terms.changeForces" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
+    "diff": {
+      "title": "Differential analysis",
+      "description": "Differential analysis represents the differences in <b class='color-accent'>performance</b>. These can be differences for the same <b class='color-accent'>analysis object</b> across two periods, or differences between two distinct objects within the same period. The value of differential analysis is that it shows only what's relevant — only what changed between the two units examined.",
+      "terms": [
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" },
+        { "name": "Comparisons against a different object", "description": "$wiki.terms.comparisonsDifferent" }
+      ]
+    },
+    "long": {
+      "title": "Longitudinal comparison of the same analysis object",
+      "description": "This analysis lets you not only see the absolute values of performance — gross margin, prices, costs, volumes — for a freely-chosen object, but also compare how they evolve across two distinct time periods. Not isolated frames, but full motion.",
+      "terms": [
+        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
+    "longchange": {
+      "title": "Longitudinal comparison of the same analysis object",
+      "description": "This analysis lets you not only see the absolute values of performance — gross margin, prices, costs, volumes — for a freely-chosen object, but also compare how they evolve across two distinct time periods. Not isolated frames, but full motion.",
+      "terms": [
+        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
+    "longdiff": {
+      "title": "Longitudinal comparison of the same analysis object",
+      "description": "This analysis lets you not only see the absolute values of performance — gross margin, prices, costs, volumes — for a freely-chosen object, but also compare how they evolve across two distinct time periods. Not isolated frames, but full motion.",
+      "terms": [
+        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
+    "point": {
+      "title": "Point analysis",
+      "description": "GestaltBI's logic is to guide management toward understanding <b class='color-accent'>performance</b> and how it changes. The product proposes a hierarchy of analyses to avoid what we call \"analysis paralysis.\" Downstream of that hierarchy, each user pursues whichever specific investigations seem most useful in the moment. These are point inquiries — the classic territory of business intelligence: pick a specific <b class='color-accent'>object</b> and analyze it, either to confirm an expectation or to discover something new to dig into.",
+      "terms": [
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
+    "sync": {
+      "title": "Synchronic comparison of performance across two different analysis objects",
+      "description": "With this analysis you can compare, within a chosen period, the <b class='color-accent'>performance</b> of certain customers, products, or territories (or any combination of these) against another set. The more comparable the <b class='color-accent'>objects</b>, the richer the learning. Pairing this with the change-forces analysis lets you understand what's actually causing improvements or declines. In the absence of reliable budget benchmarks, synchronic comparisons across different responsibility units can become one of the inputs for distributing incentives.",
+      "terms": [
+        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" },
+        { "name": "Comparisons against a different object", "description": "$wiki.terms.comparisonsDifferent" }
+      ]
+    },
+    "syncchange": {
+      "title": "Dynamic analysis of the change forces for a chosen analysis object",
+      "description": "This analysis surfaces the effects of the main forces of change (costs, prices, volumes) and explains why the gross margin of a given <b class='color-accent'>analysis object</b> shifted from one period to the next. For example, in one territory a rise in <b class='color-accent'>performance</b> may be driven mostly by larger volumes; in another it may be the result of falling costs, or a favorable combination of both. Building this analysis through repeated database queries would be hard if not impossible. A dedicated model performs it automatically.",
+      "terms": [
+        { "name": "The forces of change", "description": "$wiki.terms.changeForces" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
+    "syncdiff": {
+      "title": "Differential analysis",
+      "description": "Differential analysis represents the differences in <b class='color-accent'>performance</b>. These can be differences for the same <b class='color-accent'>analysis object</b> across two periods, or differences between two distinct objects within the same period. The value of differential analysis is that it shows only what's relevant — only what changed between the two units examined.",
+      "terms": [
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" },
+        { "name": "Comparisons against a different object", "description": "$wiki.terms.comparisonsDifferent" }
+      ]
+    },
+    "terms": {
+      "changeForces": "An original aspect of GestaltBI is that it explains the variation in gross margin in terms of the main factors that drove it. Specifically, it decomposes the change in gross margin (whatever the object) into change in volumes sold, change in selling prices, and change in costs. This breakdown — absent from traditional BI tools — splits the problem rationally into its main components, giving a strong direction to interpretation and avoiding the so-called \"analysis paralysis.\" The change forces are detected by a sophisticated algorithm that does not require — as traditional budget analyses do — predefined targets or budget values to compare actuals against.",
+      "economicPerformance": "There are many economic performance indicators. The most meaningful ones relate to the firm's profitability — the ratio between gross margin in a given period and the average capital invested in that period — such as ROI, RONA, or ROE; for listed companies, share returns. Setting share returns aside, these indicators are typically measured annually. When the goal is a management system that fosters continuous learning and improvement, they are not ideal: (1) profitability does not change appreciably over short periods, and (2) it would be very hard, if not impossible, to trace the effects of daily operating actions to changes in profitability or share return. Infrequent feedback that cannot link actions to outcomes saps motivation and inhibits learning.<br>The principal short-period performance indicator is gross margin, or profit — the difference between all revenues and all matching costs of the period. In that case even a single month can be a meaningful interval. Some firms even produce monthly P&Ls. Shorter periods, however, are no longer compatible with measuring overall gross margin (no firm produces a daily P&L), because computing matching costs requires a virtual splitting of activities, which is demanding, expensive, and unreliable when the period is very short.<br>One synthetic economic indicator that retains its relevance even when used daily is the gross margin generated by product sales — revenues minus the cost of goods sold. By the matching principle, both values must be recorded simultaneously and contextually with each sale. Each transaction therefore updates the indicator, sometimes multiple times a day. Gross margin is the indicator GestaltBI chose as the apex of the pyramid from which to start the analysis process. It is the metric that best fits the principles of relevance, objectivity, and usability.",
+      "analysisObjects": "Management cannot limit itself to analyzing the firm's overall performance, even though that is certainly an important goal. It is the more targeted, specific analyses that reveal how to improve overall performance — what's holding back revenue growth, what's preventing cost containment, or both. An \"object\" of economic analysis is any entity for which management finds it useful to have economic information. Some objects are of permanent interest — departments, functions, divisions (so-called responsibility centers); often individual products are too. These are part of standard reporting, where firms systematically track costs and (when possible) revenues. But understanding requires specific attention that shifts over time with environmental and competitive factors. Management therefore needs a tool that flexibly defines any analysis object by composing variables — geographic area, customer, product, etc. A specific combination of these defines the analysis object in our system. An object is, in essence, a subset of the data.",
+      "longitudinalSynchronic": "We speak of longitudinal analysis when the performance of the same \"object\" is compared over time. For example, analyzing the change in gross margin between February and March for a given customer group, geographic area, product combination, or any combination of these.<br>Synchronic analyses, by contrast, refer to a single period and therefore must compare two distinct \"objects.\" Here it's essential to ensure the objects are comparable — i.e. that the performance comparison carries economic meaning. Comparing the January gross margin of a product to that of a customer would carry no economic meaning and would offer no learning. Comparing the gross margin of two different customers, on the other hand, can be a rich opportunity for reflection. Longitudinal and synchronic analyses are an alternative to the budget-style way of evaluating performance: not deviations from target values built on assumptions that grow unrealistic over time, but comparison — across time, or across comparable units of analysis.",
+      "comparisonsDifferent": "When one analysis object is compared with another, their differences can raise serious comparability issues. But if the analyst can account for those differences, external data provides a reference point for performance evaluation that becomes an important source for understanding the forces driving improvement or decline. Comparative analyses, by definition, contain more elements of difference than longitudinal ones (which refer to a single object), and so potentially enable richer learning, with reflections that wouldn't surface from a longitudinal view alone. Preliminary normalization can be very useful (for example, comparing two geographic areas with different numbers of customers and salespeople through ratios)."
+    }
+  }
 }

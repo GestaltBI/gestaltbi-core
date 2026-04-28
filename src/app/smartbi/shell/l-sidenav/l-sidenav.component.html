@@ -3,34 +3,33 @@
     <img class="lsidenav__mark" src="assets/images/gestaltbi-logo.png" alt="" />
     <div class="lsidenav__brand">
       <h2 class="lsidenav__name">GestaltBI</h2>
-      <p class="lsidenav__tagline">la forma all'origine del significato</p>
+      <p class="lsidenav__tagline">{{ 'toolbar.tagline' | translate }}</p>
     </div>
   </header>
 
   <div class="lsidenav__menutitle eyebrow">{{ 'l-sidenav.menuTitle' | translate }}</div>
 
-  <ol class="lsidenav__modes" *ngIf="modes$ | async as modes">
-    <ng-container *ngFor="let link of modes; let i = index">
-      <li class="lsidenav__divider" *ngIf="link.type === 'divider'" aria-hidden="true"></li>
-      <li
+  <div class="lsidenav__modes" *ngIf="modes$ | async as modes">
+    <ng-container *ngFor="let link of modes">
+      <hr class="lsidenav__divider" *ngIf="link.type === 'divider'" />
+      <a
         class="lsidenav__mode"
         *ngIf="link.type === 'button'"
+        [routerLink]="sbi.changeMode(link.id)"
         routerLinkActive="lsidenav__mode--active"
-        (click)="goto(link.id)"
-        tabindex="0"
-        role="link"
+        (click)="onPick()"
       >
         <span class="lsidenav__mode-icon" aria-hidden="true">
           <mat-icon svgIcon="{{ link.icon }}"></mat-icon>
         </span>
         <span class="lsidenav__mode-label">{{ link.label }}</span>
         <span class="lsidenav__mode-arrow" aria-hidden="true">→</span>
-      </li>
+      </a>
     </ng-container>
-  </ol>
+  </div>
 
   <div class="lsidenav__back">
-    <a class="lsidenav__backlink" [routerLink]="['/intro']">
+    <a class="lsidenav__backlink" [routerLink]="['/intro']" (click)="onPick()">
       <mat-icon>arrow_back</mat-icon>
       <span>{{ 'l-sidenav.back' | translate }}</span>
     </a>

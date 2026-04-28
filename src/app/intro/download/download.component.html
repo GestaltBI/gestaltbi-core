@@ -1,32 +1,27 @@
-<mat-card class="download download__card" fxLayout="column" fxLayoutAlign="none center" fxLayoutGap="32px">
-  <h2 class="download__title" [innerHTML]="'intro.download.title' | translate"></h2>
-  <div class="download__content" fxLayout="row">
-    <div fxFlex>
-      <h3 class="download__subtitle" [innerHTML]="'intro.download.products.title' | translate"></h3>
-      <mat-grid-list cols="2" rowHeight="62px">
-        <ng-container *ngIf="products$ | async as products">
-          <mat-grid-tile *ngFor="let p of products">
-            <img class="download__gridicon" src="{{ 'assets/images/' + p.icon }}" />
-            <span class="download__gridlabel" [innerHTML]="p.text | translate"></span>
-          </mat-grid-tile>
-        </ng-container>
-      </mat-grid-list>
+<div class="download">
+  <div class="download__preview" aria-hidden="true">
+    <div class="download__preview-row download__preview-row--head">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-    <div class="download__divider"></div>
-    <div fxFlex>
-      <h3 class="download__subtitle" [innerHTML]="'intro.download.services.title' | translate"></h3>
-      <mat-grid-list cols="2" rowHeight="62px">
-        <ng-container *ngIf="services$ | async as services">
-          <mat-grid-tile *ngFor="let s of services">
-            <img class="download__gridicon" src="{{ 'assets/images/' + s.icon }}" />
-            <span class="download__gridlabel" [innerHTML]="s.text | translate"></span>
-          </mat-grid-tile>
-        </ng-container>
-      </mat-grid-list>
+    <div class="download__preview-row" *ngFor="let row of previewRows">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   </div>
-  <h3 class="download__subtitle" [innerHTML]="'intro.download.subtitle' | translate"></h3>
-  <button class="download__button" color="accent" mat-raised-button (click)="download()">
-    {{ 'common.download' | translate | uppercase }}
-  </button>
-</mat-card>
+
+  <div class="download__meta">
+    <div class="download__filename">
+      <mat-icon>description</mat-icon>
+      <span>data_template.csv</span>
+    </div>
+    <button class="btn btn--solid" (click)="download()">
+      <mat-icon>download</mat-icon>
+      <span>{{ 'intro.downloadCta' | translate }}</span>
+    </button>
+  </div>
+</div>
