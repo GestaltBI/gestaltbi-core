@@ -1,10 +1,16 @@
-.select-placeholder-container {
+.dimfilter {
   display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
   align-items: center;
 }
 
-.select-placeholder-container > span {
-  flex: 1;
+.select-placeholder-container {
+  display: flex;
+  align-items: center;
+  > span {
+    flex: 1;
+  }
 }
 
 .hide-dummy-option {

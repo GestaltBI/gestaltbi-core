@@ -1,4 +1,5 @@
-<button color="accent" mat-raised-button (click)="fileInput.click()">
-  CARICA
-  <input #fileInput type="file" (change)="handleFileInput($event)" style="display: none;" />
+<button class="btn btn--solid" type="button" (click)="fileInput.click()">
+  <mat-icon>folder_open</mat-icon>
+  <span>Sfoglia file</span>
+  <input #fileInput type="file" accept=".csv,text/csv" (change)="handleFileInput($event)" hidden />
 </button>

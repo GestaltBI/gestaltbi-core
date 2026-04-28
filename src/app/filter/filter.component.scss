@@ -1,7 +1,37 @@
-::ng-deep {
-  mat-form-field {
-    .mat-form-field-wrapper {
-      padding-bottom: 0px;
+.filter {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-lg);
+  align-items: center;
+
+  &__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+
+    .btn {
+      .mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+@container (max-width: 720px) {
+  .filter {
+    grid-template-columns: 1fr;
+
+    &__actions {
+      justify-content: flex-end;
     }
   }
 }

@@ -1,66 +1,109 @@
 .upload {
-  &__card {
-    padding: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border: 0 !important;
-    display: flex !important;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  &__title {
-    font-family: var(--font-display);
-    font-size: var(--text-md);
-    font-weight: 500;
-    color: var(--ink-soft);
-    text-align: center;
-    margin: 0;
-    font-variation-settings: 'opsz' 16;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 
   &__box {
+    position: relative;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: var(--space-xs);
     min-height: 220px;
-    border: 2px dashed var(--rule-strong);
+    padding: var(--space-xl);
     border-radius: var(--r-md);
-    background: color-mix(in oklch, var(--accent), var(--bg) 96%);
-    color: var(--ink-muted);
-    transition: border-color var(--motion-base) var(--ease-out-quart),
-      background-color var(--motion-base) var(--ease-out-quart),
-      transform var(--motion-base) var(--ease-out-quart);
+    border: 1.5px dashed var(--rule-strong);
+    background: color-mix(in oklch, var(--accent), var(--bg) 95%);
     cursor: pointer;
+    transition:
+      border-color var(--motion-base) var(--ease-out-quart),
+      background var(--motion-base) var(--ease-out-quart),
+      transform var(--motion-base) var(--ease-out-quart);
+  }
 
-    h3 {
-      font-family: var(--font-display);
-      font-size: var(--text-lg);
-      font-weight: 500;
-      color: var(--ink-soft);
-      margin: 0;
-      letter-spacing: -0.01em;
-      font-variation-settings: 'opsz' 20;
+  &__icon {
+    color: var(--ink-faint);
+    font-size: 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    transition:
+      color var(--motion-base) var(--ease-out-quart),
+      transform var(--motion-base) var(--ease-out-quart);
+    font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 48;
+  }
+
+  &__box-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin: 0;
+    letter-spacing: -0.01em;
+    font-variation-settings: 'opsz' 20, 'wdth' 95;
+    transition: color var(--motion-base) var(--ease-out-quart);
+  }
+
+  &__hint {
+    font-size: var(--text-xs);
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__box--active {
+    border-color: var(--accent);
+    background: color-mix(in oklch, var(--accent), var(--bg) 88%);
+    transform: scale(1.005);
+
+    .upload__icon {
+      color: var(--accent);
+      transform: translateY(-2px);
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
     }
-
-    &--active {
-      border-color: var(--accent);
-      background: color-mix(in oklch, var(--accent), var(--bg) 88%);
+    .upload__box-title {
       color: var(--accent-strong);
-      transform: scale(1.005);
-      h3 {
-        color: var(--accent-strong);
-      }
+    }
+  }
+
+  &__or {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  &__rule {
+    height: 1px;
+    background: var(--rule);
+  }
+  &__or-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+  }
+
+  &__pickrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+
+    &-label {
+      font-size: var(--text-sm);
+      color: var(--ink-soft);
     }
   }
 
   &__button {
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
   }
 }
 
 .fileover {
-  border-color: var(--accent) !important;
-  background: color-mix(in oklch, var(--accent), var(--bg) 80%) !important;
+  .upload__box {
+    border-color: var(--accent) !important;
+    background: color-mix(in oklch, var(--accent), var(--bg) 80%) !important;
+  }
 }

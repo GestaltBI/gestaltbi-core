@@ -1,7 +1,7 @@
 // =============================================================================
 // Intro / first-impression page. Editorial layout: oversized display headline
 // pulls weight, two paths (upload / template) framed as numbered acts, then
-// a single contact moment at the bottom.
+// a single contact moment at the bottom. Staggered reveal on page load.
 // =============================================================================
 
 .intro {
@@ -11,6 +11,18 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2xl);
+
+  // Page-load reveal: each [data-reveal] block fades in with a small upward
+  // translate, staggered by 80ms per index. Exponential ease.
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: intro-reveal var(--motion-hero) var(--ease-out) forwards;
+  }
+  [data-reveal='0'] { animation-delay: 0ms; }
+  [data-reveal='1'] { animation-delay: 80ms; }
+  [data-reveal='2'] { animation-delay: 200ms; }
+  [data-reveal='3'] { animation-delay: 360ms; }
 
   &__head {
     display: flex;
@@ -70,6 +82,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+    padding-top: var(--space-xl);
 
     .eyebrow {
       color: var(--ink-muted);
@@ -78,13 +91,13 @@
 
   &__display {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-size: clamp(3.25rem, 8vw, 7.5rem);
     font-weight: 600;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
     color: var(--ink);
     margin: 0;
-    font-variation-settings: 'opsz' 96, 'wdth' 95;
+    font-variation-settings: 'opsz' 96, 'wdth' 92;
 
     em {
       font-style: italic;
@@ -95,10 +108,10 @@
   }
 
   &__lede {
-    font-size: var(--text-base);
+    font-size: var(--text-lg);
     line-height: var(--leading-base);
     color: var(--ink-soft);
-    margin: var(--space-sm) 0 0;
+    margin: var(--space-md) 0 0;
     max-width: 56ch;
   }
 
@@ -119,17 +132,19 @@
     border-radius: var(--r-lg);
     padding: var(--space-xl);
     transition: border-color var(--motion-base) var(--ease-out-quart),
-      box-shadow var(--motion-base) var(--ease-out-quart);
+      box-shadow var(--motion-base) var(--ease-out-quart),
+      transform var(--motion-base) var(--ease-out-quart);
 
     &:hover {
       border-color: var(--ink-faint);
       box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
   }
 
   &__path-tag {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--text-md);
     font-weight: 500;
     color: var(--ink-faint);
     font-feature-settings: 'tnum' on;
@@ -165,47 +180,93 @@
   // —— Footer contact —————————————————————————————————————————————
   &__foot {
     margin-top: auto;
-    padding: var(--space-xl);
+    position: relative;
+    padding: var(--space-xl) var(--space-2xl);
     border-radius: var(--r-lg);
     background: var(--ink);
     color: var(--bg);
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-xl);
-    flex-wrap: wrap;
+    overflow: hidden;
   }
+
+  &__foot-mark {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 12px oklch(0% 0 0 / 0.4));
+  }
+
   &__foot-msg {
-    flex: 1;
-    min-width: 280px;
+    min-width: 0;
   }
   &__foot-title {
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: clamp(var(--text-xl), 2.5vw, var(--text-2xl));
     font-weight: 600;
     color: var(--bg);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin: 0 0 var(--space-xs);
-    font-variation-settings: 'opsz' 32;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 0 0 var(--space-2xs);
+    font-variation-settings: 'opsz' 32, 'wdth' 95;
   }
   &__foot-text {
     color: oklch(80% 0.014 245);
     font-size: var(--text-md);
     margin: 0;
     line-height: var(--leading-base);
+    max-width: 56ch;
   }
 
-  &__foot .btn--solid {
+  &__foot-cta {
     background: var(--bg);
     color: var(--ink);
+    flex-shrink: 0;
+
     .mat-icon {
       font-size: 18px;
       width: 18px;
       height: 18px;
+      transition: transform var(--motion-fast) var(--ease-out-quart);
+    }
+
+    &:hover {
+      background: var(--surface);
+      .mat-icon {
+        transform: translateX(2px);
+      }
     }
   }
-  &__foot .btn--solid:hover {
-    background: var(--surface);
+
+  // The spectrum strip that runs along the bottom of the dark contact slab
+  // — the one moment-per-view rainbow flash for this surface.
+  &__foot-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    background: var(--spectrum);
+  }
+
+  @media (max-width: 720px) {
+    &__foot {
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+    }
+    &__foot-cta {
+      grid-column: 1 / -1;
+      justify-self: stretch;
+    }
+  }
+}
+
+@keyframes intro-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

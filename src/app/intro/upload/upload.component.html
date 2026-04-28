@@ -1,20 +1,23 @@
-<mat-card
-  class="upload upload__card"
-  sbiDragAndDrop
-  (fileDropped)="onFileDropped($event)"
-  fxLayout="column"
-  fxLayoutAlign="none center"
->
-  <h2 class="upload__title" [innerHTML]="'intro.upload.title' | translate"></h2>
+<div class="upload" sbiDragAndDrop (fileDropped)="onFileDropped($event)">
   <div
     class="upload__box"
     [class.upload__box--active]="mouseOvered"
     (mouseover)="mouseOvered = true"
     (mouseout)="mouseOvered = false"
-    fxFlex
   >
-    <h3 class="upload__title" style="margin-top: 140px;">{{ 'intro.dragHere' | translate }}</h3>
+    <mat-icon class="upload__icon">cloud_upload</mat-icon>
+    <h3 class="upload__box-title">{{ 'intro.dragHere' | translate }}</h3>
+    <p class="upload__hint">CSV · separato da virgole</p>
   </div>
-  <h3 class="upload__title">{{ 'intro.fromPC' | translate }}</h3>
-  <sbi-importbtn class="upload__button" (dataLoaded)="dataLoaded($event)"></sbi-importbtn>
-</mat-card>
+
+  <div class="upload__or" aria-hidden="true">
+    <span class="upload__rule"></span>
+    <span class="upload__or-label">oppure</span>
+    <span class="upload__rule"></span>
+  </div>
+
+  <div class="upload__pickrow">
+    <span class="upload__pickrow-label">{{ 'intro.fromPC' | translate }}</span>
+    <sbi-importbtn class="upload__button" (dataLoaded)="dataLoaded($event)"></sbi-importbtn>
+  </div>
+</div>

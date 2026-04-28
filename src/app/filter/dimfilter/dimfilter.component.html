@@ -1,5 +1,9 @@
 <ng-container *ngIf="dims">
-  <div fxLayout="row wrap" fxLayoutGap="16px">
-    <sbi-dimselect [(ngModel)]="data[field]" *ngFor="let field of dims" [field]="field"></sbi-dimselect>
+  <div class="dimfilter">
+    <sbi-dimselect
+      [(ngModel)]="data[field]"
+      *ngFor="let field of dims"
+      [field]="field"
+    ></sbi-dimselect>
   </div>
 </ng-container>

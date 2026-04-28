@@ -1,20 +1,55 @@
 .legend {
-  &__smallcircle {
-    width: 12px;
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: var(--space-lg);
+  align-items: end;
+  padding: var(--space-md);
+  background: var(--surface);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-rim), var(--shadow-md);
+
+  &__eyebrow {
+    display: block;
+    margin-bottom: var(--space-2xs);
+    color: var(--ink-muted);
+  }
+
+  &__measure {
+    min-width: 200px;
+  }
+
+  &__select {
+    width: 100%;
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+
+  &__circles-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    height: 56px;
+  }
+
+  &__dot {
+    border-radius: 50%;
+    background: var(--ink-faint);
+
+    &--small {
+      width: 12px;
+      height: 12px;
+    }
+    &--big {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  &__bar {
+    width: 140px;
     height: 12px;
-    background: rgba(0, 0, 0, 0.32);
-    border-radius: 50%;
-  }
-  &__bigcircle {
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.32);
-    border-radius: 50%;
-  }
-  &__incomebar {
-    width: 96px;
-    height: 32px;
-    background: linear-gradient(90deg, #eb5757 0%, #f2c94c 48.76%, #27ae60 100%);
-    border-radius: 8px;
+    border-radius: var(--r-pill);
+    background: linear-gradient(90deg, var(--neg) 0%, oklch(72% 0.16 60) 50%, var(--pos) 100%);
   }
 }
