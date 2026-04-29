@@ -18,6 +18,8 @@ export function loadCite(): Promise<CiteCtor> {
     cached = (async () => {
       const core = await import(/* webpackChunkName: "citation-js" */ '@citation-js/core');
       // Side-effect imports register the plugins on the shared core.
+      // plugin-yaml must register before plugin-cff (peer dependency).
+      await import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-yaml');
       await Promise.all([
         import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-cff'),
         import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-csl'),
