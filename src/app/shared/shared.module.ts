@@ -25,6 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CarouselModule } from './carousel/carousel.module';
 import { EmbedComponent } from './embed/embed.component';
+import { ProjectInfoDialogComponent } from './project-info/project-info-dialog.component';
 
 const matModules = [
   MatButtonModule,
@@ -53,6 +54,6 @@ const matModules = [
 @NgModule({
   imports: [CommonModule, TranslateModule, ...matModules, CarouselModule],
   exports: [CommonModule, TranslateModule, ...matModules, CarouselModule],
-  declarations: [EmbedComponent],
+  declarations: [EmbedComponent, ProjectInfoDialogComponent],
 })
 export class SharedModule {}

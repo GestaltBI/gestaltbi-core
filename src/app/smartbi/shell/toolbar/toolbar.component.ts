@@ -5,9 +5,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { ProjectInfo, ProjectInfoService } from '../../../core/project-info.service';
 import { ThemeService } from '../../../core/theme.service';
 import { environment } from './../../../../environments/environment';
 import { EmbedComponent } from './../../../shared/embed/embed.component';
+import {
+  ProjectInfoDialogComponent,
+  ProjectInfoDialogKind,
+} from './../../../shared/project-info/project-info-dialog.component';
 import { SmartbiService } from './../../smartbi.service';
 
 @Component({
@@ -18,6 +23,7 @@ import { SmartbiService } from './../../smartbi.service';
 })
 export class ToolbarComponent implements OnInit {
   mode$: Observable<any>;
+  projectInfo$: Observable<ProjectInfo>;
 
   constructor(
     private ar: ActivatedRoute,
@@ -25,7 +31,10 @@ export class ToolbarComponent implements OnInit {
     public dialog: MatDialog,
     private _sanitizer: DomSanitizer,
     public themeService: ThemeService,
-  ) {}
+    private projectInfo: ProjectInfoService,
+  ) {
+    this.projectInfo$ = this.projectInfo.info$;
+  }
 
   toggleTheme() {
     this.themeService.toggle();
@@ -55,6 +64,13 @@ export class ToolbarComponent implements OnInit {
       data: {
         code,
       },
+    });
+  }
+
+  openProjectInfo(kind: ProjectInfoDialogKind, info: ProjectInfo) {
+    this.dialog.open(ProjectInfoDialogComponent, {
+      panelClass: 'sbi-project-info-dialog',
+      data: { kind, readme: info.readme, cff: info.cff },
     });
   }
 }

@@ -93,7 +93,32 @@
     "openMenu": "Apri menu",
     "tutorial": "Tutorial",
     "guide": "Glossario",
-    "toggleTheme": "Cambia tema"
+    "toggleTheme": "Cambia tema",
+    "intro": "Introduzione",
+    "cite": "Cita questo progetto"
+  },
+  "projectInfo": {
+    "readmeEyebrow": "Introduzione al progetto",
+    "citationEyebrow": "Come citare",
+    "readmeMissing": "Questo progetto non include un file README.md.",
+    "citationMissing": "Questo progetto non include un file CITATION.cff.",
+    "loading": "Carico le formattazioni…",
+    "loadError": "Impossibile elaborare CITATION.cff.",
+    "styled": "Citazione formattata",
+    "machineReadable": "Formato macchina",
+    "copy": "Copia",
+    "copied": "Copiato",
+    "styles": {
+      "apa": "APA",
+      "vancouver": "Vancouver",
+      "harvard": "Harvard"
+    },
+    "formats": {
+      "bibtex": "BibTeX",
+      "ris": "RIS",
+      "csljson": "CSL-JSON",
+      "cff": "CITATION.cff"
+    }
   },
   "wiki": {
     "change": {

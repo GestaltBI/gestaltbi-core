@@ -39,6 +39,26 @@
       <mat-icon>auto_awesome</mat-icon>
       <span>{{ 'common.customize' | translate }}</span>
     </button>
+    <ng-container *ngIf="projectInfo$ | async as info">
+      <button
+        *ngIf="info.readme"
+        class="toolbar__icon"
+        (click)="openProjectInfo('readme', info)"
+        [attr.aria-label]="'toolbar.intro' | translate"
+        [title]="'toolbar.intro' | translate"
+      >
+        <mat-icon>info</mat-icon>
+      </button>
+      <button
+        *ngIf="info.cff"
+        class="toolbar__icon"
+        (click)="openProjectInfo('citation', info)"
+        [attr.aria-label]="'toolbar.cite' | translate"
+        [title]="'toolbar.cite' | translate"
+      >
+        <mat-icon>format_quote</mat-icon>
+      </button>
+    </ng-container>
     <button
       class="toolbar__icon"
       (click)="toggleTheme()"

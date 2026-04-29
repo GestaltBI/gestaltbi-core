@@ -1,0 +1,80 @@
+<header class="pinfo__head">
+  <span class="pinfo__eyebrow eyebrow">
+    {{ (data.kind === 'readme' ? 'projectInfo.readmeEyebrow' : 'projectInfo.citationEyebrow') | translate }}
+  </span>
+  <button class="pinfo__close" mat-dialog-close [attr.aria-label]="'common.close' | translate">
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+
+<mat-dialog-content class="pinfo__body">
+  <ng-container *ngIf="data.kind === 'readme'">
+    <ng-container *ngIf="readmeHtml; else noReadme">
+      <article class="pinfo__readme prose" [innerHTML]="readmeHtml"></article>
+    </ng-container>
+    <ng-template #noReadme>
+      <p class="pinfo__empty">{{ 'projectInfo.readmeMissing' | translate }}</p>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="data.kind === 'citation'">
+    <ng-container *ngIf="data.cff; else noCitation">
+      <p *ngIf="loading" class="pinfo__loading">{{ 'projectInfo.loading' | translate }}</p>
+
+      <p *ngIf="loadError" class="pinfo__error">{{ 'projectInfo.loadError' | translate }}</p>
+
+      <ng-container *ngIf="!loading && !loadError">
+        <section class="pinfo__section">
+          <header class="pinfo__section-head">
+            <h2>{{ 'projectInfo.styled' | translate }}</h2>
+            <button mat-button class="pinfo__copy" (click)="copyBibliographyText()">
+              <mat-icon>{{ copied === 'bibliography' ? 'check' : 'content_copy' }}</mat-icon>
+              <span>{{ (copied === 'bibliography' ? 'projectInfo.copied' : 'projectInfo.copy') | translate }}</span>
+            </button>
+          </header>
+          <div class="pinfo__chips" role="tablist">
+            <button
+              *ngFor="let style of styles"
+              type="button"
+              class="pinfo__chip"
+              role="tab"
+              [class.is-active]="style.id === selectedStyle"
+              [attr.aria-selected]="style.id === selectedStyle"
+              (click)="selectStyle(style.id)"
+            >
+              {{ style.labelKey | translate }}
+            </button>
+          </div>
+          <div class="pinfo__bibliography prose" [innerHTML]="formattedBibliography"></div>
+        </section>
+
+        <section class="pinfo__section">
+          <header class="pinfo__section-head">
+            <h2>{{ 'projectInfo.machineReadable' | translate }}</h2>
+            <button mat-button class="pinfo__copy" (click)="copy(sources[selectedFormat], selectedFormat)">
+              <mat-icon>{{ copied === selectedFormat ? 'check' : 'content_copy' }}</mat-icon>
+              <span>{{ (copied === selectedFormat ? 'projectInfo.copied' : 'projectInfo.copy') | translate }}</span>
+            </button>
+          </header>
+          <div class="pinfo__chips" role="tablist">
+            <button
+              *ngFor="let fmt of sourceFormats"
+              type="button"
+              class="pinfo__chip"
+              role="tab"
+              [class.is-active]="fmt.id === selectedFormat"
+              [attr.aria-selected]="fmt.id === selectedFormat"
+              (click)="selectFormat(fmt.id)"
+            >
+              {{ fmt.labelKey | translate }}
+            </button>
+          </div>
+          <pre class="pinfo__source"><code>{{ sources[selectedFormat] }}</code></pre>
+        </section>
+      </ng-container>
+    </ng-container>
+    <ng-template #noCitation>
+      <p class="pinfo__empty">{{ 'projectInfo.citationMissing' | translate }}</p>
+    </ng-template>
+  </ng-container>
+</mat-dialog-content>

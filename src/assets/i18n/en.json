@@ -93,7 +93,32 @@
     "openMenu": "Open menu",
     "tutorial": "Tutorial",
     "guide": "Glossary",
-    "toggleTheme": "Toggle theme"
+    "toggleTheme": "Toggle theme",
+    "intro": "Introduction",
+    "cite": "Cite this project"
+  },
+  "projectInfo": {
+    "readmeEyebrow": "Project introduction",
+    "citationEyebrow": "How to cite",
+    "readmeMissing": "This project does not ship a README.md file.",
+    "citationMissing": "This project does not ship a CITATION.cff file.",
+    "loading": "Loading formatters…",
+    "loadError": "Could not parse CITATION.cff.",
+    "styled": "Formatted citation",
+    "machineReadable": "Machine-readable",
+    "copy": "Copy",
+    "copied": "Copied",
+    "styles": {
+      "apa": "APA",
+      "vancouver": "Vancouver",
+      "harvard": "Harvard"
+    },
+    "formats": {
+      "bibtex": "BibTeX",
+      "ris": "RIS",
+      "csljson": "CSL-JSON",
+      "cff": "CITATION.cff"
+    }
   },
   "wiki": {
     "change": {
