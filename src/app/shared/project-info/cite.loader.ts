@@ -5,7 +5,9 @@
  */
 let cached: Promise<CiteCtor> | undefined;
 
-export type CiteCtor = new (input: string | object) => CiteInstance;
+export type CiteCtor = (new (input: string | object) => CiteInstance) & {
+  async(input: string | object, options?: object): Promise<CiteInstance>;
+};
 
 export interface CiteInstance {
   format(name: 'bibtex' | 'ris' | 'data', options?: object): string;
@@ -20,13 +22,16 @@ export function loadCite(): Promise<CiteCtor> {
       // Side-effect imports register the plugins on the shared core.
       // plugin-yaml must register before plugin-cff (peer dependency).
       await import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-yaml');
+      await import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-cff');
       await Promise.all([
-        import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-cff'),
         import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-csl'),
         import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-bibtex'),
         import(/* webpackChunkName: "citation-js" */ '@citation-js/plugin-ris'),
       ]);
-      return (core as { Cite: CiteCtor }).Cite;
+      const ns = core as { Cite?: CiteCtor; default?: { Cite?: CiteCtor } };
+      const Cite = ns.Cite ?? ns.default?.Cite;
+      if (!Cite) throw new Error('citation.js: Cite export not found');
+      return Cite;
     })().catch((err) => {
       cached = undefined;
       throw err;

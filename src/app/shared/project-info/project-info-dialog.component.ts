@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, NgZone, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -47,6 +47,8 @@ export class ProjectInfoDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ProjectInfoDialogData,
     private sanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone,
   ) {
     if (data.readme) {
       this.readmeHtml = sanitizer.bypassSecurityTrustHtml(data.readme.html);
@@ -56,21 +58,32 @@ export class ProjectInfoDialogComponent implements OnInit {
     }
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     if (this.data.kind !== 'citation' || !this.data.cff) return;
     this.loading = true;
-    try {
-      const Cite = await loadCite();
-      this.cite = new Cite(this.data.cff);
-      this.sources.bibtex = this.cite.format('bibtex');
-      this.sources.ris = this.cite.format('ris');
-      this.sources['csl-json'] = JSON.stringify(this.cite.data, null, 2);
-      this.renderBibliography();
-    } catch (err) {
-      this.loadError = err;
-    } finally {
-      this.loading = false;
-    }
+    this.zone.runOutsideAngular(() => {
+      loadCite()
+        .then((Cite) => Cite.async(this.data.cff!))
+        .then((cite) => {
+          this.zone.run(() => {
+            this.cite = cite;
+            this.sources.bibtex = cite.format('bibtex');
+            this.sources.ris = cite.format('ris');
+            this.sources['csl-json'] = JSON.stringify(cite.data, null, 2);
+            this.renderBibliography();
+            this.loading = false;
+            this.cdr.markForCheck();
+          });
+        })
+        .catch((err) => {
+          console.error('[project-info] citation.js failed', err);
+          this.zone.run(() => {
+            this.loadError = err;
+            this.loading = false;
+            this.cdr.markForCheck();
+          });
+        });
+    });
   }
 
   selectStyle(id: string): void {
