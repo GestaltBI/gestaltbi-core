@@ -23,7 +23,7 @@ export class DataService {
     return this.processor.getProcessed(phase, identifier);
   }
 
-  public getProcessInfo(phase?: string): Observable<any> {
+  public getProcessInfo(phase?: string): any {
     return this.processor.getProcessInfo(phase);
   }
 }

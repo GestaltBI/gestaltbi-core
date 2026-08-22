@@ -1,5 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {
+  type ColumnDirectory,
+  type StructureColumn,
+  StructureDirectory,
+  type StructureDoc,
+  tags,
+} from '@gestaltbi/stream';
 import { firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -13,15 +20,24 @@ export class ColumnStructure {
   required: boolean;
 }
 
+/**
+ * The app's {@link ColumnDirectory}: `structure.json` plus the translation
+ * table, in the shape `@gestaltbi/stream` expects.
+ *
+ * Tag lookups delegate to the package's {@link StructureDirectory} so the two
+ * cannot drift — this service adds only what the client needs on top: label
+ * translation, and the geographic dimension hierarchy, which is richer than the
+ * flat one-level-per-dimension default the package ships.
+ */
 @Injectable({
   providedIn: 'root',
 })
-export class DatastructureService {
-  datastructure: any;
-
-  coltags: Map<string, string[]> = new Map<string, string[]>();
+export class DatastructureService implements ColumnDirectory {
+  datastructure: StructureDoc;
 
   lang: any;
+
+  private dir: StructureDirectory | undefined;
 
   constructor(
     private http: HttpClient, //
@@ -45,91 +61,73 @@ export class DatastructureService {
       firstValueFrom(this.http.get(this.cs.url('it.json'))).then((data) => {
         this.lang = data;
       }),
-      firstValueFrom(this.http.get(this.cs.url('structure.json'))).then((data) => {
-        this.datastructure = data;
+      firstValueFrom(this.http.get<StructureDoc>(this.cs.url('structure.json'))).then((data) => {
+        this.load(data);
       }),
-    ]).then(() => {
-      this.prepareData();
-    });
+    ]);
   }
 
-  load(data: any): void {
+  load(data: StructureDoc): void {
     this.datastructure = data;
-    this.prepareData();
+    this.dir = new StructureDirectory(data);
   }
 
   getLabel(code): string {
-    if (false) {
-      this.autoload().then((x) => {
-        return this.getLabel(code);
-      });
-    } else {
-      if (Object.keys(this.lang).indexOf(code) > 0) {
-        return this.lang[code] as string;
-      } else {
-        return code as string;
-      }
+    if (this.lang && Object.keys(this.lang).indexOf(code) > 0) {
+      return this.lang[code] as string;
     }
+    return code as string;
   }
 
   getFull(code): ColumnStructure | string {
-    if (false) {
-      this.autoload().then((x) => {
-        return this.getFull(code);
-      });
-    } else {
-      const label = this.getLabel(code);
-      const ret: [ColumnStructure] = this.datastructure.columns.filter((x) => x.column === code);
-      if (ret.length > 0) {
-        ret[0].label = label;
-        return ret[0] as ColumnStructure;
-      }
-      return label;
+    const label = this.getLabel(code);
+    const column = this.dir?.getColumn(code);
+    if (column) {
+      (column as any).label = label;
+      return column as unknown as ColumnStructure;
     }
+    return label;
   }
 
-  prepareData(): void {
-    this.coltags.clear();
-    this.datastructure.columns.forEach((column) => {
-      this.coltags.set(column.column, [column.column]);
-      column.tags.forEach((tag) => {
-        if (!this.coltags.has(tag)) {
-          this.coltags.set(tag, []);
-        }
-        this.coltags.get(tag).push(column.column);
-      });
-    });
-  }
-
-  getDataStructure(): any {
+  getDataStructure(): StructureDoc {
     return this.datastructure;
   }
 
+  /** Every tag in use, plus every column code — both are valid lookup keys. */
   getTags(): string[] {
-    return Array.from(this.coltags.keys());
-  }
-
-  getColumnsFor(tag: string, translate = false): string[] {
-    if (!this.coltags.has(tag)) {
+    if (!this.dir) {
       return [];
     }
-    return this.coltags.get(tag);
+    return [...new Set([...this.datastructure.columns.map((c) => c.column), ...this.dir.getTags()])];
+  }
+
+  /**
+   * Columns carrying `tag`. A column code is also a valid key and resolves to
+   * itself, so `processing.json` can name either a tag or a single column
+   * wherever a tag is expected.
+   */
+  getColumnsFor(tag: string, translate = false): string[] {
+    if (!this.dir) {
+      return [];
+    }
+    const self = this.dir.getColumn(tag) ? [tag] : [];
+    return [...self, ...this.dir.getColumnsFor(tag)];
   }
 
   getTypeFor(col, lang?: string) {
-    return this.datastructure.columns.filter((x) => x.column === col)[0].type;
+    return this.dir?.getColumn(col)?.type;
   }
 
-  getDataStructureFor(tag: string): any {
-    const ret: any = {
+  getDataStructureFor(tag: string): StructureDoc {
+    const columns: StructureColumn[] = (this.datastructure?.columns ?? []).filter(
+      (x) => (x.tags || []).includes(tag) || x.column === tag,
+    );
+    return {
       type: 'structure',
       version: '1.0',
+      name: this.datastructure?.name + '__derived',
+      columns,
     };
-    ret.name = this.datastructure.name + '__derived';
-    ret.columns = this.datastructure.columns.filter((x) => {
-      return x.tags.includes(tag) || x.column === tag;
-    });
-    return ret;
   }
 
   langMap(language: string): any {
@@ -144,12 +142,18 @@ export class DatastructureService {
     );
   }
 
+  /**
+   * Dimension hierarchies for the OLAP cube.
+   *
+   * One flat level per plain dimension, then the geographic drill-down the map
+   * views navigate: address → city → postcode → region → country.
+   */
   getDimensionHierarchies() {
     const ret = {
       dimensionHierarchies: [],
     };
 
-    this.getColumnsFor('uatu:dimension').forEach((col) => {
+    this.getColumnsFor(tags.DIMENSION).forEach((col) => {
       ret.dimensionHierarchies.push({
         dimensionTable: {
           dimension: col,
@@ -158,11 +162,10 @@ export class DatastructureService {
       });
     });
 
-    const ll = this.getColumnsFor('uatu:dimension:geo');
     ret.dimensionHierarchies.push({
       dimensionTable: {
         dimension: 'geo',
-        keyProps: ll,
+        keyProps: this.getColumnsFor(tags.GEO),
       },
     });
 
