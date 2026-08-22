@@ -14,7 +14,12 @@ export class GraphService {
 
   public getTheme(): Observable<any> {
     if (this.theme === undefined) {
-      return this.http.get('../../assets/GestaltBI.json');
+      // Base-relative, not '../../assets/…'. Under the GitHub Pages base href
+      // of /gestaltbi-core/ the ../../ climbed past the app root and fetched
+      // the theme from the domain root, so every chart silently fell back to
+      // the default ECharts palette. This is app chrome, so it stays bundled
+      // rather than going through ConfigSourceService.
+      return this.http.get('assets/GestaltBI.json');
     }
   }
 
