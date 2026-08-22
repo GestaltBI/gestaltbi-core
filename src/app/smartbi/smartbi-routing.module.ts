@@ -5,7 +5,7 @@ import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
   { path: ':mode/:vis', component: MainComponent },
-  { path: '', redirectTo: 'sync/map' },
+  { path: '', redirectTo: 'sync/map', pathMatch: 'full' },
 ];
 @NgModule({
   imports: [
