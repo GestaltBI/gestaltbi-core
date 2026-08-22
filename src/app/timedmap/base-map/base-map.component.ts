@@ -35,8 +35,7 @@ export class BaseMapComponent implements OnInit, AfterViewInit {
   private _data: any;
   @Input() set data(value: any) {
     this._data = value;
-
-    if (this.map !== undefined) {
+    this.whenStyleReady(() => {
       if (this.map.getSource(this.sourceLayer)) {
         (this.map.getSource(this.sourceLayer) as maplibregl.GeoJSONSource).setData(this._data);
       } else {
@@ -46,10 +45,27 @@ export class BaseMapComponent implements OnInit, AfterViewInit {
           generateId: true,
         });
       }
-      try {
-        this.addLayerOnMap('colored');
-      } catch (error) {}
+      this.addLayerOnMap('colored');
+    });
+  }
+
+  /**
+   * Run `fn` once the map can accept sources and layers.
+   *
+   * maplibre throws "Style is not done loading" from addSource/addLayer until
+   * the style has arrived, and the processed data almost always lands first.
+   * Re-arming on `styledata` rather than `load` also covers a style that is
+   * swapped later (the light/dark basemap toggle).
+   */
+  private whenStyleReady(fn: () => void): void {
+    if (this.map === undefined || this._data === undefined) {
+      return;
     }
+    if (!this.map.isStyleLoaded()) {
+      this.map.once('styledata', () => this.whenStyleReady(fn));
+      return;
+    }
+    fn();
   }
 
   get data() {
@@ -84,7 +100,7 @@ export class BaseMapComponent implements OnInit, AfterViewInit {
     if (this.fixedMeasure === undefined) {
       this._fixedMeasure = this.startingFixedMeasure;
     }
-    this.addLayerOnMap('colored');
+    this.whenStyleReady(() => this.addLayerOnMap('colored'));
   }
   get dynamicMeasure() {
     return this._dynamicMeasure;

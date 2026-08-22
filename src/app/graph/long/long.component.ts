@@ -20,6 +20,10 @@ export class LongComponent extends GraphBaseComponent implements OnInit {
       ]).subscribe((data) => {
         this.rootDataA = this.graphService.truncateValues(data[0], 0);
         this.rootDataB = this.graphService.truncateValues(data[1], 0);
+        // Derive data1/data2/xAxisData before assembling the chart option:
+        // the option captures those arrays by reference at build time, so
+        // building it first freezes the pre-data empty state into the chart.
+        this.onUpdateField();
 
         this.chartOption = {
           legend: {
@@ -90,8 +94,7 @@ export class LongComponent extends GraphBaseComponent implements OnInit {
             return idx * 5;
           },
         };
-
-        this.onUpdateField();
+        this.refreshAfterInit();
       });
     }, 1000);
   }

@@ -1,6 +1,6 @@
 <div class="legend">
   <div class="legend__measure">
-    <span class="legend__eyebrow eyebrow">misura</span>
+    <span class="legend__eyebrow eyebrow">{{ 'legend.measure' | translate }}</span>
     <mat-form-field appearance="outline" class="legend__select">
       <mat-select [(value)]="defaultMeasure" (selectionChange)="notifyChange($event)">
         <mat-option *ngFor="let measure of measures" [value]="measure">
@@ -11,7 +11,7 @@
   </div>
 
   <div class="legend__circles" *ngIf="isMap">
-    <span class="legend__eyebrow eyebrow">scala</span>
+    <span class="legend__eyebrow eyebrow">{{ 'legend.scale' | translate }}</span>
     <div class="legend__circles-row" aria-hidden="true">
       <span class="legend__dot legend__dot--small"></span>
       <span class="legend__dot legend__dot--big"></span>

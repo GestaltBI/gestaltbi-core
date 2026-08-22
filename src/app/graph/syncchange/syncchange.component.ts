@@ -85,6 +85,7 @@ export class SyncchangeComponent extends GraphBaseComponent implements OnInit {
 
           this.onUpdateField();
           this.fixedMeasure = this.conf.revenue;
+          this.refreshAfterInit();
         });
     }, 1000);
   }

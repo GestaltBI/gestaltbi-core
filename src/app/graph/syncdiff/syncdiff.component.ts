@@ -82,6 +82,7 @@ export class SyncdiffComponent extends GraphBaseComponent implements OnInit {
               },
             ],
           };
+          this.refreshAfterInit();
         });
     }, 1000);
   }

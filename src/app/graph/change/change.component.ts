@@ -110,6 +110,7 @@ export class ChangeComponent extends GraphBaseComponent implements OnInit {
           this.rootDataA = this.graphService.truncateValues(data, 0);
           this.onUpdateField();
           this.fixedMeasure = this.conf.revenue;
+          this.refreshAfterInit();
         });
     }, 1000);
   }

@@ -27,6 +27,10 @@ export class PointComponent extends GraphBaseComponent implements OnInit {
     setTimeout(() => {
       combineLatest([this.ds.getProcessed(this.conf.name)]).subscribe((data) => {
         this.rootDataA = this.graphService.truncateValues(data[0], 0);
+        // Derive data1/data2/xAxisData before assembling the chart option:
+        // the option captures those arrays by reference at build time, so
+        // building it first freezes the pre-data empty state into the chart.
+        this.onUpdateField();
         this.chartOption = {
           tooltip: {
             trigger: 'axis',
@@ -178,7 +182,7 @@ export class PointComponent extends GraphBaseComponent implements OnInit {
             },
           ],
         };
-        this.onUpdateField();
+        this.refreshAfterInit();
       });
     }, 1000);
   }

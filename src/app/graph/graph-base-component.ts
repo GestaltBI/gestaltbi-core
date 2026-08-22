@@ -100,6 +100,13 @@ export abstract class GraphBaseComponent extends BaseComponentWithLegend impleme
 
   extractDataByField(rootData: any, key: string, fill?: any): any[] {
     const data = [];
+    // `ngDoCheck` pushes the legend's measure into `dynamicMeasure`, whose
+    // setter calls `onUpdateField()` — and that fires well before the
+    // subscriptions in each subclass have delivered a frame. No data yet means
+    // no series, not a crash.
+    if (!Array.isArray(rootData)) {
+      return data;
+    }
     rootData.forEach((element) => {
       if (element[key] !== undefined) {
         if (key === this.dateFieldName && moment(element[key]).isValid()) {
@@ -116,9 +123,16 @@ export abstract class GraphBaseComponent extends BaseComponentWithLegend impleme
 
   generateLabel(rootData: any[], label: string): any[] {
     const size: number[] = [];
-    rootData.forEach((element) => {
-      size.push(element.length);
+    // Callers pass a mixed list (a frame plus the date field name), and the
+    // frame is undefined until its stream emits — count only what has a length.
+    (rootData ?? []).forEach((element) => {
+      if (element !== null && element !== undefined && element.length !== undefined) {
+        size.push(element.length);
+      }
     });
+    if (size.length === 0) {
+      return [];
+    }
     const max = Math.max.apply(null, size);
     const res = Array(max);
     for (let index = 0; index < res.length; index++) {
@@ -130,6 +144,18 @@ export abstract class GraphBaseComponent extends BaseComponentWithLegend impleme
 
   generateTimeLabel(rootData: any[]) {
     return this.generateLabel(rootData, this.translateService.instant('graph.day'));
+  }
+
+  /**
+   * Re-apply the derived series once the chart actually exists.
+   *
+   * ngx-echarts builds the chart only when `[options]` first becomes non-null,
+   * and that build is async. A `[merge]` that changes in the same pass is
+   * handed to a still-null chart and dropped without a word. Re-running the
+   * update on the next macrotask lands it on the chart that exists by then.
+   */
+  protected refreshAfterInit(): void {
+    setTimeout(() => this.onUpdateField());
   }
 
   abstract onUpdateField(): void;

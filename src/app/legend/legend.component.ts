@@ -21,18 +21,18 @@ export class LegendComponent implements OnInit {
   constructor(private ds: DatastructureService) {}
 
   ngOnInit(): void {
-    this.measures = this.ds.getColumnsFor(this.tag, true).map((x) => {
-      console.log(this.tag, x);
-      return new Measure(this.ds.getFull(x), x);
-    });
-    if (this.measures.length > 1) {
+    this.measures = this.ds.getColumnsFor(this.tag, true).map((x) => new Measure(this.ds.getFull(x), x));
+    if (this.measures.length > 0) {
       this.defaultMeasure = this.measures[0];
-      this.measureChange.emit(this.defaultMeasure);
+      // The host binds this measure straight into its children, and its view
+      // has already been checked by the time our ngOnInit runs — emitting
+      // synchronously changes a checked binding (NG0100). Announce the default
+      // once the current pass is over.
+      setTimeout(() => this.measureChange.emit(this.defaultMeasure));
     }
   }
 
   notifyChange({ value }): void {
-    console.log(value);
     this.measureChange.emit(value);
   }
 }

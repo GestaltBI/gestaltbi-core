@@ -87,6 +87,7 @@ export class DiffComponent extends GraphBaseComponent implements OnInit {
               },
             ],
           };
+          this.refreshAfterInit();
         });
     }, 1000);
   }

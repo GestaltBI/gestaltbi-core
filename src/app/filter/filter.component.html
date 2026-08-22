@@ -1,10 +1,10 @@
 <div class="filter">
   <div class="filter__body">
-    <ng-template
-      [style.visibility]="isGlobal ? 'visible' : 'hidden'"
-      [cdkPortalOutlet]="selectedPortal"
-    ></ng-template>
-    <ng-content [style.visibility]="!isGlobal ? 'visible' : 'hidden'"></ng-content>
+    <!-- Global filters attach their scope-specific filter here; local ones
+         leave selectedPortal unset and project their content instead. Only
+         one of the two is ever populated for a given instance. -->
+    <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
+    <ng-content></ng-content>
   </div>
   <div class="filter__actions">
     <button class="btn btn--ghost btn--sm" (click)="reset()">

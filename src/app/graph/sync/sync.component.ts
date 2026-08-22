@@ -44,12 +44,16 @@ export class SyncComponent extends GraphBaseComponent implements OnInit {
       ]).subscribe((data) => {
         this.rootDataA = this.graphService.truncateValues(data[0], 0);
         this.rootDataB = this.graphService.truncateValues(data[1], 0);
+        // Derive data1/data2/xAxisData before assembling the chart option:
+        // the option captures those arrays by reference at build time, so
+        // building it first freezes the pre-data empty state into the chart.
+        this.onUpdateField();
 
         this.setupBarChart();
         this.setupPieChart();
         this.setupSankeyChart();
         this.setupBubbleChart();
-        this.onUpdateField();
+        this.refreshAfterInit();
       });
     }, 1000);
   }
@@ -155,7 +159,6 @@ export class SyncComponent extends GraphBaseComponent implements OnInit {
       tooltip: {
         trigger: 'item',
         formatter: (element, index) => {
-        
           let res = element.marker + '<b>' + element.name + ': ' + element.percent + '%</b></br>';
 
           res += element.value;
@@ -335,7 +338,7 @@ export class SyncComponent extends GraphBaseComponent implements OnInit {
     const focus = [];
 
     const map = this.generateMapData(rootData, filterField, measureField);
- 
+
     const iterator = map.entries();
 
     while (true) {
@@ -397,7 +400,7 @@ export class SyncComponent extends GraphBaseComponent implements OnInit {
 
   updateSankeyChart(): void {
     const sankeyDataA = this.generateSankeyData(this.rootDataA, ' A');
-   
+
     this.sankeyMergeOptionA = {
       series: [
         {
@@ -428,8 +431,6 @@ export class SyncComponent extends GraphBaseComponent implements OnInit {
       nodes: [],
       links: [],
     };
-
- 
 
     const titleLabel = this.translateService.instant('graph.focus');
     const rootLabel = 'Italia';
