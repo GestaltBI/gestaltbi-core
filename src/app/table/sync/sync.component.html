@@ -2,7 +2,7 @@
   <div fxFlex>
     <mat-card class="analysis-filter">
       <sbi-filter localFilter="data1" localState="filterL">
-          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto A101'] }"></sbi-dimfilter>
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['A101'] }"></sbi-dimfilter>
       </sbi-filter>
     </mat-card>
     <ag-grid-angular fxFill *ngIf="columnDefs" class="ag-theme-alpine" [rowData]="rowData1" [columnDefs]="columnDefs">
@@ -11,7 +11,7 @@
   <div fxFlex>
     <mat-card class="analysis-filter">
       <sbi-filter localFilter="data2" localState="filterR">
-          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['Prodotto B102'] }"></sbi-dimfilter>
+          <sbi-dimfilter [start]="{ 'smartbi:product_code': ['B102'] }"></sbi-dimfilter>
       </sbi-filter>
     </mat-card>
     <ag-grid-angular fxFill *ngIf="columnDefs" class="ag-theme-alpine" [rowData]="rowData2" [columnDefs]="columnDefs">

@@ -59,7 +59,6 @@ export class FilterComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     if (this.isGlobal) {
       this.ar.paramMap.subscribe((params) => {
-        console.log(params);
         this.mode = params.get('mode');
         this.vis = params.get('vis');
         this.portal?.attached.subscribe((_) => {
@@ -82,12 +81,18 @@ export class FilterComponent implements OnInit, AfterViewInit {
       this.portalFilter = (this.portal.attachedRef as any).instance;
     }
 
-    setTimeout((_) => {
-      const d = document.getElementsByClassName('clickme');
-      for (let c = 0; c < d.length; c++) {
-        (d.item(c) as any).click();
-      }
-    }, 1200);
+    // Apply the declared defaults (e.g. <sbi-periodfilter startFrom=… startTo=…>)
+    // so a panel actually shows the period its date pickers advertise. This used
+    // to be done by clicking elements with a `clickme` class, which no template
+    // carries any more — leaving every two-period view comparing a period
+    // against itself, i.e. rendering zeros.
+    //
+    // It has to run after the views have called getProcessed(), because that
+    // resets the stored filter for its identifier. Hence the delay, which must
+    // stay longer than the 1000ms the visualization components wait.
+    if (!this.isGlobal) {
+      setTimeout(() => this.save(), 1200);
+    }
   }
 
   get isGlobal() {

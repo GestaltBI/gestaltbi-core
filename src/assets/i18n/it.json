@@ -70,6 +70,10 @@
     "fileLoadedCorrectlyDesc": "Clicca sul pulsante qui sotto per proseguire.",
     "title": "Benvenuto"
   },
+  "legend": {
+    "measure": "Misura",
+    "scale": "Scala"
+  },
   "l-sidenav": {
     "back": "Carica e analizza i tuoi dati",
     "menuTitle": "Tipi di analisi"

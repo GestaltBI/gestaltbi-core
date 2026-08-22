@@ -70,6 +70,10 @@
     "fileLoadedCorrectlyDesc": "Click the button below to continue.",
     "title": "Welcome"
   },
+  "legend": {
+    "measure": "Measure",
+    "scale": "Scale"
+  },
   "l-sidenav": {
     "back": "Load and analyze your data",
     "menuTitle": "Analysis modes"
