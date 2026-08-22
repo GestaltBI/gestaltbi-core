@@ -13,19 +13,27 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "src", "README.md"],
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "engines": {
     "node": ">=20.19.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "fixture:everpix": "node fixtures/everpix/build.mjs",
+    "demo:everpix": "npm run build && node examples/everpix.mjs",
+    "prepare": "npm run build",
     "prepack": "npm run clean && npm run build"
   },
   "peerDependencies": {
-    "moment": "^2.30.0",
-    "olap-cube-js": "^0.16.0",
-    "rxjs": "^7.0.0"
+    "moment": "^2.30.1",
+    "olap-cube-js": "^0.16.1",
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "typescript": "~5.9.0"
@@ -38,5 +46,15 @@
     "url": "git+https://github.com/GestaltBI/gestaltbi-core.git",
     "directory": "packages/stream"
   },
-  "keywords": ["rxjs", "pipeline", "stream-processing", "olap", "etl", "dataflow", "gestaltbi"]
+  "keywords": [
+    "rxjs",
+    "pipeline",
+    "stream-processing",
+    "olap",
+    "etl",
+    "dataflow",
+    "gestaltbi"
+  ],
+  "homepage": "https://github.com/GestaltBI/stream",
+  "bugs": "https://github.com/GestaltBI/stream/issues"
 }

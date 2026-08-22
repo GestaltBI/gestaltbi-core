@@ -7,7 +7,9 @@ import type { ColumnDirectory } from './column-directory.js';
 import type { ExternalFetcher, OpContext } from './op.js';
 import { OpRegistry } from './op-registry.js';
 import { Aggregate } from './ops/aggregate.js';
+import { Assert } from './ops/assert.js';
 import { ClearEmpty } from './ops/clear-empty.js';
+import { Cohort } from './ops/cohort.js';
 import { DiffCalc } from './ops/diff-calc.js';
 import { Enhance } from './ops/enhance.js';
 import { Format } from './ops/format.js';
@@ -16,6 +18,7 @@ import { Geojsonify } from './ops/geojsonify.js';
 import { GlobalFilter } from './ops/global-filter.js';
 import { Heatmap } from './ops/heatmap.js';
 import { LocalFilter } from './ops/local-filter.js';
+import { Recognize } from './ops/recognize.js';
 import { Regionify } from './ops/regionify.js';
 
 /** A single named transformation step in a process graph. */
@@ -45,8 +48,8 @@ export interface ProcessorOptions {
 }
 
 /**
- * Build a registry pre-populated with the eleven built-in ops under the
- * canonical names referenced in `processing.json`.
+ * Build a registry pre-populated with the built-in ops under the canonical
+ * names referenced in `processing.json`.
  */
 export function buildDefaultRegistry(): OpRegistry {
   const r = new OpRegistry();
@@ -61,6 +64,9 @@ export function buildDefaultRegistry(): OpRegistry {
   r.register('heatmap', Heatmap);
   r.register('regionify', Regionify);
   r.register('aggregate', Aggregate);
+  r.register('recognize', Recognize);
+  r.register('cohort', Cohort);
+  r.register('assert', Assert);
   return r;
 }
 
@@ -82,6 +88,8 @@ export class Processor {
   mode: string | undefined;
 
   cube: any;
+  /** Set when {@link initializeAggregator} could not build a cube. */
+  cubeError: Error | undefined;
 
   workObs: Observable<any> | undefined;
 
@@ -111,9 +119,16 @@ export class Processor {
   }
 
   initializeAggregator(data: any): void {
-    const h = this.columnDirectory.getDimensionHierarchies();
-    this.cube = new Cube(h);
-    this.cube.addFacts(data);
+    try {
+      const h = this.columnDirectory.getDimensionHierarchies();
+      this.cube = new Cube(h);
+      this.cube.addFacts(data);
+    } catch (err) {
+      // A structure with no usable dimension hierarchy is a cube problem, not a
+      // pipeline problem: ops that never call `liveCube()` still run.
+      this.cube = undefined;
+      this.cubeError = err as Error;
+    }
   }
 
   workOn(dataframe: any): void {
@@ -122,6 +137,23 @@ export class Processor {
     this.workObs = of(this.work.data);
     this.initializeAggregator(dataframe.data);
     this.done = [];
+    // A consumer that called `getProcessed` before the data landed is holding a
+    // plain Subject with nothing in it. Without this push it stays silent for
+    // good and the view never renders. Re-importing a file has to reach the
+    // views already on screen for the same reason.
+    this.pushToStreams();
+  }
+
+  /** Re-push the current input frame through every live stream. */
+  private pushToStreams(identifier?: string): void {
+    if (!this.start) return;
+    if (identifier !== undefined) {
+      this.localFilterSub.get(identifier)?.next(this.start.data);
+      return;
+    }
+    for (const sub of this.localFilterSub.values()) {
+      sub.next(this.start.data);
+    }
   }
 
   clear(): void {
@@ -193,6 +225,7 @@ export class Processor {
   }
 
   liveCube(): any {
+    if (!this.cube) throw this.cubeError ?? new Error('no OLAP cube: the structure declared no dimension hierarchy');
     return this.cube.dice().getCells();
   }
 
@@ -200,13 +233,8 @@ export class Processor {
     const ff = this.localFilterSet.get(identifier) || {};
     this.deepAssign(ff, filter);
     this.localFilterSet.set(identifier, ff);
-    if (identifier !== 'default') {
-      this.localFilterSub.get(identifier)?.next(this.start.data);
-    } else {
-      for (const k of this.localFilterSub.keys()) {
-        this.localFilterSub.get(k)?.next(this.start.data);
-      }
-    }
+    // The 'default' identifier is the global filter: it re-runs every stream.
+    this.pushToStreams(identifier === 'default' ? undefined : identifier);
   }
 
   getFilter(identifier = 'default'): any {
@@ -222,6 +250,15 @@ export class Processor {
 
   getProcessInfo(name: string): any {
     return this.processes?.process[name]?.options;
+  }
+
+  /**
+   * The context ops are constructed with. Exposed so a host can build an op —
+   * or a `Deviation` / `GeoDeviation` — outside a process graph and still give
+   * it the column directory and fetcher the graph-run ops get.
+   */
+  context(): OpContext {
+    return this.opContext();
   }
 
   /** Construct the context handed to each op at instantiation time. */

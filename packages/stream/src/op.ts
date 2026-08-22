@@ -31,13 +31,35 @@ export interface Op {
   setOptions?(options: any): void;
 }
 
+/** Column directory that knows nothing — see {@link DETACHED_CONTEXT}. */
+const NO_COLUMNS: ColumnDirectory = {
+  getColumnsFor: () => [],
+  getDataStructureFor: () => ({ columns: [] }),
+  getDimensionHierarchies: () => ({ dimensionHierarchies: [] }),
+};
+
+/**
+ * Context for an op constructed outside a process graph.
+ *
+ * `Deviation` and `GeoDeviation` take an optional context and build `Enhance` /
+ * `Geojsonify` from it, so a host that has no context to give must still get an
+ * op that runs rather than one that throws on first property access. Ops that
+ * genuinely need a directory degrade to "no columns carry that tag", which the
+ * resolvers already treat as "fall back to inspecting the rows".
+ */
+const DETACHED_CONTEXT: OpContext = {
+  columnDirectory: NO_COLUMNS,
+  fetcher: () => of({}),
+  getFilter: () => ({}),
+};
+
 export abstract class AbstractOp implements Op {
   protected options: any;
   protected ctx: OpContext;
 
-  constructor(opts: any, ctx: OpContext) {
+  constructor(opts: any, ctx?: OpContext) {
     this.options = opts;
-    this.ctx = ctx;
+    this.ctx = ctx ?? DETACHED_CONTEXT;
   }
 
   /** Convenience accessor preserved for ops that referenced `this.dss`. */

@@ -22,7 +22,7 @@ export class Aggregate extends AbstractOp {
     const pret = data.reduce((pv, cv) => {
       for (const col of aggs.columns) {
         for (const agg of col.aggregation) {
-          pv[cv[this.ac]][agg.target] = this.agg(agg.type, pv[cv[this.ac]][agg.target], cv[col.column]);
+          pv[cv[this.ac]][agg.target] = this.agg(agg.type, pv[cv[this.ac]][agg.target], cv[col.column], agg, cv);
         }
       }
       return pv;
@@ -46,6 +46,8 @@ export class Aggregate extends AbstractOp {
 
   neuter(type: string): any {
     switch (type) {
+      case 'ratio':
+        return { n: 0, d: 0 };
       case 'sum':
         return 0;
       case 'avg':
@@ -61,8 +63,17 @@ export class Aggregate extends AbstractOp {
     }
   }
 
-  agg(type: string, target: any, value: any): any {
+  agg(type: string, target: any, value: any, spec?: any, fact?: any): any {
     switch (type) {
+      case 'ratio': {
+        // Rates do not average. Accumulate numerator and denominator, divide once
+        // in finalize, so the group's rate is the rate of the group.
+        const n = parseFloat(fact?.[spec?.numerator]);
+        const d = parseFloat(fact?.[spec?.denominator]);
+        if (Number.isFinite(n)) target.n += n;
+        if (Number.isFinite(d)) target.d += d;
+        return target;
+      }
       case 'sum':
         return target + parseFloat(value);
       case 'avg':
@@ -83,6 +94,8 @@ export class Aggregate extends AbstractOp {
 
   finalize(type: string, target: any): any {
     switch (type) {
+      case 'ratio':
+        return target.d === 0 ? null : target.n / target.d;
       case 'avg':
         const sum = target.reduce((a: number, b: number) => a + b, 0);
         return sum / target.length;
@@ -94,14 +107,16 @@ export class Aggregate extends AbstractOp {
         return Math.max(...target);
       case 'min':
         return Math.min(...target);
-      case 'median':
-        if (target.length % 2 === 0) {
-          const idxh = target.length / 2;
-          const idxl = idxh - 1;
-          return (target[idxh] + target[idxl]) / 2;
-        } else {
-          return target[(target.length - 1) / 2];
+      case 'median': {
+        // Values arrive in scan order; a median of an unsorted list is not a median.
+        const sorted = target.slice().sort((a: number, b: number) => a - b);
+        if (sorted.length === 0) return null;
+        if (sorted.length % 2 === 0) {
+          const idxh = sorted.length / 2;
+          return (sorted[idxh] + sorted[idxh - 1]) / 2;
         }
+        return sorted[(sorted.length - 1) / 2];
+      }
       case 'concat':
         return target.join(', ');
       default:

@@ -1,4 +1,5 @@
 import { AbstractOp } from '../op.js';
+import { resolveTimeColumn } from '../resolve.js';
 
 export class Enhance extends AbstractOp {
   public run(df: any): any {
@@ -37,20 +38,28 @@ export class Enhance extends AbstractOp {
 
   funcCall(df: any[], column: string, func: string, options: any[]): void {
     switch (func) {
-      case 'cumsum':
+      case 'cumsum': {
         const scol = options[0];
+        // `options[1]` names the ordering column explicitly; otherwise resolve
+        // it, which still lands on the canonical `uatu:date` code that
+        // `mapping.json` produces.
+        // `on[1]` names the ordering column explicitly; `options.cumulateOn`
+        // is the key sample-config already ships for this. Failing both,
+        // resolve it — which still lands on the canonical `uatu:date` code.
+        const dcol = resolveTimeColumn(this.columnDirectory, df, options[1] ?? this.options?.cumulateOn?.[0]);
         df.sort((a, b) => {
-          const da = new Date(a['uatu:date']);
-          const db = new Date(b['uatu:date']);
-          if (da < db) return -1;
-          if (da > db) return 1;
-          return 0;
+          if (!dcol) return 0;
+          const da = +new Date(a[dcol]);
+          const db = +new Date(b[dcol]);
+          if (!Number.isFinite(da) || !Number.isFinite(db)) return 0;
+          return da - db;
         }).reduce((res: number[], row: any) => {
           res.push(row[scol]);
           row[column] = res.reduce((a, b) => a + b, 0);
           return res;
         }, []);
         break;
+      }
     }
   }
 
@@ -61,9 +70,16 @@ export class Enhance extends AbstractOp {
       return field;
     } else {
       if (Object.keys(row).indexOf(field) >= 0) {
-        return row[field];
+        const v = row[field];
+        // With `nullSafe`, a missing operand poisons the expression instead of
+        // reading as the identity. `revenue - null` must not look like margin.
+        // `format`'s cleanNumber turns an empty cell into NaN, so NaN counts as
+        // missing here too — otherwise it silently poisons the arithmetic.
+        if (this.options?.nullSafe && (v === null || v === undefined || v === '' || (typeof v === 'number' && Number.isNaN(v))))
+          return null;
+        return v;
       } else {
-        return this.neuter(field[0]);
+        return this.options?.nullSafe ? null : this.neuter(field[0]);
       }
     }
   }
@@ -81,7 +97,8 @@ export class Enhance extends AbstractOp {
     }
   }
 
-  polish(expr: any[]): number {
+  polish(expr: any[]): number | null {
+    if (this.options?.nullSafe && (expr[1] === null || expr[2] === null)) return null;
     switch (expr[0]) {
       case '-':
         return expr[1] - expr[2];

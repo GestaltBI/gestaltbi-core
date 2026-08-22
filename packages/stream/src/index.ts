@@ -1,4 +1,26 @@
 export type { ColumnDirectory } from './column-directory.js';
+export {
+  StructureDirectory,
+  type StructureDoc,
+  type StructureColumn,
+} from './structure-directory.js';
+export * as tags from './tags.js';
+export { resolveTimeColumn, byDate, TIME_TAGS } from './resolve.js';
+export {
+  runCheck,
+  runChecks,
+  allPassed,
+  type Check,
+  type CheckContext,
+  type CheckStatus,
+  type Verdict,
+  type MonotonicCheck,
+  type SignCheck,
+  type CoversCheck,
+  type DivergenceCheck,
+  type WindowCompleteCheck,
+  type RatioBoundsCheck,
+} from './checks.js';
 export { type ExternalFetcher, type Op, AbstractOp, type OpContext } from './op.js';
 export { OpRegistry, type OpConstructor } from './op-registry.js';
 export {
@@ -13,7 +35,9 @@ export { GeoDeviation } from './geodeviation.js';
 
 export { AbstractFilter } from './ops/abstract-filter.js';
 export { Aggregate } from './ops/aggregate.js';
+export { Assert } from './ops/assert.js';
 export { ClearEmpty } from './ops/clear-empty.js';
+export { Cohort } from './ops/cohort.js';
 export { DiffCalc } from './ops/diff-calc.js';
 export { Enhance } from './ops/enhance.js';
 export { Format } from './ops/format.js';
@@ -22,4 +46,5 @@ export { Geojsonify } from './ops/geojsonify.js';
 export { GlobalFilter } from './ops/global-filter.js';
 export { Heatmap } from './ops/heatmap.js';
 export { LocalFilter } from './ops/local-filter.js';
+export { Recognize } from './ops/recognize.js';
 export { Regionify } from './ops/regionify.js';
