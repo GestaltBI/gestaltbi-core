@@ -68,6 +68,10 @@ export class SmartbiService {
     return this.reg.componentFor(mode, vis);
   }
 
+  viewsFor(mode: string): string[] {
+    return this.reg.viewsFor(mode);
+  }
+
   changeMode(mode: string) {
     return [...this.prefix, mode, this.view];
   }

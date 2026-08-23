@@ -1,0 +1,16 @@
+<div class="explore">
+  <mat-card class="analysis-filter">
+    <sbi-filter localFilter="pivotgraph" localState="pivotgraph">
+      <sbi-periodfilter></sbi-periodfilter>
+    </sbi-filter>
+  </mat-card>
+
+  <mat-card class="explore__controls">
+    <sbi-pivot-controls (selectionChange)="onSelection($event)"></sbi-pivot-controls>
+    <p class="explore__note" *ngIf="omitted > 0">{{ 'explore.folded' | translate: { count: omitted } }}</p>
+  </mat-card>
+
+  <p class="explore__empty" *ngIf="loaded && !pivotable">{{ 'explore.noDimensions' | translate }}</p>
+
+  <div class="explore__chart" echarts *ngIf="chartOption" [theme]="theme" [options]="chartOption"></div>
+</div>

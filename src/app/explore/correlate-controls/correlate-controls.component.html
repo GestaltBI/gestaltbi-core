@@ -1,0 +1,30 @@
+<div class="axes">
+  <div class="axes__field">
+    <span class="axes__eyebrow eyebrow">{{ 'explore.method' | translate }}</span>
+    <mat-form-field appearance="outline" class="axes__select">
+      <mat-select [value]="selection.method" (selectionChange)="pick('method', $event.value)">
+        <mat-option *ngFor="let m of methods" [value]="m">{{ 'explore.methods.' + m | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="axes__field">
+    <span class="axes__eyebrow eyebrow">{{ 'explore.atLeast' | translate }}</span>
+    <mat-form-field appearance="outline" class="axes__select">
+      <mat-select [value]="selection.minCoefficient" (selectionChange)="pick('minCoefficient', $event.value)">
+        <mat-option *ngFor="let f of floors" [value]="f.value">{{ 'explore.floors.' + f.key | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="axes__field axes__field--wide">
+    <span class="axes__eyebrow eyebrow">{{ 'explore.compare' | translate }}</span>
+    <mat-form-field appearance="outline" class="axes__select axes__select--wide">
+      <mat-select multiple [value]="selection.include" (selectionChange)="pick('include', $event.value)">
+        <mat-option *ngFor="let f of families" [value]="f.value">
+          {{ 'explore.families.' + f.key | translate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

@@ -29,6 +29,59 @@
       }
     }
   },
+  "explore": {
+    "rows": "Sulle righe",
+    "columns": "Sulle colonne",
+    "noColumns": "Niente — solo totali",
+    "measure": "Misura",
+    "aggregation": "Aggrega per",
+    "method": "Metodo",
+    "atLeast": "Mostra almeno",
+    "compare": "Confronta",
+    "folded": "altri {{count}} valori raccolti in “Altro”",
+    "noDimensions": "Questo dataset non ha dimensioni da incrociare — è solo una serie storica.",
+    "noPairs": "Nessuna coppia è abbastanza forte da essere segnalata a questa soglia.",
+    "caveat": "Una relazione non è una causa. Due valori derivati l’uno dall’altro sembreranno sempre collegati.",
+    "agg": {
+      "sum": "Somma",
+      "avg": "Media",
+      "median": "Mediana",
+      "min": "Minimo",
+      "max": "Massimo",
+      "count": "Numero di righe",
+      "countDistinct": "Valori distinti"
+    },
+    "methods": {
+      "pearson": "Lineare (Pearson)",
+      "spearman": "Crescente o decrescente (Spearman)"
+    },
+    "floors": {
+      "all": "Tutto",
+      "weak": "Da debole in su",
+      "moderate": "Da moderata in su",
+      "strong": "Solo forti"
+    },
+    "families": {
+      "measureMeasure": "Misura e misura",
+      "dimensionMeasure": "Dimensione e misura",
+      "dimensionDimension": "Dimensione e dimensione"
+    },
+    "strength": {
+      "none": "Nessuna",
+      "weak": "Debole",
+      "moderate": "Moderata",
+      "strong": "Forte",
+      "undefined": "Non misurabile"
+    },
+    "col": {
+      "a": "Questo",
+      "b": "e questo",
+      "kind": "Confronto",
+      "coefficient": "Punteggio",
+      "strength": "Forza",
+      "reading": "Cosa dice"
+    }
+  },
   "filter": {
     "focusA": "Focus A",
     "focusB": "Focus B",
@@ -90,7 +143,9 @@
     "sync": "Sincronica",
     "syncdiff": "Sincronica · differenza",
     "syncchange": "Sincronica · forze del cambiamento",
-    "point": "Analisi puntuale"
+    "point": "Analisi puntuale",
+    "correlate": "Relazioni",
+    "pivot": "Tabella incrociata"
   },
   "toolbar": {
     "tagline": "la forma all'origine del significato",
@@ -206,12 +261,32 @@
         { "name": "I confronti con un oggetto diverso", "description": "$wiki.terms.comparisonsDifferent" }
       ]
     },
+    "correlate": {
+      "title": "Relazioni fra ciò che misuri",
+      "description": "Una tabella incrociata ti mostra due cose alla volta, e tu ne hai molte di più. Questa analisi assegna un punteggio a <b class='color-accent'>ogni coppia</b> di colonne e le ordina, così le relazioni che meritano attenzione arrivano da sole invece di dover essere indovinate. Serve anche a trovare le ridondanze: due colonne che vanno sempre d'accordo sono una sola colonna registrata due volte, e saperlo semplifica tutto il resto.",
+      "terms": [
+        { "name": "Correlazione non è causa", "description": "$wiki.terms.correlationCausation" },
+        { "name": "La tabella incrociata", "description": "$wiki.terms.crossTabulation" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" }
+      ]
+    },
+    "pivot": {
+      "title": "Incrocio di due dimensioni",
+      "description": "Tutte le altre analisi leggono i dati lungo il tempo. Questa li legge attraverso le cose che hai raccolto: metti i clienti sulle righe e i prodotti sulle colonne, o i territori contro le famiglie di prodotto, e osserva come si distribuisce la <b class='color-accent'>performance</b>. Le celle vuote dicono quanto quelle piene: sono le combinazioni che non stai servendo.",
+      "terms": [
+        { "name": "La tabella incrociata", "description": "$wiki.terms.crossTabulation" },
+        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
+        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
     "terms": {
       "changeForces": "Un aspetto originale di GestaltBI è che spiega la variazione del margine lordo in funzione dei principali fattori che l'hanno determinata. Nel caso specifico, scompone il cambiamento del margine lordo (qualunque sia l'oggetto) in variazione delle quantità vendute, variazione dei prezzi di vendita e variazione dei costi. Questa scomposizione — assente nelle BI tradizionali — separa razionalmente il problema nelle sue componenti principali, dando una direzione forte all'interpretazione ed evitando la cosiddetta \"paralisi da analisi\". Le forze del cambiamento sono rilevate da un algoritmo sofisticato che non richiede — come nelle analisi di budget tradizionali — valori obiettivo predefiniti rispetto ai quali confrontare i consuntivi.",
       "economicPerformance": "Esistono molti indicatori economici di performance. I più significativi sono quelli che si riferiscono alla redditività dell'impresa — il rapporto fra il margine lordo di un certo periodo e il capitale mediamente investito — come ROI, RONA o ROE; per le società quotate, il rendimento azionario. Esclusi i rendimenti azionari, questi indicatori si misurano tipicamente su base annuale. Quando l'obiettivo è un sistema gestionale che favorisce apprendimento e miglioramento continui, non sono ideali: (1) la redditività non cambia in modo apprezzabile in periodi brevi, e (2) sarebbe difficile, se non impossibile, ricondurre gli effetti delle attività gestionali quotidiane ai cambiamenti di redditività o di rendimento azionario. Feedback poco frequenti che non collegano azioni e risultati demotivano e inibiscono l'apprendimento.<br>Il principale indicatore di performance di breve periodo è il margine lordo o profitto: la differenza fra tutti i ricavi e tutti i costi di competenza del periodo. In tal caso anche un solo mese può essere un intervallo significativo. Alcune imprese redigono conti economici mensili. Periodi più brevi però non sono più compatibili con una misura del margine lordo complessivo (nessuna impresa produce conti economici giornalieri), perché il calcolo dei costi di competenza richiede un frazionamento virtuale delle attività che è impegnativo, costoso e poco attendibile quando il periodo è molto breve.<br>Un indicatore sintetico che mantiene la sua rilevanza anche giornalmente è il margine lordo generato dalla vendita dei prodotti: ricavi meno costo dei beni venduti. Per il principio di competenza i due valori vengono rilevati simultaneamente a ogni vendita. Ogni transazione aggiorna l'indicatore, anche più volte in un giorno. Il margine lordo è quindi l'indicatore che GestaltBI ha scelto come vertice della piramide da cui iniziare l'analisi: è il quoziente che meglio fitta i principi di rilevanza, oggettività e utilizzabilità.",
       "analysisObjects": "Il management non può limitarsi ad analizzare la performance dell'impresa nel suo complesso, sebbene sia certamente un obiettivo importante. Sono le analisi più mirate e specifiche che rivelano come migliorare la performance complessiva — quali problemi frenano la crescita dei ricavi o ostacolano il contenimento dei costi, o entrambi. Un \"oggetto\" di analisi economica è qualunque entità per la quale il management ritiene utile disporre di informazioni economiche. Alcuni oggetti sono di interesse permanente — reparti, funzioni, divisioni (i cosiddetti centri di responsabilità); spesso anche i singoli prodotti. Sono parte della reportistica ufficiale, dove le imprese tracciano sistematicamente costi e (quando possibile) ricavi. Ma la comprensione richiede un'attenzione specifica che cambia nel tempo con i fattori ambientali e competitivi. Il management ha bisogno di uno strumento che definisca flessibilmente qualunque oggetto di analisi componendo variabili come area geografica, cliente, prodotto, ecc. Una specifica combinazione di queste definisce l'oggetto di analisi nel nostro sistema. Un oggetto è, in essenza, un sottoinsieme dei dati.",
       "longitudinalSynchronic": "Si parla di analisi longitudinale quando la performance di uno stesso \"oggetto\" è comparata nel tempo. Ad esempio, analizzare la variazione del margine lordo fra febbraio e marzo per un certo gruppo di clienti, un'area geografica, una combinazione di prodotti, o qualunque combinazione di questi.<br>Le analisi sincrone, al contrario, si riferiscono a un singolo periodo e devono quindi confrontare due \"oggetti\" diversi. Qui è essenziale garantire che gli oggetti siano comparabili — cioè che il confronto di performance abbia un significato economico. Comparare il margine di gennaio di un prodotto con quello di un cliente non avrebbe alcun significato economico e non offrirebbe alcun apprendimento. Comparare il margine di due clienti diversi, invece, può essere un'occasione ricca di riflessione. Le analisi longitudinali e sincrone sono un'alternativa alla valutazione della performance via budget: non più scostamenti da valori obiettivo costruiti su ipotesi che invecchiano, ma confronto — nel tempo, o fra unità di analisi comparabili.",
-      "comparisonsDifferent": "Quando un oggetto di analisi è confrontato con un altro, le loro differenze possono sollevare seri problemi di comparabilità. Se però l'analista è in grado di tenere conto di queste differenze, i dati esterni forniscono un riferimento per la valutazione della performance — una fonte importante per comprendere le forze del miglioramento o del peggioramento. Le analisi comparative, per definizione, contengono più elementi di diversità di quelle longitudinali (che si riferiscono a un solo oggetto) e quindi consentono potenzialmente un apprendimento più ricco, con riflessioni che da una sola analisi longitudinale non potrebbero emergere. Interventi preliminari di normalizzazione possono essere utili (ad esempio, comparare due aree geografiche con numeri diversi di clienti e venditori attraverso quozienti)."
+      "comparisonsDifferent": "Quando un oggetto di analisi è confrontato con un altro, le loro differenze possono sollevare seri problemi di comparabilità. Se però l'analista è in grado di tenere conto di queste differenze, i dati esterni forniscono un riferimento per la valutazione della performance — una fonte importante per comprendere le forze del miglioramento o del peggioramento. Le analisi comparative, per definizione, contengono più elementi di diversità di quelle longitudinali (che si riferiscono a un solo oggetto) e quindi consentono potenzialmente un apprendimento più ricco, con riflessioni che da una sola analisi longitudinale non potrebbero emergere. Interventi preliminari di normalizzazione possono essere utili (ad esempio, comparare due aree geografiche con numeri diversi di clienti e venditori attraverso quozienti).",
+      "crossTabulation": "Una tabella incrociata mette una dimensione sulle righe e un'altra sulle colonne, e riempie le celle con una misura. Sommare i ricavi per territorio ti dice dove vendi; sommarli per prodotto ti dice cosa vendi. Solo incrociando i due sai <b class='color-accent'>quale prodotto vende dove</b> — ed è lì che di solito sta la decisione.",
+      "correlationCausation": "Una relazione dice che due valori si muovono insieme. Non dice che uno causa l'altro, e non può dirlo: un terzo fattore può guidarli entrambi, oppure la coppia è semplicemente lo stesso fatto scritto due volte. Tratta un punteggio alto come una domanda da porsi, non come una risposta."
     }
   }
 }

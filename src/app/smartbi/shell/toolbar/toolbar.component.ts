@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ProjectInfo, ProjectInfoService } from '../../../core/project-info.service';
@@ -23,6 +23,9 @@ import { SmartbiService } from './../../smartbi.service';
 })
 export class ToolbarComponent implements OnInit {
   mode$: Observable<any>;
+  views$: Observable<string[]>;
+
+  readonly viewIcons: Record<string, string> = { map: 'map', graph: 'monitoring', table: 'view_list' };
   projectInfo$: Observable<ProjectInfo>;
 
   constructor(
@@ -42,7 +45,9 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.ar.paramMap.subscribe((params) => {
-      this.mode$ = this.sbi.getModes().pipe(map((modes) => modes.find((mode) => mode.id === params.get('mode'))));
+      const id = params.get('mode');
+      this.mode$ = this.sbi.getModes().pipe(map((modes) => modes.find((mode) => mode.id === id)));
+      this.views$ = of(this.sbi.viewsFor(id));
     });
   }
 

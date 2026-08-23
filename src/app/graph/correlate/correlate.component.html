@@ -1,0 +1,16 @@
+<div class="explore">
+  <mat-card class="analysis-filter">
+    <sbi-filter localFilter="correlategraph" localState="correlategraph">
+      <sbi-periodfilter></sbi-periodfilter>
+    </sbi-filter>
+  </mat-card>
+
+  <mat-card class="explore__controls">
+    <sbi-correlate-controls (selectionChange)="onSelection($event)"></sbi-correlate-controls>
+    <p class="explore__note">{{ 'explore.caveat' | translate }}</p>
+  </mat-card>
+
+  <p class="explore__empty" *ngIf="loaded && !pairs">{{ 'explore.noPairs' | translate }}</p>
+
+  <div class="explore__chart" echarts *ngIf="chartOption" [theme]="theme" [options]="chartOption"></div>
+</div>

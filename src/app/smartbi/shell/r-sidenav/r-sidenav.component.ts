@@ -31,7 +31,10 @@ export class RSidenavComponent implements OnInit {
       this.translateService.get(`wiki.${this.mode}.terms`).subscribe((terms: WikiTerm[]) => {
         // Resolve $key.path references — lets the JSON share long
         // descriptions across modes without duplicating them.
-        this.terms = (terms || []).map((t) => ({
+        // A mode with no wiki entry gets the key string back, not an array —
+        // any config repo declaring a mode we have no glossary for used to take
+        // the sidenav down with it.
+        this.terms = (Array.isArray(terms) ? terms : []).map((t) => ({
           name: t.name,
           description: t.description?.startsWith('$')
             ? this.translateService.instant(t.description.slice(1))

@@ -1,0 +1,38 @@
+<div class="axes">
+  <div class="axes__field">
+    <span class="axes__eyebrow eyebrow">{{ 'explore.rows' | translate }}</span>
+    <mat-form-field appearance="outline" class="axes__select">
+      <mat-select [value]="selection.rows" (selectionChange)="pick('rows', $event.value)">
+        <mat-option *ngFor="let d of dimensions" [value]="d.code">{{ d.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="axes__field">
+    <span class="axes__eyebrow eyebrow">{{ 'explore.columns' | translate }}</span>
+    <mat-form-field appearance="outline" class="axes__select">
+      <mat-select [value]="selection.columns ?? ''" (selectionChange)="pickColumns($event.value)">
+        <mat-option value="">{{ 'explore.noColumns' | translate }}</mat-option>
+        <mat-option *ngFor="let d of dimensions" [value]="d.code">{{ d.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="axes__field" *ngIf="needsMeasure">
+    <span class="axes__eyebrow eyebrow">{{ 'explore.measure' | translate }}</span>
+    <mat-form-field appearance="outline" class="axes__select">
+      <mat-select [value]="selection.measure" (selectionChange)="pick('measure', $event.value)">
+        <mat-option *ngFor="let m of measures" [value]="m.code">{{ m.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="axes__field">
+    <span class="axes__eyebrow eyebrow">{{ 'explore.aggregation' | translate }}</span>
+    <mat-form-field appearance="outline" class="axes__select axes__select--narrow">
+      <mat-select [value]="selection.type" (selectionChange)="pick('type', $event.value)">
+        <mat-option *ngFor="let t of types" [value]="t">{{ 'explore.agg.' + t | translate }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

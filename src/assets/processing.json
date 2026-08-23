@@ -1184,6 +1184,18 @@
         ]
       }
     },
+    "exploresource": {
+      "op": "clear",
+      "require": ["pre_agg_enhance"]
+    },
+
+    "conf_explore": {
+      "op": "noop",
+      "options": {
+        "source": "exploresource"
+      }
+    },
+
     "conf_basegraph": {
       "op": "noop",
       "options": {

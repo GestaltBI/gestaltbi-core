@@ -1,0 +1,24 @@
+.axes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: flex-end;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__eyebrow {
+    color: var(--ink-muted);
+  }
+
+  &__select {
+    min-width: 190px;
+
+    &--wide {
+      min-width: 320px;
+    }
+  }
+}

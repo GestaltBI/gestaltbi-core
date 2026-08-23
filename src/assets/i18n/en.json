@@ -29,6 +29,59 @@
       }
     }
   },
+  "explore": {
+    "rows": "Down the side",
+    "columns": "Across the top",
+    "noColumns": "Nothing — just totals",
+    "measure": "Measure",
+    "aggregation": "Combine by",
+    "method": "Method",
+    "atLeast": "Show at least",
+    "compare": "Compare",
+    "folded": "{{count}} more values folded into “Other”",
+    "noDimensions": "This dataset has no dimensions to cross-tabulate — only a time series.",
+    "noPairs": "No pair was strong enough to report at this threshold.",
+    "caveat": "A relationship is not a cause. Two figures derived from one another will always look connected.",
+    "agg": {
+      "sum": "Sum",
+      "avg": "Average",
+      "median": "Median",
+      "min": "Lowest",
+      "max": "Highest",
+      "count": "Count of rows",
+      "countDistinct": "Distinct values"
+    },
+    "methods": {
+      "pearson": "Straight-line (Pearson)",
+      "spearman": "Rising or falling (Spearman)"
+    },
+    "floors": {
+      "all": "Everything",
+      "weak": "Weak and above",
+      "moderate": "Moderate and above",
+      "strong": "Strong only"
+    },
+    "families": {
+      "measureMeasure": "Measure vs measure",
+      "dimensionMeasure": "Dimension vs measure",
+      "dimensionDimension": "Dimension vs dimension"
+    },
+    "strength": {
+      "none": "None",
+      "weak": "Weak",
+      "moderate": "Moderate",
+      "strong": "Strong",
+      "undefined": "Not measurable"
+    },
+    "col": {
+      "a": "This",
+      "b": "and this",
+      "kind": "Comparison",
+      "coefficient": "Score",
+      "strength": "Strength",
+      "reading": "What it says"
+    }
+  },
   "filter": {
     "focusA": "Focus A",
     "focusB": "Focus B",
@@ -90,7 +143,9 @@
     "sync": "Synchronic",
     "syncdiff": "Synchronic · diff",
     "syncchange": "Synchronic · change forces",
-    "point": "Point analysis"
+    "point": "Point analysis",
+    "correlate": "Relationships",
+    "pivot": "Cross-tab"
   },
   "toolbar": {
     "tagline": "the shape at the origin of meaning",
@@ -206,12 +261,32 @@
         { "name": "Comparisons against a different object", "description": "$wiki.terms.comparisonsDifferent" }
       ]
     },
+    "correlate": {
+      "title": "Relationships between what you measure",
+      "description": "A cross-tab shows you two things at a time, and you have more than two. This analysis scores <b class='color-accent'>every pair</b> of columns and ranks them, so the relationships worth looking at come to you rather than waiting to be guessed. It also earns its keep by finding the pairs that are redundant — two columns that always agree are one column recorded twice, and knowing that simplifies everything downstream.",
+      "terms": [
+        { "name": "Correlation is not cause", "description": "$wiki.terms.correlationCausation" },
+        { "name": "Cross-tabulation", "description": "$wiki.terms.crossTabulation" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" }
+      ]
+    },
+    "pivot": {
+      "title": "Cross-tabulation of two dimensions",
+      "description": "Every other analysis here reads your data along time. This one reads it across the things you collected: put customers down the side and products across the top, or territories against product families, and see how the <b class='color-accent'>performance</b> distributes between them. Cells that are empty are as informative as cells that are full — they are the combinations you are not serving.",
+      "terms": [
+        { "name": "Cross-tabulation", "description": "$wiki.terms.crossTabulation" },
+        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
+        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+      ]
+    },
     "terms": {
       "changeForces": "An original aspect of GestaltBI is that it explains the variation in gross margin in terms of the main factors that drove it. Specifically, it decomposes the change in gross margin (whatever the object) into change in volumes sold, change in selling prices, and change in costs. This breakdown — absent from traditional BI tools — splits the problem rationally into its main components, giving a strong direction to interpretation and avoiding the so-called \"analysis paralysis.\" The change forces are detected by a sophisticated algorithm that does not require — as traditional budget analyses do — predefined targets or budget values to compare actuals against.",
       "economicPerformance": "There are many economic performance indicators. The most meaningful ones relate to the firm's profitability — the ratio between gross margin in a given period and the average capital invested in that period — such as ROI, RONA, or ROE; for listed companies, share returns. Setting share returns aside, these indicators are typically measured annually. When the goal is a management system that fosters continuous learning and improvement, they are not ideal: (1) profitability does not change appreciably over short periods, and (2) it would be very hard, if not impossible, to trace the effects of daily operating actions to changes in profitability or share return. Infrequent feedback that cannot link actions to outcomes saps motivation and inhibits learning.<br>The principal short-period performance indicator is gross margin, or profit — the difference between all revenues and all matching costs of the period. In that case even a single month can be a meaningful interval. Some firms even produce monthly P&Ls. Shorter periods, however, are no longer compatible with measuring overall gross margin (no firm produces a daily P&L), because computing matching costs requires a virtual splitting of activities, which is demanding, expensive, and unreliable when the period is very short.<br>One synthetic economic indicator that retains its relevance even when used daily is the gross margin generated by product sales — revenues minus the cost of goods sold. By the matching principle, both values must be recorded simultaneously and contextually with each sale. Each transaction therefore updates the indicator, sometimes multiple times a day. Gross margin is the indicator GestaltBI chose as the apex of the pyramid from which to start the analysis process. It is the metric that best fits the principles of relevance, objectivity, and usability.",
       "analysisObjects": "Management cannot limit itself to analyzing the firm's overall performance, even though that is certainly an important goal. It is the more targeted, specific analyses that reveal how to improve overall performance — what's holding back revenue growth, what's preventing cost containment, or both. An \"object\" of economic analysis is any entity for which management finds it useful to have economic information. Some objects are of permanent interest — departments, functions, divisions (so-called responsibility centers); often individual products are too. These are part of standard reporting, where firms systematically track costs and (when possible) revenues. But understanding requires specific attention that shifts over time with environmental and competitive factors. Management therefore needs a tool that flexibly defines any analysis object by composing variables — geographic area, customer, product, etc. A specific combination of these defines the analysis object in our system. An object is, in essence, a subset of the data.",
       "longitudinalSynchronic": "We speak of longitudinal analysis when the performance of the same \"object\" is compared over time. For example, analyzing the change in gross margin between February and March for a given customer group, geographic area, product combination, or any combination of these.<br>Synchronic analyses, by contrast, refer to a single period and therefore must compare two distinct \"objects.\" Here it's essential to ensure the objects are comparable — i.e. that the performance comparison carries economic meaning. Comparing the January gross margin of a product to that of a customer would carry no economic meaning and would offer no learning. Comparing the gross margin of two different customers, on the other hand, can be a rich opportunity for reflection. Longitudinal and synchronic analyses are an alternative to the budget-style way of evaluating performance: not deviations from target values built on assumptions that grow unrealistic over time, but comparison — across time, or across comparable units of analysis.",
-      "comparisonsDifferent": "When one analysis object is compared with another, their differences can raise serious comparability issues. But if the analyst can account for those differences, external data provides a reference point for performance evaluation that becomes an important source for understanding the forces driving improvement or decline. Comparative analyses, by definition, contain more elements of difference than longitudinal ones (which refer to a single object), and so potentially enable richer learning, with reflections that wouldn't surface from a longitudinal view alone. Preliminary normalization can be very useful (for example, comparing two geographic areas with different numbers of customers and salespeople through ratios)."
+      "comparisonsDifferent": "When one analysis object is compared with another, their differences can raise serious comparability issues. But if the analyst can account for those differences, external data provides a reference point for performance evaluation that becomes an important source for understanding the forces driving improvement or decline. Comparative analyses, by definition, contain more elements of difference than longitudinal ones (which refer to a single object), and so potentially enable richer learning, with reflections that wouldn't surface from a longitudinal view alone. Preliminary normalization can be very useful (for example, comparing two geographic areas with different numbers of customers and salespeople through ratios).",
+      "crossTabulation": "A cross-tab puts one dimension down the side and another across the top, and fills the cells with a measure. Totalling revenue by region tells you where you sell; totalling it by product tells you what you sell. Only crossing the two tells you <b class='color-accent'>which product sells where</b> — and that is usually where the decision is.",
+      "correlationCausation": "A relationship says two figures move together. It does not say one causes the other, and it cannot: a third thing may drive both, or the pair may simply be the same fact written twice. Treat a strong score as a question worth asking, not an answer."
     }
   }
 }

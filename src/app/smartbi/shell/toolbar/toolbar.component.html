@@ -15,21 +15,17 @@
   <div class="toolbar__center">
     <ng-container *ngIf="mode$ | async as mode">
       <div class="toolbar__mode">
-        <span class="toolbar__mode-label">{{ mode.label }}</span>
+        <span class="toolbar__mode-label">{{ mode.labelKey | translate }}</span>
       </div>
     </ng-container>
-    <mat-button-toggle-group class="toolbar__views">
-      <mat-button-toggle [routerLink]="sbi.changeView('map')" [attr.aria-label]="'view.map' | translate">
-        <mat-icon>map</mat-icon>
-        <span>{{ 'view.map' | translate }}</span>
-      </mat-button-toggle>
-      <mat-button-toggle [routerLink]="sbi.changeView('graph')" [attr.aria-label]="'view.graph' | translate">
-        <mat-icon>monitoring</mat-icon>
-        <span>{{ 'view.graph' | translate }}</span>
-      </mat-button-toggle>
-      <mat-button-toggle [routerLink]="sbi.changeView('table')" [attr.aria-label]="'view.table' | translate">
-        <mat-icon>view_list</mat-icon>
-        <span>{{ 'view.table' | translate }}</span>
+    <mat-button-toggle-group class="toolbar__views" *ngIf="views$ | async as views">
+      <mat-button-toggle
+        *ngFor="let view of views"
+        [routerLink]="sbi.changeView(view)"
+        [attr.aria-label]="'view.' + view | translate"
+      >
+        <mat-icon>{{ viewIcons[view] }}</mat-icon>
+        <span>{{ 'view.' + view | translate }}</span>
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>

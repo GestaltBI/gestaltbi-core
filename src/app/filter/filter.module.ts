@@ -41,6 +41,13 @@ export class FilterModule {
     this.reg.register('syncchange', 'table', 'global', PeriodfilterComponent); // 403 - 404
     this.reg.register('point', 'table', 'global', DimfilterComponent); // 605 - 606
 
+    // The cross-dimensional modes filter globally by period; their axes are
+    // chosen in the view itself rather than in the filter bar.
+    for (const view of ['table', 'graph', 'map']) {
+      this.reg.register('pivot', view, 'global', PeriodfilterComponent);
+      this.reg.register('correlate', view, 'global', PeriodfilterComponent);
+    }
+
     /* this.reg.register('long', 'map', 'local', PeriodfilterComponent); // 200 - 202
     this.reg.register('diff', 'map', 'local', PeriodfilterComponent); // 300 - 301
     this.reg.register('change', 'map', 'local', PeriodfilterComponent); // 400

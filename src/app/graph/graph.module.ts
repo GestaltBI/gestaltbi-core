@@ -3,15 +3,18 @@ import { NgModule } from '@angular/core';
 import * as echarts from 'echarts';
 import { NgxEchartsModule } from 'ngx-echarts';
 
+import { ExploreModule } from './../explore/explore.module';
 import { FilterModule } from './../filter/filter.module';
 import { LegendModule } from './../legend/legend.module';
 import { RegistryService } from './../sbi-registry/registry.service';
 import { SbiRegistryModule } from './../sbi-registry/sbi-registry.module';
 import { SharedModule } from '../shared/shared.module';
 import { ChangeComponent } from './change/change.component';
+import { CorrelateComponent } from './correlate/correlate.component';
 import { DiffComponent } from './diff/diff.component';
 import { GraphComponent } from './graph/graph.component';
 import { LongComponent } from './long/long.component';
+import { PivotComponent } from './pivot/pivot.component';
 import { PointComponent } from './point/point.component';
 import { SyncComponent } from './sync/sync.component';
 import { SyncchangeComponent } from './syncchange/syncchange.component';
@@ -27,12 +30,15 @@ import { SyncdiffComponent } from './syncdiff/syncdiff.component';
     PointComponent,
     SyncdiffComponent,
     SyncchangeComponent,
+    PivotComponent,
+    CorrelateComponent,
   ],
   imports: [
     SharedModule,
     SbiRegistryModule,
     LegendModule,
     FilterModule,
+    ExploreModule,
     CdkScrollableModule,
     NgxEchartsModule.forRoot({
       echarts,
@@ -48,5 +54,7 @@ export class GraphModule {
     this.reg.registerComponent('point', 'graph', PointComponent); // 601 - 603
     this.reg.registerComponent('syncdiff', 'graph', SyncdiffComponent);
     this.reg.registerComponent('syncchange', 'graph', SyncchangeComponent);
+    this.reg.registerComponent('pivot', 'graph', PivotComponent);
+    this.reg.registerComponent('correlate', 'graph', CorrelateComponent);
   }
 }

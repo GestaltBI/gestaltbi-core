@@ -7,5 +7,8 @@
   { "type": "button", "id": "syncdiff", "labelKey": "modes.syncdiff", "icon": "align-horizontal-left" },
   { "type": "button", "id": "syncchange", "labelKey": "modes.syncchange", "icon": "chart-bubble" },
   { "type": "divider" },
-  { "type": "button", "id": "point", "labelKey": "modes.point", "icon": "chart-timeline-variant" }
+  { "type": "button", "id": "point", "labelKey": "modes.point", "icon": "chart-timeline-variant" },
+  { "type": "divider" },
+  { "type": "button", "id": "pivot", "labelKey": "modes.pivot", "icon": "table-large" },
+  { "type": "button", "id": "correlate", "labelKey": "modes.correlate", "icon": "chart-scatter-plot" }
 ]
