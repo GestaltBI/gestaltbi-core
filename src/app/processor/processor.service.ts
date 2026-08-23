@@ -125,6 +125,11 @@ export class ProcessorService {
     return this.proc.getProcesses();
   }
 
+  /** Whether the loaded graph defines a process by this name. */
+  hasProcess(name: string | undefined | null): boolean {
+    return !!name && this.getProcesses().indexOf(name) >= 0;
+  }
+
   process(name: string, identifier = 'default'): void {
     this.proc.process(name, identifier);
   }

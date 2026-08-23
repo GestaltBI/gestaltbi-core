@@ -5,7 +5,9 @@
   "engines": {
     "node": ">=20.19.0"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -32,6 +34,7 @@
     "@citation-js/plugin-csl": "^0.7.22",
     "@citation-js/plugin-ris": "^0.7.21",
     "@citation-js/plugin-yaml": "^0.6.2",
+    "@gestaltbi/storybook": "github:GestaltBI/storybook",
     "@gestaltbi/stream": "*",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",

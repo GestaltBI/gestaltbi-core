@@ -134,7 +134,8 @@
   "view": {
     "map": "Mappa",
     "graph": "Grafico",
-    "table": "Tabella"
+    "table": "Tabella",
+    "story": "Racconto"
   },
   "modes": {
     "long": "Longitudinale",
@@ -145,7 +146,23 @@
     "syncchange": "Sincronica · forze del cambiamento",
     "point": "Analisi puntuale",
     "correlate": "Relazioni",
-    "pivot": "Tabella incrociata"
+    "pivot": "Tabella incrociata",
+    "narrative": "Il racconto"
+  },
+  "narrative": {
+    "rows": "letto su {{count}} righe",
+    "sources": "Fonti",
+    "mismatchTitle": "Questo racconto è stato scritto per un altro dataset",
+    "mismatchBody": "«{{story}}» legge colonne che questo dataset non descrive: risulterebbe una pagina di spazi vuoti. Carica i dati per cui è stato scritto e prende vita.",
+    "openEverpix": "Apri il report Everpix",
+    "status": {
+      "pass": "ogni affermazione regge",
+      "warn": "alcune affermazioni sono al limite",
+      "fail": "alcune affermazioni non reggono su questi dati",
+      "none": "nessuna affermazione verificata"
+    },
+    "noSourceTitle": "Questo report non ha dati da leggere",
+    "noSourceBody": "«{{story}}» indica un passaggio di analisi che questa configurazione non definisce, quindi non c’è nulla da raccontare. Dichiaralo come conf_narrative.source in processing.json."
   },
   "toolbar": {
     "tagline": "la forma all'origine del significato",

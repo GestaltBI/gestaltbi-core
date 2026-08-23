@@ -1,0 +1,113 @@
+<div class="story">
+  <mat-card class="analysis-filter">
+    <sbi-filter localFilter="narrative" localState="narrative">
+      <sbi-periodfilter></sbi-periodfilter>
+    </sbi-filter>
+  </mat-card>
+
+  <!-- The story asked for does not fit the data that is loaded. -->
+  <mat-card class="story__mismatch" *ngIf="loaded && missing.length">
+    <h2>{{ 'narrative.mismatchTitle' | translate }}</h2>
+    <p>{{ 'narrative.mismatchBody' | translate: { story: storyTitle } }}</p>
+    <p class="story__missing"><code>{{ missing.slice(0, 6).join(', ') }}</code></p>
+    <a class="btn btn--solid btn--sm" [routerLink]="['/gh', 'sirmmo', 'Everpix-Intelligence', 'narrative', 'story']">
+      {{ 'narrative.openEverpix' | translate }}
+    </a>
+  </mat-card>
+
+  <mat-card class="story__mismatch" *ngIf="loaded && sourceMissing && !missing.length">
+    <h2>{{ 'narrative.noSourceTitle' | translate }}</h2>
+    <p>{{ 'narrative.noSourceBody' | translate: { story: storyTitle } }}</p>
+  </mat-card>
+
+  <article class="story__body" *ngIf="story && !sourceMissing">
+    <header class="story__head">
+      <h1 class="story__title">{{ story.title }}</h1>
+      <p class="story__subtitle" *ngIf="story.subtitle">{{ story.subtitle }}</p>
+      <p class="story__standfirst prose" *ngFor="let p of story.standfirst" [innerHtml]="p"></p>
+      <p class="story__meta">
+        <span class="badge badge--{{ story.status }}">{{ 'narrative.status.' + story.status | translate }}</span>
+        <span>{{ 'narrative.rows' | translate: { count: story.n } }}</span>
+      </p>
+    </header>
+
+    <section class="chapter" *ngFor="let c of story.chapters; let i = index">
+      <div class="chapter__prose">
+        <span class="chapter__num eyebrow">{{ i < 9 ? '0' + (i + 1) : i + 1 }}</span>
+        <h2 class="chapter__title">{{ c.title }}</h2>
+        <p class="prose" *ngFor="let p of c.prose" [innerHtml]="p"></p>
+        <p class="chapter__takeaway" *ngIf="c.takeaway">{{ c.takeaway }}</p>
+
+        <ul class="verdicts" *ngIf="c.verdicts.length">
+          <li class="verdict verdict--{{ v.status }}" *ngFor="let v of c.verdicts">
+            <span class="verdict__dot" aria-hidden="true"></span>
+            <span class="verdict__label">{{ verdictLabel(v) }}</span>
+            <span class="verdict__summary">{{ v.summary }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="chapter__panel" *ngIf="c.panel as panel" [ngSwitch]="panel.kind">
+        <div class="figures" *ngSwitchCase="'figures'">
+          <div class="figure" *ngFor="let f of panel.figures">
+            <span class="figure__label eyebrow">{{ f.label }}</span>
+            <span class="figure__value">{{ f.formatted }}<small *ngIf="f.unit"> {{ f.unit }}</small></span>
+            <span class="figure__note" *ngIf="f.note">{{ f.note }}</span>
+          </div>
+        </div>
+
+        <div class="chapter__chart" echarts *ngSwitchCase="'series'" [theme]="theme" [options]="charts.get(c.id)"></div>
+
+        <table class="dtable" *ngSwitchCase="'pivot'">
+          <thead>
+            <tr>
+              <th>{{ panel.rowKey }}</th>
+              <th class="dtable__num" *ngFor="let col of panel.columns">{{ col }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of panel.rows">
+              <th scope="row">{{ row[panel.rowKey] }}</th>
+              <td class="dtable__num" *ngFor="let col of panel.columns">{{ row[col] }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="dtable" *ngSwitchCase="'correlate'">
+          <thead>
+            <tr>
+              <th>{{ 'explore.col.a' | translate }}</th>
+              <th>{{ 'explore.col.b' | translate }}</th>
+              <th class="dtable__num">{{ 'explore.col.coefficient' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of panel.associations">
+              <th scope="row">{{ a.a }}</th>
+              <td>{{ a.b }}</td>
+              <td class="dtable__num">{{ a.coefficient === null ? '—' : (a.coefficient | number: '1.2-2') }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="dtable" *ngSwitchCase="'table'">
+          <thead>
+            <tr>
+              <th *ngFor="let col of panel.columns">{{ col.label }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of panel.rows">
+              <td *ngFor="let col of panel.columns">{{ row[col.column] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="story__credits" *ngIf="story.credits.length">
+      <span class="eyebrow">{{ 'narrative.sources' | translate }}</span>
+      <a *ngFor="let c of story.credits" [href]="c.href" target="_blank" rel="noopener">{{ c.label }}</a>
+    </footer>
+  </article>
+</div>

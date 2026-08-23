@@ -281,3 +281,28 @@ test('enhance nullSafe treats NaN as missing, as format produces for empty cells
   new Enhance({ nullSafe: true, columns: [{ column: 'margin', expr: ['-', 'rev', 'cost'] }] }, ctx()).run(frame(rows));
   assert.equal(rows[0].margin, null);
 });
+
+test('aggregate keeps the type of the columns it grouped by', () => {
+  // The group key is a joined string; writing it back turned a Date into its
+  // toString, and every later check that ordered by that column silently
+  // compared "Fri…" against "Mon…" instead of comparing dates.
+  const rows = [
+    { month: new Date('2013-02-01'), amount: 1 },
+    { month: new Date('2013-01-01'), amount: 2 },
+    { month: new Date('2013-01-01'), amount: 3 },
+  ];
+  const structure = {
+    columns: [
+      { column: 'month', type: 'date', tags: ['uatu:dimension', 'uatu:dimension:time'] },
+      {
+        column: 'amount', type: 'number', tags: ['uatu:measure', 'uatu:aggregable'],
+        aggregation: [{ target: 'amount:sum', type: 'sum' }],
+      },
+    ],
+  };
+  const out = new Aggregate({ groupby: ['month'] }, ctx(structure)).run(frame(rows));
+  assert.equal(out.length, 2);
+  assert.ok(out.every((r) => r.month instanceof Date), 'the group key must stay a Date');
+  const jan = out.find((r) => r.month.getUTCMonth() === 0);
+  assert.equal(jan['amount:sum'], 5);
+});

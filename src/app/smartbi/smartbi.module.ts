@@ -2,6 +2,7 @@ import { PortalModule } from '@angular/cdk/portal';
 import { NgModule } from '@angular/core';
 
 import { ImporterModule } from './../importer/importer.module';
+import { NarrativeModule } from './../narrative/narrative.module';
 import { SbiRegistryModule } from './../sbi-registry/sbi-registry.module';
 import { SharedModule } from './../shared/shared.module';
 import { TimedmapModule } from './../timedmap/timedmap.module';
@@ -32,6 +33,7 @@ import { SmartbiRoutingModule } from './smartbi-routing.module';
     GraphModule,
     TableModule,
     MapModule,
+    NarrativeModule,
   ],
 })
 export class SmartbiModule {}

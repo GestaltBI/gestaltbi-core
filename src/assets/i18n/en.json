@@ -134,7 +134,8 @@
   "view": {
     "map": "Map",
     "graph": "Chart",
-    "table": "Table"
+    "table": "Table",
+    "story": "Story"
   },
   "modes": {
     "long": "Longitudinal",
@@ -145,7 +146,23 @@
     "syncchange": "Synchronic · change forces",
     "point": "Point analysis",
     "correlate": "Relationships",
-    "pivot": "Cross-tab"
+    "pivot": "Cross-tab",
+    "narrative": "The story"
+  },
+  "narrative": {
+    "rows": "read against {{count}} rows",
+    "sources": "Sources",
+    "mismatchTitle": "This story was written for a different dataset",
+    "mismatchBody": "“{{story}}” reads columns this dataset does not describe, so it would render as a page of blanks. Load the data it was written for and it comes alive.",
+    "openEverpix": "Open the Everpix report",
+    "status": {
+      "pass": "every claim holds",
+      "warn": "some claims are marginal",
+      "fail": "some claims fail on this data",
+      "none": "nothing asserted"
+    },
+    "noSourceTitle": "This report has no data to read",
+    "noSourceBody": "“{{story}}” names an analysis step this configuration does not define, so there is nothing to report on. Declare it as conf_narrative.source in processing.json."
   },
   "toolbar": {
     "tagline": "the shape at the origin of meaning",

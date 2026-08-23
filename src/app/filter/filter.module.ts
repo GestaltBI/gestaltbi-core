@@ -47,6 +47,7 @@ export class FilterModule {
       this.reg.register('pivot', view, 'global', PeriodfilterComponent);
       this.reg.register('correlate', view, 'global', PeriodfilterComponent);
     }
+    this.reg.register('narrative', 'story', 'global', PeriodfilterComponent);
 
     /* this.reg.register('long', 'map', 'local', PeriodfilterComponent); // 200 - 202
     this.reg.register('diff', 'map', 'local', PeriodfilterComponent); // 300 - 301

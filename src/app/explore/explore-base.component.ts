@@ -27,21 +27,39 @@ export abstract class ExploreBaseComponent extends BaseComponent implements OnIn
     super(injector);
   }
 
+  /** Set when the graph does not define the process this view asked for. */
+  sourceMissing = false;
+
+  /** Process the view read from, or null when it fell back to the raw frame. */
+  sourceProcessName: string | null = null;
+
   /** Stream identifier, so each view keeps its own filter state. */
   protected abstract get identifier(): string;
+
+  /**
+   * Process to read from. Defaults to whatever `conf_explore` names.
+   *
+   * A view that needs something more specific overrides this — the narrative
+   * takes the process its story was written against.
+   */
+  protected sourceProcess(): string | undefined {
+    const conf: any = this.ds.getProcessInfo('conf_explore') ?? {};
+    return conf.source ?? 'exploresource';
+  }
 
   /** Recompute whatever this view renders. Called on new data and on new options. */
   protected abstract recompute(): void;
 
   ngOnInit(): void {
-    const conf: any = this.ds.getProcessInfo('conf_explore') ?? {};
-    // A frame that has been filtered and enhanced but not rolled up. Falling
-    // back keeps this working against a config repo that never heard of it:
-    // an unknown process name yields the raw frame rather than an error.
-    const process: string = conf.source ?? 'exploresource';
+    const wanted = this.sourceProcess();
+    // An unknown process name silently yields the raw frame — unparsed numbers,
+    // no derived columns — which looks like data and is not. Check first, and
+    // let the view say so rather than quietly analysing strings.
+    this.sourceMissing = !this.ps.hasProcess(wanted);
+    this.sourceProcessName = this.sourceMissing ? null : (wanted as string);
 
     setTimeout(() => {
-      this.sub = this.ds.getProcessed(process, this.identifier).subscribe((data) => {
+      this.sub = this.ds.getProcessed(this.sourceProcessName, this.identifier).subscribe((data) => {
         this.source = Array.isArray(data) ? data : [];
         this.loaded = true;
         this.recompute();
