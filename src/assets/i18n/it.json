@@ -163,7 +163,9 @@
       "none": "nessuna affermazione verificata"
     },
     "noSourceTitle": "Questo report non ha dati da leggere",
-    "noSourceBody": "«{{story}}» indica un passaggio di analisi che questa configurazione non definisce, quindi non c’è nulla da raccontare. Dichiaralo come conf_narrative.source in processing.json."
+    "noSourceBody": "«{{story}}» indica un passaggio di analisi che questa configurazione non definisce, quindi non c’è nulla da raccontare. Dichiaralo come conf_narrative.source in processing.json.",
+    "noStoryTitle": "Questo dataset non ha ancora un racconto",
+    "noStoryBody": "Un racconto è scritto per i dati che legge. Aggiungi un story.json accanto a processing.json in questa configurazione e verrà raccontato qui."
   },
   "toolbar": {
     "tagline": "la forma all'origine del significato",

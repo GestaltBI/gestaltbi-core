@@ -1,0 +1,214 @@
+{
+  "id": "smartbi-2020",
+  "title": "A year of selling, read in order",
+  "subtitle": "What the sample dataset says about 2020, and what it refuses to say",
+  "source": "enhance",
+  "date": "uatu:date",
+  "standfirst": [
+    "This is the demonstration dataset — one company, two products, four customers, a year of daily orders. It is small enough to check by hand, which makes it a good place to see what a narrative does.",
+    "Every figure below is computed from the data loaded right now. Change the period at the top and the sentences change with it. Every claim carries a check, and the checks are allowed to fail."
+  ],
+  "chapters": [
+    {
+      "id": "year",
+      "title": "The year in three numbers",
+      "figures": [
+        {
+          "id": "revenue",
+          "label": "Revenue",
+          "measure": "smartbi:calc:daily_revenue:sum",
+          "reduce": "sum",
+          "format": "currency"
+        },
+        {
+          "id": "margin",
+          "label": "Gross margin",
+          "measure": "smartbi:calc:daily_ro:sum",
+          "reduce": "sum",
+          "format": "currency",
+          "note": "Revenue less the cost of what was sold"
+        },
+        {
+          "id": "units",
+          "label": "Units sold",
+          "measure": "smartbi:sold_quant:sum",
+          "reduce": "sum",
+          "format": "integer"
+        }
+      ],
+      "prose": [
+        "Across the loaded period the company billed {{revenue}} and kept {{margin}} of it as gross margin, on {{units}} units shipped.",
+        "Those three numbers are the whole business in outline. Everything that follows is an attempt to say <b class='color-accent'>where they came from</b> — because a total tells you the size of something, never its shape."
+      ],
+      "takeaway": "Start with the totals, then refuse to stop there.",
+      "panel": {
+        "kind": "figures"
+      }
+    },
+    {
+      "id": "shape",
+      "title": "Revenue and margin do not move together",
+      "figures": [
+        {
+          "id": "best",
+          "label": "Best day, by margin",
+          "measure": "smartbi:calc:daily_ro:sum",
+          "reduce": "max",
+          "format": "currency"
+        },
+        {
+          "id": "worst",
+          "label": "Worst day",
+          "measure": "smartbi:calc:daily_ro:sum",
+          "reduce": "min",
+          "format": "currency"
+        }
+      ],
+      "prose": [
+        "Plot the two against each other and the gap opens up. The best day returned {{best}}; the worst returned {{worst}}.",
+        "A negative worst day is not a rounding artefact: it is a day that cost more to serve than it billed. A day can be busy and unprofitable, and that is the first thing a revenue chart alone will never tell you."
+      ],
+      "takeaway": "Busy is not the same as profitable, and the difference is a daily fact, not an annual one.",
+      "panel": {
+        "kind": "series",
+        "series": [
+          {
+            "measure": "smartbi:calc:daily_revenue:sum",
+            "label": "Revenue",
+            "type": "bar"
+          },
+          {
+            "measure": "smartbi:calc:daily_ro:sum",
+            "label": "Gross margin",
+            "type": "line"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "id": "margin-never-negative",
+          "type": "sign",
+          "label": "Every day returned a positive margin",
+          "measure": "smartbi:calc:daily_ro:sum",
+          "expect": ">0"
+        },
+        {
+          "id": "revenue-covers-margin",
+          "type": "covers",
+          "label": "Revenue is at least the margin it produced",
+          "measure": "smartbi:calc:daily_revenue:sum",
+          "by": "smartbi:calc:daily_ro:sum"
+        }
+      ]
+    },
+    {
+      "id": "price",
+      "title": "Price is the lever",
+      "figures": [
+        {
+          "id": "price",
+          "label": "Average price",
+          "measure": "smartbi:sold_price:avg",
+          "reduce": "avg",
+          "format": "currency"
+        },
+        {
+          "id": "cost",
+          "label": "Average unit cost",
+          "measure": "smartbi:unit_cost:avg",
+          "reduce": "avg",
+          "format": "currency"
+        }
+      ],
+      "prose": [
+        "The average unit went out at {{price}} against {{cost}} to buy. The distance between those two is the entire margin, and it is set before a single order is taken.",
+        "Volume moves the total. Price moves the <b class='color-accent'>rate</b>. Confusing the two is how a company sells more and earns less.",
+        "On the days where that gap closed entirely, the order shipped below cost and the day ran at a loss. The check below counts them and names the dates — a handful out of the whole period, which is exactly the kind of thing a monthly total hides."
+      ],
+      "takeaway": "Volume changes the size of the business; price changes whether it works — and a few days a year, it did not.",
+      "panel": {
+        "kind": "series",
+        "series": [
+          {
+            "measure": "smartbi:sold_price:avg",
+            "label": "Average price",
+            "type": "line"
+          },
+          {
+            "measure": "smartbi:unit_cost:avg",
+            "label": "Average unit cost",
+            "type": "line"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "id": "price-above-cost",
+          "type": "covers",
+          "label": "The average price stayed above the average cost",
+          "measure": "smartbi:sold_price:avg",
+          "by": "smartbi:unit_cost:avg"
+        }
+      ]
+    },
+    {
+      "id": "cumulative",
+      "title": "Where the year actually went",
+      "figures": [
+        {
+          "id": "cumRevenue",
+          "label": "Cumulative revenue",
+          "measure": "smartbi:calc:cumulative_revenue",
+          "reduce": "last",
+          "format": "currency"
+        },
+        {
+          "id": "cumMargin",
+          "label": "Cumulative margin",
+          "measure": "smartbi:calc:cumulative_ro",
+          "reduce": "last",
+          "format": "currency"
+        }
+      ],
+      "prose": [
+        "Read cumulatively rather than daily and the noise drops out: {{cumRevenue}} banked, {{cumMargin}} of it kept.",
+        "A cumulative line only ever rises, which makes it flattering and easy to read badly. What it is good for is slope — where the line steepens, something changed, and that is the date worth asking about."
+      ],
+      "takeaway": "Look at the slope, not the height.",
+      "panel": {
+        "kind": "series",
+        "series": [
+          {
+            "measure": "smartbi:calc:cumulative_revenue",
+            "label": "Cumulative revenue",
+            "type": "area"
+          },
+          {
+            "measure": "smartbi:calc:cumulative_ro",
+            "label": "Cumulative margin",
+            "type": "area"
+          }
+        ]
+      },
+      "checks": [
+        {
+          "id": "cumulative-only-rises",
+          "type": "monotonic",
+          "label": "Cumulative revenue never falls",
+          "measure": "smartbi:calc:cumulative_revenue",
+          "direction": "increasing"
+        }
+      ]
+    }
+  ],
+  "credits": [
+    {
+      "label": "Bundled demonstration data",
+      "href": "https://github.com/GestaltBI/gestaltbi-core"
+    },
+    {
+      "label": "How a story is written",
+      "href": "https://github.com/GestaltBI/storybook"
+    }
+  ]
+}

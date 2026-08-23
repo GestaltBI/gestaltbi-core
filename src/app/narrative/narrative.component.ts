@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { missingColumns, resolveStory, storyById, type ResolvedStory, type Story } from '@gestaltbi/storybook';
+import { missingColumns, resolveStory, type ResolvedStory, type Story } from '@gestaltbi/storybook';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -35,6 +35,11 @@ export class NarrativeComponent extends ExploreBaseComponent {
 
   /** The story this config asked for, whether or not it fits. */
   storyTitle = '';
+
+  /** True when this configuration ships no story at all. */
+  get noStory(): boolean {
+    return this.loaded && !this.definition;
+  }
 
   theme: any;
 
@@ -73,23 +78,18 @@ export class NarrativeComponent extends ExploreBaseComponent {
   /**
    * Where a story comes from, in order of precedence.
    *
-   * A story is about one dataset, so it belongs with that dataset: a config
-   * repo can ship its own `story.json` beside `processing.json` and own its
-   * narrative outright, without anything being compiled into the client. The
-   * ids in `@gestaltbi/storybook` are the fallback, and the reason the bundled
-   * sample still has something to show.
+   * A story is about one dataset, so it belongs with that dataset: a config repo
+   * ships `story.json` beside `processing.json` and owns its narrative outright.
+   * Nothing is compiled in — `conf_narrative.storyUrl` only moves the file.
    */
   private loadStory(): Observable<Story | null> {
     const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
-    if (conf.story && storyById(conf.story)) {
-      return of(storyById(conf.story) as Story);
-    }
     const url = this.injector.get(ConfigSourceService).url(conf.storyUrl ?? 'story.json');
     return this.injector.get(HttpClient).get<Story>(url).pipe(
       map((story) => (story?.chapters?.length ? story : null)),
-      // No story.json is a normal configuration, not an error: fall back to
-      // whatever id the config named, or to the bundled default.
-      catchError(() => of(storyById(conf.story ?? 'everpix') ?? null)),
+      // No story.json is a normal configuration, not an error: this mode simply
+      // has nothing to tell for that dataset, and says so.
+      catchError(() => of(null)),
     );
   }
 

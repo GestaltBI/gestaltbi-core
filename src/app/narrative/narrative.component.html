@@ -5,6 +5,11 @@
     </sbi-filter>
   </mat-card>
 
+  <mat-card class="story__mismatch" *ngIf="noStory">
+    <h2>{{ 'narrative.noStoryTitle' | translate }}</h2>
+    <p>{{ 'narrative.noStoryBody' | translate }}</p>
+  </mat-card>
+
   <!-- The story asked for does not fit the data that is loaded. -->
   <mat-card class="story__mismatch" *ngIf="loaded && missing.length">
     <h2>{{ 'narrative.mismatchTitle' | translate }}</h2>

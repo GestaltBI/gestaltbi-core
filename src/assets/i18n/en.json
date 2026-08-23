@@ -163,7 +163,9 @@
       "none": "nothing asserted"
     },
     "noSourceTitle": "This report has no data to read",
-    "noSourceBody": "“{{story}}” names an analysis step this configuration does not define, so there is nothing to report on. Declare it as conf_narrative.source in processing.json."
+    "noSourceBody": "“{{story}}” names an analysis step this configuration does not define, so there is nothing to report on. Declare it as conf_narrative.source in processing.json.",
+    "noStoryTitle": "This dataset has no story yet",
+    "noStoryBody": "A narrative is written for the data it reads. Add a story.json beside processing.json in this configuration and it will be told here."
   },
   "toolbar": {
     "tagline": "the shape at the origin of meaning",
