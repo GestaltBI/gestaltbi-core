@@ -48,8 +48,8 @@ export class ImporterService {
   getHeaders(file: File): void {
     this.papa.parse(file, {
       header: true,
+      skipEmptyLines: true,
       complete: (result) => {
-        console.log(result);
         this.headersLoaded.emit(result.meta.fields);
       },
     });
@@ -58,20 +58,43 @@ export class ImporterService {
   getData(file: File): ParseResult {
     return this.papa.parse(file, {
       header: true,
+      // Without this a file ending in a newline yields a trailing row of empty
+      // strings, which then travels the whole pipeline as a real record.
+      skipEmptyLines: true,
       complete: (result) => {
-        console.log(result);
-        result.data.map((x) => {
-          this.importMapping().subscribe((m) => {
-            m.columns.forEach((e) => {
-              if (Object.keys(x).indexOf(e.column) >= 0) {
-                x[e.target] = x[e.column].replace(' �', '');
-              }
-            });
-          });
+        // Fetch the mapping once, apply it, and only then announce the data.
+        // Emitting first published the raw CSV headers, so any config whose
+        // data.csv is not already written in canonical column codes produced
+        // views with no measures at all. Subscribing per row also fired one
+        // request per record.
+        this.importMapping().subscribe({
+          next: (m) => {
+            this.applyMapping(result.data, m);
+            this.dataLoaded.emit(result);
+          },
+          // No mapping is a valid configuration: the bundled sample already
+          // uses canonical codes as its CSV headers.
+          error: () => this.dataLoaded.emit(result),
         });
-        this.dataLoaded.emit(result);
       },
     });
+  }
+
+  /** Rename source columns to the canonical codes `structure.json` is written in. */
+  private applyMapping(rows: any[], mapping: any): void {
+    const columns: any[] = mapping?.columns ?? [];
+    if (!columns.length) {
+      return;
+    }
+    for (const row of rows) {
+      for (const e of columns) {
+        if (Object.prototype.hasOwnProperty.call(row, e.column)) {
+          const value = row[e.column];
+          // The ' �' strip is for mojibake in the bundled Italian sample.
+          row[e.target] = typeof value === 'string' ? value.replace(' �', '') : value;
+        }
+      }
+    }
   }
 
   getStructure(): Observable<any> {
