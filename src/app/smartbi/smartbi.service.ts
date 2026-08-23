@@ -72,8 +72,18 @@ export class SmartbiService {
     return this.reg.viewsFor(mode);
   }
 
+  /**
+   * Route to a mode, keeping the current view where that mode has one.
+   *
+   * Modes no longer all offer the same views — a narrative has no table, a
+   * cross-tab has no map — so carrying the current view across blindly linked
+   * straight at an unregistered pair, which resolves to EmptyComponent. Fall
+   * back to whatever the target mode actually provides.
+   */
   changeMode(mode: string) {
-    return [...this.prefix, mode, this.view];
+    const views = this.reg.viewsFor(mode);
+    const view = views.includes(this.view) ? this.view : (views[0] ?? this.view);
+    return [...this.prefix, mode, view];
   }
 
   changeView(view: string) {
