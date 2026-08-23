@@ -10,7 +10,8 @@
     <p class="explore__note" *ngIf="omitted > 0">{{ 'explore.folded' | translate: { count: omitted } }}</p>
   </mat-card>
 
-  <p class="explore__empty" *ngIf="loaded && !pivotable">{{ 'explore.noDimensions' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && sourceMissing">{{ 'explore.noSource' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && !sourceMissing && !pivotable">{{ 'explore.noDimensions' | translate }}</p>
 
   <div class="explore__chart" echarts *ngIf="chartOption" [theme]="theme" [options]="chartOption"></div>
 </div>

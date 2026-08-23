@@ -1,5 +1,5 @@
 import type { ColumnDirectory } from './column-directory.js';
-import { DIMENSION, TIME } from './tags.js';
+import { DIMENSION_TAGS } from './resolve.js';
 
 /** A column entry in a `structure.json` document. */
 export interface StructureColumn {
@@ -65,13 +65,14 @@ export class StructureDirectory implements ColumnDirectory {
    * Dimension hierarchies in the shape `olap-cube-js` expects:
    * `{ dimensionHierarchies: [{ dimensionTable: { dimension, keyProps }, level: [] }] }`.
    *
-   * One flat hierarchy per dimension column. Time dimensions are included; if a
-   * structure declares no dimensions at all the cube is given an empty list
-   * rather than a malformed one.
+   * One flat hierarchy per dimension column — including the refinements, since
+   * `uatu:dimension:geo` marks a dimension every bit as much as the base tag
+   * does. If a structure declares no dimensions at all the cube is given an
+   * empty list rather than a malformed one.
    */
   getDimensionHierarchies(): any {
-    const dims = this.structure.columns.filter(
-      (c) => (c.tags || []).includes(DIMENSION) || (c.tags || []).includes(TIME),
+    const dims = this.structure.columns.filter((c) =>
+      (c.tags || []).some((t) => DIMENSION_TAGS.includes(t)),
     );
     return {
       dimensionHierarchies: dims.map((c) => ({

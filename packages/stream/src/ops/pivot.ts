@@ -1,9 +1,9 @@
 import { finalize, neuter, step, type AggKind, type AggSpec } from '../agg.js';
 import { AbstractOp } from '../op.js';
-import { DIMENSION } from '../tags.js';
+import { dimensionColumns } from '../resolve.js';
 
 export interface PivotOptions extends AggSpec {
-  /** Dimensions down the side. Defaults to every `uatu:dimension` not used as a column. */
+  /** Dimensions down the side. Defaults to every dimension not used as a column. */
   rows?: string[];
   /** Dimensions across the top. Omit for a plain group-by with one measure column. */
   columns?: string[];
@@ -154,13 +154,11 @@ export class Pivot extends AbstractOp {
 
   /** Dimensions the structure declares, minus the ones spent on the column axis. */
   private defaultRows(colDims: string[]): string[] {
-    let dims: string[] = [];
     try {
-      dims = this.columnDirectory?.getColumnsFor(DIMENSION) ?? [];
+      return dimensionColumns(this.columnDirectory).filter((d) => !colDims.includes(d));
     } catch {
-      dims = [];
+      return [];
     }
-    return dims.filter((d) => !colDims.includes(d));
   }
 
   /** The `limit` most frequent column keys. */

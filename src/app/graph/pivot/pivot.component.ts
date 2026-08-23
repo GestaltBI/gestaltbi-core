@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Pivot } from '@gestaltbi/stream';
+import { dimensionColumns, Pivot } from '@gestaltbi/stream';
 
 import { ExploreBaseComponent } from '../../explore/explore-base.component';
 import { PivotSelection } from '../../explore/pivot-controls/pivot-controls.component';
@@ -23,7 +23,7 @@ export class PivotComponent extends ExploreBaseComponent {
   theme: any;
 
   get pivotable(): boolean {
-    return (this.dataStructureService.getColumnsFor('uatu:dimension') ?? []).length > 0;
+    return dimensionColumns(this.dataStructureService).length > 0;
   }
 
   private selection: PivotSelection | undefined;

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import type { AggKind } from '@gestaltbi/stream';
+import { dimensionColumns, type AggKind } from '@gestaltbi/stream';
 
 import { DatastructureService } from '../../datastructure/datastructure.service';
 
@@ -43,8 +43,12 @@ export class PivotControlsComponent implements OnInit {
   constructor(private dss: DatastructureService) {}
 
   ngOnInit(): void {
-    this.dimensions = this.choices('uatu:dimension');
-    this.measures = this.choices('uatu:measure');
+    // `uatu:dimension:time` and friends are refinements of `uatu:dimension`, so
+    // a dataset whose only axis is time still has one to pivot on. Continuous
+    // ones are dropped: latitude is tagged a geo dimension and is a coordinate,
+    // and cross-tabulating by it would make one column per distinct reading.
+    this.dimensions = this.label(dimensionColumns(this.dss).filter((code) => this.categorical(code)));
+    this.measures = this.label(this.dss.getColumnsFor('uatu:measure') ?? []);
 
     this.selection = {
       rows: this.dimensions[0]?.code ?? '',
@@ -79,8 +83,14 @@ export class PivotControlsComponent implements OnInit {
     this.selectionChange.emit({ ...this.selection });
   }
 
-  private choices(tag: string): Choice[] {
-    return (this.dss.getColumnsFor(tag) ?? [])
+  /** An axis has to have levels. A number line does not. */
+  private categorical(code: string): boolean {
+    const type = String(this.dss.getTypeFor(code) ?? '');
+    return !type.startsWith('number') && type !== 'int' && type !== 'float';
+  }
+
+  private label(codes: string[]): Choice[] {
+    return codes
       .filter((code, i, all) => all.indexOf(code) === i)
       .map((code) => ({ code, label: this.dss.getLabel(code) }));
   }

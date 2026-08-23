@@ -1,4 +1,15 @@
 import type { ColumnDirectory } from './column-directory.js';
+import { COHORT, DIMENSION, GEO, TIME } from './tags.js';
+
+/**
+ * Every tag that marks a column as a dimension.
+ *
+ * `uatu:dimension:time`, `:geo` and `:cohort` are *refinements* of
+ * `uatu:dimension`, so a structure carrying only the refinement still has a
+ * dimension. Reading the base tag alone makes a dataset whose only axis is time
+ * look like it has no axes at all.
+ */
+export const DIMENSION_TAGS = [DIMENSION, TIME, GEO, COHORT];
 
 /**
  * Tags that mark the time dimension, newest vocabulary last.
@@ -60,3 +71,12 @@ export const byDate =
     if (Number.isFinite(ad) && Number.isFinite(bd)) return ad - bd;
     return String(av) < String(bv) ? -1 : String(av) > String(bv) ? 1 : 0;
   };
+
+/** Every column acting as a dimension, in {@link DIMENSION_TAGS} order, deduplicated. */
+export function dimensionColumns(dir: ColumnDirectory | undefined): string[] {
+  const seen = new Set<string>();
+  for (const tag of DIMENSION_TAGS) {
+    for (const column of cols(dir, tag)) seen.add(column);
+  }
+  return [...seen];
+}

@@ -1,6 +1,7 @@
 import { num } from '../agg.js';
 import { AbstractOp } from '../op.js';
-import { DIMENSION, MEASURE } from '../tags.js';
+import { dimensionColumns } from '../resolve.js';
+import { MEASURE } from '../tags.js';
 
 /** What kind of pair a coefficient describes. */
 export type PairKind = 'measure-measure' | 'dimension-measure' | 'dimension-dimension';
@@ -25,7 +26,7 @@ export interface Association {
 export interface CorrelateOptions {
   /** Numeric columns. Defaults to everything tagged `uatu:measure` and present in the frame. */
   measures?: string[];
-  /** Categorical columns. Defaults to everything tagged `uatu:dimension`. */
+  /** Categorical columns. Defaults to every column tagged as a dimension. */
   dimensions?: string[];
   /** `pearson` (default) measures a straight-line relationship, `spearman` a monotonic one. */
   method?: 'pearson' | 'spearman';
@@ -81,7 +82,7 @@ export class Correlate extends AbstractOp {
     if (!rows.length) return [];
 
     const measures = (o.measures ?? this.tagged(MEASURE)).filter((c) => this.present(rows, c));
-    const dimensions = (o.dimensions ?? this.tagged(DIMENSION)).filter((c) => this.present(rows, c));
+    const dimensions = (o.dimensions ?? this.dimensions()).filter((c) => this.present(rows, c));
     const include = o.include ?? ['measure-measure', 'dimension-measure', 'dimension-dimension'];
 
     const out: Association[] = [];
@@ -108,6 +109,15 @@ export class Correlate extends AbstractOp {
   }
 
   // ------------------------------------------------------------- selection ---
+
+  /** Dimensions, refinements included. */
+  private dimensions(): string[] {
+    try {
+      return dimensionColumns(this.columnDirectory);
+    } catch {
+      return [];
+    }
+  }
 
   private tagged(tag: string): string[] {
     try {

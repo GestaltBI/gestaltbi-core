@@ -12,7 +12,8 @@
     </p>
   </mat-card>
 
-  <p class="explore__empty" *ngIf="loaded && !pivotable">{{ 'explore.noDimensions' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && sourceMissing">{{ 'explore.noSource' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && !sourceMissing && !pivotable">{{ 'explore.noDimensions' | translate }}</p>
 
   <ag-grid-angular
     *ngIf="columnDefs.length"

@@ -80,7 +80,8 @@
       "coefficient": "Score",
       "strength": "Strength",
       "reading": "What it says"
-    }
+    },
+    "noSource": "This configuration defines no analysis step these views can read. Name one as conf_explore.source in processing.json."
   },
   "filter": {
     "focusA": "Focus A",

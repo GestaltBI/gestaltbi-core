@@ -10,7 +10,8 @@
     <p class="explore__note">{{ 'explore.caveat' | translate }}</p>
   </mat-card>
 
-  <p class="explore__empty" *ngIf="loaded && !rowData.length">{{ 'explore.noPairs' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && sourceMissing">{{ 'explore.noSource' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && !sourceMissing && !rowData.length">{{ 'explore.noPairs' | translate }}</p>
 
   <ag-grid-angular
     *ngIf="rowData.length"

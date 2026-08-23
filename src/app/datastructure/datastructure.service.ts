@@ -73,7 +73,11 @@ export class DatastructureService implements ColumnDirectory {
   }
 
   getLabel(code): string {
-    if (this.lang && Object.keys(this.lang).indexOf(code) > 0) {
+    // `indexOf(code) > 0` treated index 0 as "not found", so whichever code
+    // happened to be written first in the translation file never resolved. In
+    // both shipped configs that is `uatu:date`, which is why the date column
+    // has been showing its own code everywhere instead of its label.
+    if (this.lang && Object.prototype.hasOwnProperty.call(this.lang, code)) {
       return this.lang[code] as string;
     }
     return code as string;

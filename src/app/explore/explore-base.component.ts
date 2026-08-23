@@ -37,14 +37,21 @@ export abstract class ExploreBaseComponent extends BaseComponent implements OnIn
   protected abstract get identifier(): string;
 
   /**
-   * Process to read from. Defaults to whatever `conf_explore` names.
+   * Processes to read from, best first.
    *
-   * A view that needs something more specific overrides this — the narrative
-   * takes the process its story was written against.
+   * These views want a frame that has been filtered and enhanced but not rolled
+   * up, since both ops group it themselves. `conf_explore.source` names it
+   * outright; failing that we try the canonical stage names, because a config
+   * repo written before this mode existed still has the stage — it just never
+   * had a reason to name it.
+   *
+   * A view that needs something specific overrides this: the narrative takes
+   * the process its story was written against.
    */
   protected sourceProcess(): string | undefined {
     const conf: any = this.ds.getProcessInfo('conf_explore') ?? {};
-    return conf.source ?? 'exploresource';
+    const candidates = [conf.source, 'exploresource', 'pre_agg_enhance', 'localfilter'];
+    return candidates.find((name) => this.ps.hasProcess(name));
   }
 
   /** Recompute whatever this view renders. Called on new data and on new options. */

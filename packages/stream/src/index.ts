@@ -5,7 +5,7 @@ export {
   type StructureColumn,
 } from './structure-directory.js';
 export * as tags from './tags.js';
-export { resolveTimeColumn, byDate, TIME_TAGS } from './resolve.js';
+export { resolveTimeColumn, byDate, dimensionColumns, DIMENSION_TAGS, TIME_TAGS } from './resolve.js';
 export { neuter, step, finalize, num, type AggKind, type AggSpec } from './agg.js';
 export {
   runCheck,

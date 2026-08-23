@@ -80,7 +80,8 @@
       "coefficient": "Punteggio",
       "strength": "Forza",
       "reading": "Cosa dice"
-    }
+    },
+    "noSource": "Questa configurazione non definisce un passaggio di analisi leggibile da queste viste. Indicane uno come conf_explore.source in processing.json."
   },
   "filter": {
     "focusA": "Focus A",

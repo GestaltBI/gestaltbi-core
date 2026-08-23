@@ -10,7 +10,8 @@
     <p class="explore__note">{{ 'explore.caveat' | translate }}</p>
   </mat-card>
 
-  <p class="explore__empty" *ngIf="loaded && !pairs">{{ 'explore.noPairs' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && sourceMissing">{{ 'explore.noSource' | translate }}</p>
+  <p class="explore__empty" *ngIf="loaded && !sourceMissing && !pairs">{{ 'explore.noPairs' | translate }}</p>
 
   <div class="explore__chart" echarts *ngIf="chartOption" [theme]="theme" [options]="chartOption"></div>
 </div>
