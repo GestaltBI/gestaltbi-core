@@ -8,13 +8,17 @@
   display: block;
   width: var(--shell-side-w);
   height: 100%;
+  // Without this the flex column below cannot shrink, and its overflow escapes
+  // the drawer instead of scrolling inside it.
+  min-height: 0;
 }
 
 .lsidenav {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  min-height: 0;
   padding: var(--space-xl) var(--space-lg) var(--space-lg);
   background: var(--surface);
   color: var(--ink);
@@ -64,10 +68,26 @@
   }
 
   // —— Modes list ————————————————————————————————————————————————————
+  // The list is the part that scrolls. `min-height: 0` is what lets it: a flex
+  // item defaults to min-height:auto, which refuses to shrink below its
+  // content, so the column grew past the drawer and was clipped with no
+  // scrollbar — the modes at the bottom simply were not reachable on a short
+  // window. Brand, back-link and footer stay put.
   &__modes {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  &__head,
+  &__menutitle,
+  &__back,
+  &__foot {
+    flex: 0 0 auto;
   }
 
   &__divider {
@@ -197,7 +217,6 @@
 
   // —— Footer ——————————————————————————————————————————————————————————
   &__foot {
-    margin-top: auto;
     padding-top: var(--space-md);
   }
 
