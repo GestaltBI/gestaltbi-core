@@ -2,7 +2,7 @@
   <div fxFlex>
     <mat-card class="analysis-filter">
       <sbi-filter localFilter="default" localState="default">
-        <sbi-periodfilter startFrom="2020-01-01" startTo="2020-12-31"></sbi-periodfilter>
+        <sbi-periodfilter></sbi-periodfilter>
       </sbi-filter>
     </mat-card>
     <ag-grid-angular fxFill *ngIf="columnDefs" class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs">
