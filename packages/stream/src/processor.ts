@@ -10,6 +10,7 @@ import { Aggregate } from './ops/aggregate.js';
 import { Assert } from './ops/assert.js';
 import { ClearEmpty } from './ops/clear-empty.js';
 import { Cohort } from './ops/cohort.js';
+import { Correlate } from './ops/correlate.js';
 import { DiffCalc } from './ops/diff-calc.js';
 import { Enhance } from './ops/enhance.js';
 import { Format } from './ops/format.js';
@@ -18,6 +19,7 @@ import { Geojsonify } from './ops/geojsonify.js';
 import { GlobalFilter } from './ops/global-filter.js';
 import { Heatmap } from './ops/heatmap.js';
 import { LocalFilter } from './ops/local-filter.js';
+import { Pivot } from './ops/pivot.js';
 import { Recognize } from './ops/recognize.js';
 import { Regionify } from './ops/regionify.js';
 
@@ -67,6 +69,8 @@ export function buildDefaultRegistry(): OpRegistry {
   r.register('recognize', Recognize);
   r.register('cohort', Cohort);
   r.register('assert', Assert);
+  r.register('pivot', Pivot);
+  r.register('correlate', Correlate);
   return r;
 }
 

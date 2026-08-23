@@ -6,6 +6,7 @@ export {
 } from './structure-directory.js';
 export * as tags from './tags.js';
 export { resolveTimeColumn, byDate, TIME_TAGS } from './resolve.js';
+export { neuter, step, finalize, num, type AggKind, type AggSpec } from './agg.js';
 export {
   runCheck,
   runChecks,
@@ -38,6 +39,7 @@ export { Aggregate } from './ops/aggregate.js';
 export { Assert } from './ops/assert.js';
 export { ClearEmpty } from './ops/clear-empty.js';
 export { Cohort } from './ops/cohort.js';
+export { Correlate, type Association, type CorrelateOptions, type PairKind } from './ops/correlate.js';
 export { DiffCalc } from './ops/diff-calc.js';
 export { Enhance } from './ops/enhance.js';
 export { Format } from './ops/format.js';
@@ -46,5 +48,6 @@ export { Geojsonify } from './ops/geojsonify.js';
 export { GlobalFilter } from './ops/global-filter.js';
 export { Heatmap } from './ops/heatmap.js';
 export { LocalFilter } from './ops/local-filter.js';
+export { Pivot, type PivotOptions } from './ops/pivot.js';
 export { Recognize } from './ops/recognize.js';
 export { Regionify } from './ops/regionify.js';

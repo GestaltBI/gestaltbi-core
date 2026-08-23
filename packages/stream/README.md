@@ -38,8 +38,10 @@ The package's `prepare` script runs `tsc` after install, so a fresh `dist/` is b
   | `recognize` | revenue recognition — spread an amount across the periods it serves |
   | `cohort` | cohort axis, plus the incomplete-window guard |
   | `assert` | run checks, return verdicts |
+  | `pivot` | cross-tabulate: dimensions down the side, dimensions across the top |
+  | `correlate` | how strongly columns move together — Pearson/Spearman, eta, Cramér's V |
 
-- **OpRegistry** — maps op names to op classes for dynamic instantiation. Pre-populated with the eleven built-in ops; extend with your own.
+- **OpRegistry** — maps op names to op classes for dynamic instantiation. Pre-populated with the built-in ops; extend with your own.
 - **Processor** — orchestrates streaming data through a graph of named ops. Holds the input dataframe, an OLAP cube derived from it, identifier-keyed filter state, and one Observable per active stream.
 - **ColumnDirectory** — interface the host implements to expose column metadata (which columns are tagged "date", "currency", "geocodable", etc). The Angular adapter wraps a service that loads `assets/structure.json`; `StructureDirectory` in this package is a dependency-free reference implementation over the same document, so the pipeline runs standalone.
 - **Check** — a predicate over a processed frame that returns a `Verdict` (`pass` / `fail` / `warn` / `skip`) naming the periods that broke it. See [Validation](#validation).
@@ -105,6 +107,66 @@ All additive: untagged numeric columns keep behaving exactly as before.
 `window_complete` measures from the **end** of the cohort bucket when you pass `span`: someone who signed up on 31 October has been observed for six days on 6 November, not thirty-six. Without that guard a half-observed cohort reports a perfect retention rate.
 
 Checks are plain data — `runCheck` / `runChecks` are exported if you'd rather call them outside a graph.
+
+## Across dimensions
+
+Most of the package reads a frame along time — deltas, recognition, cohorts.
+`pivot` and `correlate` read it across the dimensions instead, which is what it
+takes to see how the things you collected relate to *each other*.
+
+### pivot
+
+`aggregate` rolls a frame up along one axis. `pivot` puts a second axis across
+the top:
+
+```json
+{ "op": "pivot", "require": ["clean"], "options": {
+    "rows": ["product_family"],
+    "columns": ["region"],
+    "measure": "revenue",
+    "type": "sum",
+    "totals": true } }
+```
+
+Emits one plain record per row key — the row dimensions, then one field per
+column bucket — so a grid or a chart consumes it directly. `rows` defaults to
+every `uatu:dimension` not spent on the column axis; drop `columns` entirely and
+it degenerates to a group-by.
+
+Cells take the same aggregation kinds as `aggregate` (`sum`, `avg`, `median`,
+`ratio`, …) plus `count` and `countDistinct`, and they fold the same way — the
+accumulators are shared, so a sum in a pivot cell means what a sum in a rolled-up
+row means. Totals re-fold the accumulators rather than the finished cells: an
+average of averages is not the average.
+
+A combination with no rows behind it is `null`, not `0` — an absence is not a
+zero. Column buckets are capped (`columnLimit`, default 50); the tail lands under
+`Other` and is counted in `getOmitted()`, never dropped quietly.
+
+### correlate
+
+Which pairs actually travel together, and how strongly. "Correlation" means a
+different statistic depending on what is being related, so the op picks one:
+
+| pair | statistic | range |
+|---|---|---|
+| measure × measure | Pearson's *r*, or Spearman's *rho* on ranks | −1 … 1 |
+| dimension × measure | correlation ratio *eta* — variance explained by group | 0 … 1 |
+| dimension × dimension | Cramér's *V* over the contingency table | 0 … 1 |
+
+```json
+{ "op": "correlate", "require": ["clean"], "options": {
+    "method": "spearman", "minCoefficient": 0.3, "limit": 20 } }
+```
+
+Terminal, like `assert`: it returns `Association` records rather than rows,
+strongest first, each with a one-line `summary` safe to render straight into a
+card. Pairs it cannot honestly score — a constant column, too few complete rows,
+a dimension with more levels than `maxLevels` — come back with a `null`
+coefficient and a `reason` instead of a number.
+
+A coefficient is a description, not a cause. Two measures derived from one
+another — a total and its own component — will sit near 1 and mean nothing.
 
 ## Process graph
 

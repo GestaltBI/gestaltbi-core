@@ -1,3 +1,4 @@
+import { finalize, neuter, step, type AggSpec } from '../agg.js';
 import { AbstractOp } from '../op.js';
 
 export class Aggregate extends AbstractOp {
@@ -44,83 +45,17 @@ export class Aggregate extends AbstractOp {
     return fret;
   }
 
+  // The accumulators live in ../agg.ts so `pivot` folds values exactly the way
+  // this op does. Kept as methods because they read as the op's own vocabulary.
   neuter(type: string): any {
-    switch (type) {
-      case 'ratio':
-        return { n: 0, d: 0 };
-      case 'sum':
-        return 0;
-      case 'avg':
-      case 'last':
-      case 'first':
-      case 'min':
-      case 'max':
-      case 'median':
-      case 'concat':
-        return [];
-      default:
-        return null;
-    }
+    return neuter(type);
   }
 
-  agg(type: string, target: any, value: any, spec?: any, fact?: any): any {
-    switch (type) {
-      case 'ratio': {
-        // Rates do not average. Accumulate numerator and denominator, divide once
-        // in finalize, so the group's rate is the rate of the group.
-        const n = parseFloat(fact?.[spec?.numerator]);
-        const d = parseFloat(fact?.[spec?.denominator]);
-        if (Number.isFinite(n)) target.n += n;
-        if (Number.isFinite(d)) target.d += d;
-        return target;
-      }
-      case 'sum':
-        return target + parseFloat(value);
-      case 'avg':
-      case 'last':
-      case 'first':
-      case 'max':
-      case 'min':
-      case 'median':
-        target.push(parseFloat(value));
-        return target;
-      case 'concat':
-        target.push(value.toString());
-        return target;
-      default:
-        return null;
-    }
+  agg(type: string, target: any, value: any, spec?: AggSpec, fact?: any): any {
+    return step(type, target, value, spec, fact);
   }
 
   finalize(type: string, target: any): any {
-    switch (type) {
-      case 'ratio':
-        return target.d === 0 ? null : target.n / target.d;
-      case 'avg':
-        const sum = target.reduce((a: number, b: number) => a + b, 0);
-        return sum / target.length;
-      case 'last':
-        return target[target.length - 1];
-      case 'first':
-        return target[0];
-      case 'max':
-        return Math.max(...target);
-      case 'min':
-        return Math.min(...target);
-      case 'median': {
-        // Values arrive in scan order; a median of an unsorted list is not a median.
-        const sorted = target.slice().sort((a: number, b: number) => a - b);
-        if (sorted.length === 0) return null;
-        if (sorted.length % 2 === 0) {
-          const idxh = sorted.length / 2;
-          return (sorted[idxh] + sorted[idxh - 1]) / 2;
-        }
-        return sorted[(sorted.length - 1) / 2];
-      }
-      case 'concat':
-        return target.join(', ');
-      default:
-        return target;
-    }
+    return finalize(type, target);
   }
 }
