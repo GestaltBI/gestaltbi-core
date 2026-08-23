@@ -123,10 +123,12 @@ export abstract class GraphBaseComponent extends BaseComponentWithLegend impleme
 
   generateLabel(rootData: any[], label: string): any[] {
     const size: number[] = [];
-    // Callers pass a mixed list (a frame plus the date field name), and the
-    // frame is undefined until its stream emits — count only what has a length.
+    // Callers pass a mixed list — a frame plus, in some views, the name of the
+    // date field. Count frames only: a 9-character column name was sizing the
+    // axis to 9 slots, so a dataset with fewer rows than that grew phantom
+    // categories past the end of its data.
     (rootData ?? []).forEach((element) => {
-      if (element !== null && element !== undefined && element.length !== undefined) {
+      if (Array.isArray(element)) {
         size.push(element.length);
       }
     });

@@ -13,16 +13,16 @@ export class Measure {
       return;
     }
 
-    if (typeof data === 'object' && data.label !== undefined) {
+    if (data && typeof data === 'object' && data.label !== undefined) {
       this.column = data;
       return;
     }
 
-    if (typeof data === 'object' && data.label === undefined) {
-      const cl = new ColumnStructure();
-      cl.label = code;
-      this.column = cl;
-      return;
-    }
+    // Anything else still gets a usable column. A conf block that names no
+    // measure, or names one the structure does not describe, used to leave
+    // `column` undefined and take the whole view down on the first `.label`.
+    const cl = new ColumnStructure();
+    cl.label = code ?? '';
+    this.column = cl;
   }
 }
