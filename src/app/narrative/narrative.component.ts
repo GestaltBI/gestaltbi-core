@@ -1,7 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { missingColumns, resolveStory, storyById, type ResolvedStory } from '@gestaltbi/storybook';
+import { missingColumns, resolveStory, storyById, type ResolvedStory, type Story } from '@gestaltbi/storybook';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
+import { ConfigSourceService } from '../core/config-source.service';
 import { ExploreBaseComponent } from '../explore/explore-base.component';
 import { GraphService } from '../graph/graph.service';
 
@@ -37,6 +41,9 @@ export class NarrativeComponent extends ExploreBaseComponent {
   /** ECharts options for the `series` panels, keyed by chapter id. */
   readonly charts = new Map<string, any>();
 
+  /** The story this config tells, wherever it came from. */
+  private definition: Story | undefined;
+
   protected get identifier(): string {
     return 'narrative';
   }
@@ -50,17 +57,45 @@ export class NarrativeComponent extends ExploreBaseComponent {
    */
   protected override sourceProcess(): string | undefined {
     const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
-    return conf.source ?? storyById(conf.story ?? 'everpix')?.source;
+    return conf.source ?? this.definition?.source;
   }
 
   override ngOnInit(): void {
     this.theme = this.injector.get(GraphService).theme;
-    super.ngOnInit();
+    // The story has to be in hand before the base subscribes, because it names
+    // the process to read from.
+    this.loadStory().subscribe((story) => {
+      this.definition = story ?? undefined;
+      super.ngOnInit();
+    });
+  }
+
+  /**
+   * Where a story comes from, in order of precedence.
+   *
+   * A story is about one dataset, so it belongs with that dataset: a config
+   * repo can ship its own `story.json` beside `processing.json` and own its
+   * narrative outright, without anything being compiled into the client. The
+   * ids in `@gestaltbi/storybook` are the fallback, and the reason the bundled
+   * sample still has something to show.
+   */
+  private loadStory(): Observable<Story | null> {
+    const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
+    if (conf.story && storyById(conf.story)) {
+      return of(storyById(conf.story) as Story);
+    }
+    const url = this.injector.get(ConfigSourceService).url(conf.storyUrl ?? 'story.json');
+    return this.injector.get(HttpClient).get<Story>(url).pipe(
+      map((story) => (story?.chapters?.length ? story : null)),
+      // No story.json is a normal configuration, not an error: fall back to
+      // whatever id the config named, or to the bundled default.
+      catchError(() => of(storyById(conf.story ?? 'everpix') ?? null)),
+    );
   }
 
   protected recompute(): void {
     const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
-    const story = storyById(conf.story ?? 'everpix');
+    const story = this.definition;
     this.charts.clear();
 
     if (!story) {
