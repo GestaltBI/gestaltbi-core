@@ -127,6 +127,12 @@ export class PeriodfilterComponent extends BasefilterComponent implements OnInit
     if (!this.data.startDate || !this.data.endDate) {
       this.applyDefaults();
     }
+    if (!this.data.startDate || !this.data.endDate) {
+      // Nothing loaded yet, so there is no window to describe.
+      // `moment(undefined)` is *now*, and saving now..now excludes every row
+      // there will ever be. Constrain nothing instead.
+      return {};
+    }
     return {
       [this.timeColumn()]: {
         between: [moment(this.data.startDate).toDate(), moment(this.data.endDate).toDate()],

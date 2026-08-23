@@ -7,6 +7,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   QueryList,
@@ -14,6 +15,11 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+
+import { ImporterService } from './../importer/importer.service';
+import { ProcessorService } from './../processor/processor.service';
 
 import { FilterService as ProcessFilterService } from './../processor/filter.service';
 import { BasefilterComponent } from './basefilter/basefilter.component';
@@ -27,7 +33,7 @@ import { FilterRegistryService } from './filter.registry.service';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss'],
 })
-export class FilterComponent implements OnInit, AfterViewInit {
+export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() filterScope = 'local';
 
   @Input() filterType = '';
@@ -54,7 +60,11 @@ export class FilterComponent implements OnInit, AfterViewInit {
     private frs: FilterRegistryService,
     private pfs: ProcessFilterService,
     private gfs: FilterStateService,
+    private ps: ProcessorService,
+    private importer: ImporterService,
   ) {}
+
+  private applied: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.isGlobal) {
@@ -81,18 +91,33 @@ export class FilterComponent implements OnInit, AfterViewInit {
       this.portalFilter = (this.portal.attachedRef as any).instance;
     }
 
-    // Apply the declared defaults (e.g. <sbi-periodfilter startFrom=… startTo=…>)
-    // so a panel actually shows the period its date pickers advertise. This used
-    // to be done by clicking elements with a `clickme` class, which no template
+    // Apply the declared defaults (e.g. <sbi-periodfilter span="first">) so a
+    // panel actually shows the period its date pickers advertise. This used to
+    // be done by clicking elements with a `clickme` class, which no template
     // carries any more — leaving every two-period view comparing a period
     // against itself, i.e. rendering zeros.
     //
-    // It has to run after the views have called getProcessed(), because that
-    // resets the stored filter for its identifier. Hence the delay, which must
-    // stay longer than the 1000ms the visualization components wait.
-    if (!this.isGlobal) {
-      setTimeout(() => this.save(), 1200);
+    // It has to run *after* the data has landed, because a period filter
+    // derives its window from the range actually present, and *after* the views
+    // have called getProcessed(), because that resets the stored filter for its
+    // identifier. Hence: wait for the frame, then out-wait the 1000ms the
+    // visualization components sit on.
+    if (this.isGlobal) {
+      return;
     }
+    if (this.ps.loaded) {
+      this.applyDeclaredDefaults();
+    } else {
+      this.applied = this.importer.dataLoaded.pipe(take(1)).subscribe(() => this.applyDeclaredDefaults());
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.applied?.unsubscribe();
+  }
+
+  private applyDeclaredDefaults(): void {
+    setTimeout(() => this.save(), 1200);
   }
 
   get isGlobal() {
