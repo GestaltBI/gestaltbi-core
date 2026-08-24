@@ -81,6 +81,12 @@
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
+
+    // The tools group is short and fixed; only the analyses list scrolls.
+    &--tools {
+      flex: 0 0 auto;
+      overflow: visible;
+    }
   }
 
   &__head,

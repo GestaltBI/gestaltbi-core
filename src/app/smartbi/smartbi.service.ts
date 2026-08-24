@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 
 import { ConfigSourceService } from '../core/config-source.service';
 import { ImporterService } from './../importer/importer.service';
@@ -39,8 +40,59 @@ export class SmartbiService {
     private cs: ConfigSourceService,
   ) {}
 
-  getModes(): Observable<any> {
-    return this.http.get(this.cs.url('modes.json'));
+  /** One fetch per config source, so every consumer sees the same curation. */
+  private modesCache: { base: string; modes$: Observable<any[]> } | null = null;
+
+  /**
+   * The analyses this configuration offers.
+   *
+   * `modes.json` is either the bare array it has always been, or an object
+   * wrapping that array so the file has somewhere to put settings that are not
+   * about a single mode:
+   *
+   * ```json
+   * { "exclude": ["map"], "modes": [ { "type": "button", "id": "long", ... } ] }
+   * ```
+   *
+   * Reading it is also what installs the view exclusions, and the result is
+   * shared — so anything that asks for views after asking for modes is asking
+   * a registry that already knows what this dataset has no use for.
+   */
+  getModes(): Observable<any[]> {
+    const base = this.cs.base;
+    if (this.modesCache?.base !== base) {
+      this.modesCache = {
+        base,
+        modes$: this.http.get(this.cs.url('modes.json')).pipe(
+          map((raw) => this.readModes(raw)),
+          shareReplay({ bufferSize: 1, refCount: false }),
+        ),
+      };
+    }
+    return this.modesCache.modes$;
+  }
+
+  /** Normalise both file shapes, and tell the registry what to leave out. */
+  private readModes(raw: any): any[] {
+    const modes: any[] = Array.isArray(raw) ? raw : (raw?.modes ?? []);
+    const global = this.viewList(Array.isArray(raw) ? null : raw?.exclude);
+
+    const byMode = new Map<string, string[]>();
+    for (const entry of modes) {
+      const views = this.viewList(entry?.exclude);
+      if (entry?.id && views.length) {
+        byMode.set(entry.id, views);
+      }
+    }
+
+    this.reg.setExcludedViews(global, byMode);
+    return modes;
+  }
+
+  /** `"map"` and `["map", "graph"]` are both reasonable things to write. */
+  private viewList(value: any): string[] {
+    if (typeof value === 'string') return [value];
+    return Array.isArray(value) ? value.filter((v) => typeof v === 'string') : [];
   }
 
   setMode(mode: string) {
@@ -70,6 +122,11 @@ export class SmartbiService {
 
   viewsFor(mode: string): string[] {
     return this.reg.viewsFor(mode);
+  }
+
+  /** Dataset-independent tools, shown regardless of what modes.json lists. */
+  get tools() {
+    return this.reg.tools;
   }
 
   /**

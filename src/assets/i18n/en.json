@@ -154,7 +154,8 @@
   },
   "l-sidenav": {
     "back": "Load and analyze your data",
-    "menuTitle": "Analysis modes"
+    "menuTitle": "Analysis modes",
+    "toolsTitle": "Tools"
   },
   "view": {
     "map": "Map",

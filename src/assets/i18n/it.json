@@ -154,7 +154,8 @@
   },
   "l-sidenav": {
     "back": "Carica e analizza i tuoi dati",
-    "menuTitle": "Tipi di analisi"
+    "menuTitle": "Tipi di analisi",
+    "toolsTitle": "Strumenti"
   },
   "view": {
     "map": "Mappa",

@@ -20,5 +20,8 @@ import { AdvisorComponent } from './advisor.component';
 export class AdvisorModule {
   constructor(private reg: RegistryService) {
     this.reg.registerComponent('advisor', 'advice', AdvisorComponent);
+    // Not an analysis this dataset happens to suit — a tool that reads whatever
+    // is loaded. It appears whether or not a config repo lists it.
+    this.reg.registerTool({ id: 'advisor', labelKey: 'modes.advisor', icon: 'lightbulb-on-outline' });
   }
 }

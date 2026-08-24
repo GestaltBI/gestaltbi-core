@@ -28,6 +28,25 @@
     </ng-container>
   </div>
 
+  <ng-container *ngIf="tools$ | async as tools">
+    <div class="lsidenav__menutitle eyebrow" *ngIf="tools.length">{{ 'l-sidenav.toolsTitle' | translate }}</div>
+    <div class="lsidenav__modes lsidenav__modes--tools" *ngIf="tools.length">
+      <a
+        class="lsidenav__mode"
+        *ngFor="let tool of tools"
+        [routerLink]="sbi.changeMode(tool.id)"
+        routerLinkActive="lsidenav__mode--active"
+        (click)="onPick()"
+      >
+        <span class="lsidenav__mode-icon" aria-hidden="true">
+          <mat-icon svgIcon="{{ tool.icon }}"></mat-icon>
+        </span>
+        <span class="lsidenav__mode-label">{{ tool.labelKey | translate }}</span>
+        <span class="lsidenav__mode-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </ng-container>
+
   <div class="lsidenav__back">
     <a class="lsidenav__backlink" [routerLink]="['/intro']" (click)="onPick()">
       <mat-icon>arrow_back</mat-icon>

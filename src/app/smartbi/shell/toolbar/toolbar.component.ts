@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ProjectInfo, ProjectInfoService } from '../../../core/project-info.service';
@@ -47,7 +47,9 @@ export class ToolbarComponent implements OnInit {
     this.ar.paramMap.subscribe((params) => {
       const id = params.get('mode');
       this.mode$ = this.sbi.getModes().pipe(map((modes) => modes.find((mode) => mode.id === id)));
-      this.views$ = of(this.sbi.viewsFor(id));
+      // Read the views only once the config has been, since reading it is what
+      // tells the registry which of them this dataset has no use for.
+      this.views$ = this.sbi.getModes().pipe(map(() => this.sbi.viewsFor(id)));
     });
   }
 
