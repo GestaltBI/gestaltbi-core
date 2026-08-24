@@ -7,7 +7,8 @@
     "email": "info@gestaltbi.com",
     "description": "GestaltBI is a set of tools enabling stream based business intelligence. The work is aimed at small and family-run businesses that need to understand their own numbers without a consultant in the room.",
     "webpageUrl": {
-      "url": "https://github.com/GestaltBI"
+      "url": "https://gestaltbi.github.io/",
+      "wellKnown": "https://gestaltbi.github.io/.well-known/funding-manifest-urls"
     }
   },
   "projects": [
@@ -16,7 +17,8 @@
       "name": "gestaltbi-core",
       "description": "The GestaltBI client: a browser-based analysis surface that reads a dataset and its description from a configuration repository, and renders it as maps, charts, cross-tabs, relationship matrices and interactive reports. Points it at any GitHub repo carrying the config files and it becomes an instance for that data.",
       "webpageUrl": {
-        "url": "https://gestaltbi.github.io/gestaltbi-core/"
+        "url": "https://gestaltbi.github.io/gestaltbi-core/",
+        "wellKnown": "https://gestaltbi.github.io/.well-known/funding-manifest-urls"
       },
       "repositoryUrl": {
         "url": "https://github.com/GestaltBI/gestaltbi-core"
