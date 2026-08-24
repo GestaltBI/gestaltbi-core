@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { dimensionColumns, type AggKind } from '@gestaltbi/stream';
 
 import { DatastructureService } from '../../datastructure/datastructure.service';
@@ -40,6 +41,8 @@ export class PivotControlsComponent implements OnInit {
 
   selection: PivotSelection = { rows: '', columns: null, measure: '', type: 'sum' };
 
+  private route = inject(ActivatedRoute);
+
   constructor(private dss: DatastructureService) {}
 
   ngOnInit(): void {
@@ -50,13 +53,19 @@ export class PivotControlsComponent implements OnInit {
     this.dimensions = this.label(dimensionColumns(this.dss).filter((code) => this.categorical(code)));
     this.measures = this.label(this.dss.getColumnsFor('uatu:measure') ?? []);
 
+    // The advisor routes here with the axes it recommended. Anything it did not
+    // name falls back to the same defaults a cold visit gets.
+    const q = this.route.snapshot.queryParamMap;
+    const known = (code: string | null, among: Choice[]) =>
+      code && among.some((c) => c.code === code) ? code : null;
+
     this.selection = {
-      rows: this.dimensions[0]?.code ?? '',
+      rows: known(q.get('rows'), this.dimensions) ?? this.dimensions[0]?.code ?? '',
       // A second dimension across the top is the whole point; fall back to a
       // plain group-by when the structure only describes one.
-      columns: this.dimensions[1]?.code ?? null,
-      measure: this.measures[0]?.code ?? '',
-      type: 'sum',
+      columns: known(q.get('columns'), this.dimensions) ?? this.dimensions[1]?.code ?? null,
+      measure: known(q.get('measure'), this.measures) ?? this.measures[0]?.code ?? '',
+      type: (this.types.includes(q.get('agg') as any) ? q.get('agg') : 'sum') as AggKind,
     };
 
     // The host binds this straight into its children, and its view has already

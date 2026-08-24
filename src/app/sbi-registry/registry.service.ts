@@ -25,7 +25,7 @@ export class RegistryService {
    * should not offer a button that leads to an empty surface.
    */
   viewsFor(mode: string): string[] {
-    const order = ['map', 'graph', 'table', 'story'];
+    const order = ['map', 'graph', 'table', 'story', 'advice'];
     const found = [...this.components.keys()]
       .filter((key) => key.startsWith(`${mode}::`))
       .map((key) => key.split('::')[1]);

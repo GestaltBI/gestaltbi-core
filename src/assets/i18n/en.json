@@ -1,4 +1,28 @@
 {
+  "advisor": {
+    "keyTitle": "Use your own model",
+    "keyBody": "This asks a model on OpenRouter what is worth analysing here. You pay for it directly with your own key — there is no server in between. The key is kept for this tab only and is forgotten when you close it.",
+    "keyLabel": "OpenRouter API key",
+    "keySave": "Save for this session",
+    "keyGet": "Get a key at openrouter.ai",
+    "model": "Model",
+    "ask": "Suggest analyses",
+    "thinking": "Thinking…",
+    "forget": "Forget my key",
+    "reload": "Reload models",
+    "noModels": "No models available with the capabilities this needs.",
+    "samples": "Include a few example values",
+    "sendsShapeOnly": "Sends the shape of your data only — column names, types, how many rows and distinct values, the range of each measure. None of the {{rows}} rows are sent.",
+    "sendsValues": "Sends the shape of your data, plus a few real values per dimension so the model can tell what a column means. Those values leave your browser.",
+    "openIt": "Open this analysis",
+    "cannotOpen": "Cannot be opened — it refers to something this dataset does not have.",
+    "noData": "No data loaded yet.",
+    "confidence": {
+      "high": "high confidence",
+      "medium": "worth a look",
+      "low": "a guess"
+    }
+  },
   "common": {
     "close": "Close",
     "contactus": "Get in touch",
@@ -136,7 +160,8 @@
     "map": "Map",
     "graph": "Chart",
     "table": "Table",
-    "story": "Story"
+    "story": "Story",
+    "advice": "Advice"
   },
   "modes": {
     "long": "Longitudinal",
@@ -148,7 +173,8 @@
     "point": "Point analysis",
     "correlate": "Relationships",
     "pivot": "Pivot table",
-    "narrative": "The story"
+    "narrative": "The story",
+    "advisor": "What should I look at?"
   },
   "narrative": {
     "rows": "read against {{count}} rows",

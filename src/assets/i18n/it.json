@@ -1,4 +1,28 @@
 {
+  "advisor": {
+    "keyTitle": "Usa il tuo modello",
+    "keyBody": "Chiede a un modello su OpenRouter cosa vale la pena analizzare qui. Paghi direttamente con la tua chiave: non c’è nessun server in mezzo. La chiave resta solo in questa scheda e viene dimenticata quando la chiudi.",
+    "keyLabel": "Chiave API OpenRouter",
+    "keySave": "Salva per questa sessione",
+    "keyGet": "Ottieni una chiave su openrouter.ai",
+    "model": "Modello",
+    "ask": "Suggerisci analisi",
+    "thinking": "Sto pensando…",
+    "forget": "Dimentica la chiave",
+    "reload": "Ricarica i modelli",
+    "noModels": "Nessun modello disponibile con le capacità necessarie.",
+    "samples": "Includi qualche valore di esempio",
+    "sendsShapeOnly": "Invia solo la forma dei dati: nomi delle colonne, tipi, quante righe e quanti valori distinti, l’intervallo di ogni misura. Nessuna delle {{rows}} righe viene inviata.",
+    "sendsValues": "Invia la forma dei dati più qualche valore reale per dimensione, così il modello capisce cosa contiene una colonna. Quei valori escono dal tuo browser.",
+    "openIt": "Apri questa analisi",
+    "cannotOpen": "Non apribile: si riferisce a qualcosa che questo dataset non ha.",
+    "noData": "Nessun dato caricato.",
+    "confidence": {
+      "high": "alta confidenza",
+      "medium": "da guardare",
+      "low": "un’ipotesi"
+    }
+  },
   "common": {
     "close": "Chiudi",
     "contactus": "Contattaci",
@@ -136,7 +160,8 @@
     "map": "Mappa",
     "graph": "Grafico",
     "table": "Tabella",
-    "story": "Racconto"
+    "story": "Racconto",
+    "advice": "Consigli"
   },
   "modes": {
     "long": "Longitudinale",
@@ -148,7 +173,8 @@
     "point": "Analisi puntuale",
     "correlate": "Relazioni",
     "pivot": "Tabella pivot",
-    "narrative": "Il racconto"
+    "narrative": "Il racconto",
+    "advisor": "Cosa guardo?"
   },
   "narrative": {
     "rows": "letto su {{count}} righe",

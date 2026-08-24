@@ -1,0 +1,93 @@
+<div class="advisor">
+  <mat-card class="analysis-filter">
+    <sbi-filter localFilter="advisor" localState="advisor">
+      <sbi-periodfilter></sbi-periodfilter>
+    </sbi-filter>
+  </mat-card>
+
+  <!-- BYOK: no key, no call. -->
+  <mat-card class="advisor__setup" *ngIf="!hasKey">
+    <h2>{{ 'advisor.keyTitle' | translate }}</h2>
+    <p class="advisor__lede">{{ 'advisor.keyBody' | translate }}</p>
+    <div class="advisor__keyrow">
+      <mat-form-field appearance="outline" class="advisor__keyfield">
+        <mat-label>{{ 'advisor.keyLabel' | translate }}</mat-label>
+        <input matInput type="password" autocomplete="off" spellcheck="false" [(ngModel)]="keyDraft" (keyup.enter)="saveKey()" />
+      </mat-form-field>
+      <button class="btn btn--solid btn--sm" (click)="saveKey()" [disabled]="!keyDraft">
+        {{ 'advisor.keySave' | translate }}
+      </button>
+    </div>
+    <p class="advisor__note">
+      <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">{{ 'advisor.keyGet' | translate }}</a>
+    </p>
+  </mat-card>
+
+  <ng-container *ngIf="hasKey">
+    <mat-card class="advisor__controls">
+      <div class="advisor__row">
+        <div class="advisor__field">
+          <span class="advisor__eyebrow eyebrow">{{ 'advisor.model' | translate }}</span>
+          <mat-form-field appearance="outline" class="advisor__select">
+            <mat-select [value]="model" (selectionChange)="pickModel($event.value)" [disabled]="loadingModels">
+              <mat-option *ngFor="let m of models" [value]="m.id">{{ m.name || m.id }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <button class="btn btn--solid" (click)="suggest()" [disabled]="thinking || !model || !rowCount">
+          {{ (thinking ? 'advisor.thinking' : 'advisor.ask') | translate }}
+        </button>
+        <button class="btn btn--ghost btn--sm" (click)="forgetKey()">{{ 'advisor.forget' | translate }}</button>
+      </div>
+
+      <p class="advisor__note" *ngIf="!models.length && !loadingModels">
+        {{ 'advisor.noModels' | translate }}
+        <button class="btn btn--ghost btn--sm" (click)="loadModels()">{{ 'advisor.reload' | translate }}</button>
+      </p>
+
+      <!-- What is about to be sent, before it is sent. -->
+      <div class="advisor__privacy">
+        <mat-slide-toggle [checked]="sampleValues" (change)="toggleSamples($event.checked)">
+          {{ 'advisor.samples' | translate }}
+        </mat-slide-toggle>
+        <p class="advisor__note">
+          {{ (sampleValues ? 'advisor.sendsValues' : 'advisor.sendsShapeOnly') | translate: { rows: rowCount } }}
+        </p>
+        <p class="advisor__disclosed" *ngIf="disclosed.length">
+          <code>{{ disclosed.slice(0, 12).join(' · ') }}</code>
+        </p>
+      </div>
+    </mat-card>
+
+    <p class="advisor__error" *ngIf="error">{{ error }}</p>
+
+    <div class="cards" *ngIf="suggestions.length">
+      <article class="card" [class.card--ungrounded]="!s.grounded" *ngFor="let s of suggestions">
+        <header class="card__head">
+          <h3 class="card__title">{{ s.title }}</h3>
+          <span class="card__confidence eyebrow">{{ 'advisor.confidence.' + s.confidence | translate }}</span>
+        </header>
+        <p class="card__rationale">{{ s.rationale }}</p>
+
+        <ul class="card__chips">
+          <li *ngIf="s.mode">{{ 'modes.' + s.mode | translate }}</li>
+          <li *ngFor="let r of s.rows">↓ {{ r }}</li>
+          <li *ngFor="let c of s.columns">→ {{ c }}</li>
+          <li *ngFor="let m of s.measures">Σ {{ m }}</li>
+        </ul>
+
+        <ul class="card__problems" *ngIf="s.problems?.length">
+          <li *ngFor="let p of s.problems">{{ p }}</li>
+        </ul>
+
+        <button class="btn btn--solid btn--sm" *ngIf="s.grounded" (click)="open(s)">
+          {{ 'advisor.openIt' | translate }}
+        </button>
+        <span class="card__blocked" *ngIf="!s.grounded">{{ 'advisor.cannotOpen' | translate }}</span>
+      </article>
+    </div>
+
+    <p class="advisor__empty" *ngIf="loaded && !rowCount">{{ 'advisor.noData' | translate }}</p>
+  </ng-container>
+</div>

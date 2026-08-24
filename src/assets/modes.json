@@ -12,5 +12,6 @@
   { "type": "button", "id": "pivot", "labelKey": "modes.pivot", "icon": "table-large" },
   { "type": "button", "id": "correlate", "labelKey": "modes.correlate", "icon": "chart-scatter-plot" },
   { "type": "divider" },
-  { "type": "button", "id": "narrative", "labelKey": "modes.narrative", "icon": "book-open-page-variant" }
+  { "type": "button", "id": "narrative", "labelKey": "modes.narrative", "icon": "book-open-page-variant" },
+  { "type": "button", "id": "advisor", "labelKey": "modes.advisor", "icon": "lightbulb-on-outline" }
 ]

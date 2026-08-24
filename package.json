@@ -35,6 +35,7 @@
     "@citation-js/plugin-csl": "^0.7.22",
     "@citation-js/plugin-ris": "^0.7.21",
     "@citation-js/plugin-yaml": "^0.6.2",
+    "@gestaltbi/inference": "github:GestaltBI/inference",
     "@gestaltbi/storybook": "github:GestaltBI/storybook",
     "@gestaltbi/stream": "*",
     "@ngx-translate/core": "^17.0.0",
