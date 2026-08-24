@@ -1,0 +1,74 @@
+{
+  "version": "v1.0.0",
+  "entity": {
+    "type": "organisation",
+    "role": "owner",
+    "name": "Gestalt BI",
+    "email": "info@gestaltbi.com",
+    "description": "GestaltBI is a set of tools enabling stream based business intelligence. The work is aimed at small and family-run businesses that need to understand their own numbers without a consultant in the room.",
+    "webpageUrl": {
+      "url": "https://github.com/GestaltBI"
+    }
+  },
+  "projects": [
+    {
+      "guid": "gestaltbi-core",
+      "name": "gestaltbi-core",
+      "description": "The GestaltBI client: a browser-based analysis surface that reads a dataset and its description from a configuration repository, and renders it as maps, charts, cross-tabs, relationship matrices and interactive reports. Points it at any GitHub repo carrying the config files and it becomes an instance for that data.",
+      "webpageUrl": {
+        "url": "https://gestaltbi.github.io/gestaltbi-core/"
+      },
+      "repositoryUrl": {
+        "url": "https://github.com/GestaltBI/gestaltbi-core"
+      },
+      "licenses": [
+        "spdx:MIT"
+      ],
+      "tags": [
+        "business-intelligence",
+        "data-visualization",
+        "analytics",
+        "dashboard",
+        "angular",
+        "self-hosted"
+      ]
+    }
+  ],
+  "funding": {
+    "channels": [
+      {
+        "guid": "github-sponsors",
+        "type": "payment-provider",
+        "address": "https://github.com/sponsors/sirmmo",
+        "description": "GitHub Sponsors, on the maintainer account. The GestaltBI organisation has no sponsors listing, so this is the working destination."
+      }
+    ],
+    "plans": [
+      {
+        "guid": "supporter-monthly",
+        "status": "active",
+        "name": "Monthly support",
+        "description": "A recurring contribution of any size. Goes to maintenance of the client and the two libraries under it: keeping the Angular toolchain current, and the analysis and narrative packages working against real config repositories.",
+        "amount": 0,
+        "currency": "USD",
+        "frequency": "monthly",
+        "channels": [
+          "github-sponsors"
+        ]
+      },
+      {
+        "guid": "one-time",
+        "status": "active",
+        "name": "One-time contribution",
+        "description": "A single contribution of any size, for anyone who has found the project useful and would rather not commit to a schedule.",
+        "amount": 0,
+        "currency": "USD",
+        "frequency": "one-time",
+        "channels": [
+          "github-sponsors"
+        ]
+      }
+    ],
+    "history": []
+  }
+}
