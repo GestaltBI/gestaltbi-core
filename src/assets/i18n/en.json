@@ -21,7 +21,17 @@
       "high": "high confidence",
       "medium": "worth a look",
       "low": "a guess"
-    }
+    },
+    "askAgain": "Ask again",
+    "asked": "Kept from {{when}}. Asking again costs another call to your provider.",
+    "reading": "What it would tell you",
+    "storyTitle": "Turn this into a report",
+    "storyBody": "Writes these analyses up as a narrative you can read straight through. The sentences come from the model; every number in them is computed here, from your data.",
+    "storyWrite": "Write the report",
+    "storyRewrite": "Write it again",
+    "storyWriting": "Writing…",
+    "storyRead": "Read it",
+    "storyDropped": "Left out, because this dataset cannot support it:"
   },
   "common": {
     "close": "Close",
@@ -192,7 +202,9 @@
     "noSourceTitle": "This report has no data to read",
     "noSourceBody": "“{{story}}” names an analysis step this configuration does not define, so there is nothing to report on. Declare it as conf_narrative.source in processing.json.",
     "noStoryTitle": "This dataset has no story yet",
-    "noStoryBody": "A narrative is written for the data it reads. Add a story.json beside processing.json in this configuration and it will be told here."
+    "noStoryBody": "A narrative is written for the data it reads. Add a story.json beside processing.json in this configuration and it will be told here.",
+    "generatedBy": "Written from your data by a model",
+    "askAdvisor": "Have one written from this data"
   },
   "toolbar": {
     "tagline": "the shape at the origin of meaning",
@@ -231,99 +243,198 @@
       "title": "Dynamic analysis of the change forces for a chosen analysis object",
       "description": "This analysis surfaces the effects of the main forces of change (costs, prices, volumes) and explains why the gross margin of a given <b class='color-accent'>analysis object</b> shifted from one period to the next. For example, in one territory a rise in <b class='color-accent'>performance</b> may be driven mostly by larger volumes; in another it may be the result of falling costs, or a favorable combination of both. Building this analysis through repeated database queries would be hard if not impossible. A dedicated model performs it automatically.",
       "terms": [
-        { "name": "The forces of change", "description": "$wiki.terms.changeForces" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "The forces of change",
+          "description": "$wiki.terms.changeForces"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "diff": {
       "title": "Differential analysis",
       "description": "Differential analysis represents the differences in <b class='color-accent'>performance</b>. These can be differences for the same <b class='color-accent'>analysis object</b> across two periods, or differences between two distinct objects within the same period. The value of differential analysis is that it shows only what's relevant — only what changed between the two units examined.",
       "terms": [
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" },
-        { "name": "Comparisons against a different object", "description": "$wiki.terms.comparisonsDifferent" }
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        },
+        {
+          "name": "Comparisons against a different object",
+          "description": "$wiki.terms.comparisonsDifferent"
+        }
       ]
     },
     "long": {
       "title": "Longitudinal comparison of the same analysis object",
       "description": "This analysis lets you not only see the absolute values of performance — gross margin, prices, costs, volumes — for a freely-chosen object, but also compare how they evolve across two distinct time periods. Not isolated frames, but full motion.",
       "terms": [
-        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Longitudinal vs. synchronic analyses",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "longchange": {
       "title": "Longitudinal comparison of the same analysis object",
       "description": "This analysis lets you not only see the absolute values of performance — gross margin, prices, costs, volumes — for a freely-chosen object, but also compare how they evolve across two distinct time periods. Not isolated frames, but full motion.",
       "terms": [
-        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Longitudinal vs. synchronic analyses",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "longdiff": {
       "title": "Longitudinal comparison of the same analysis object",
       "description": "This analysis lets you not only see the absolute values of performance — gross margin, prices, costs, volumes — for a freely-chosen object, but also compare how they evolve across two distinct time periods. Not isolated frames, but full motion.",
       "terms": [
-        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Longitudinal vs. synchronic analyses",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "point": {
       "title": "Point analysis",
       "description": "GestaltBI's logic is to guide management toward understanding <b class='color-accent'>performance</b> and how it changes. The product proposes a hierarchy of analyses to avoid what we call \"analysis paralysis.\" Downstream of that hierarchy, each user pursues whichever specific investigations seem most useful in the moment. These are point inquiries — the classic territory of business intelligence: pick a specific <b class='color-accent'>object</b> and analyze it, either to confirm an expectation or to discover something new to dig into.",
       "terms": [
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "sync": {
       "title": "Synchronic comparison of performance across two different analysis objects",
       "description": "With this analysis you can compare, within a chosen period, the <b class='color-accent'>performance</b> of certain customers, products, or territories (or any combination of these) against another set. The more comparable the <b class='color-accent'>objects</b>, the richer the learning. Pairing this with the change-forces analysis lets you understand what's actually causing improvements or declines. In the absence of reliable budget benchmarks, synchronic comparisons across different responsibility units can become one of the inputs for distributing incentives.",
       "terms": [
-        { "name": "Longitudinal vs. synchronic analyses", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" },
-        { "name": "Comparisons against a different object", "description": "$wiki.terms.comparisonsDifferent" }
+        {
+          "name": "Longitudinal vs. synchronic analyses",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        },
+        {
+          "name": "Comparisons against a different object",
+          "description": "$wiki.terms.comparisonsDifferent"
+        }
       ]
     },
     "syncchange": {
       "title": "Dynamic analysis of the change forces for a chosen analysis object",
       "description": "This analysis surfaces the effects of the main forces of change (costs, prices, volumes) and explains why the gross margin of a given <b class='color-accent'>analysis object</b> shifted from one period to the next. For example, in one territory a rise in <b class='color-accent'>performance</b> may be driven mostly by larger volumes; in another it may be the result of falling costs, or a favorable combination of both. Building this analysis through repeated database queries would be hard if not impossible. A dedicated model performs it automatically.",
       "terms": [
-        { "name": "The forces of change", "description": "$wiki.terms.changeForces" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "The forces of change",
+          "description": "$wiki.terms.changeForces"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "syncdiff": {
       "title": "Differential analysis",
       "description": "Differential analysis represents the differences in <b class='color-accent'>performance</b>. These can be differences for the same <b class='color-accent'>analysis object</b> across two periods, or differences between two distinct objects within the same period. The value of differential analysis is that it shows only what's relevant — only what changed between the two units examined.",
       "terms": [
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" },
-        { "name": "Comparisons against a different object", "description": "$wiki.terms.comparisonsDifferent" }
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        },
+        {
+          "name": "Comparisons against a different object",
+          "description": "$wiki.terms.comparisonsDifferent"
+        }
       ]
     },
     "correlate": {
       "title": "Relationships between what you measure",
       "description": "A cross-tab shows you two things at a time, and you have more than two. This analysis scores <b class='color-accent'>every pair</b> of columns and ranks them, so the relationships worth looking at come to you rather than waiting to be guessed. It also earns its keep by finding the pairs that are redundant — two columns that always agree are one column recorded twice, and knowing that simplifies everything downstream.",
       "terms": [
-        { "name": "Correlation is not cause", "description": "$wiki.terms.correlationCausation" },
-        { "name": "Cross-tabulation", "description": "$wiki.terms.crossTabulation" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" }
+        {
+          "name": "Correlation is not cause",
+          "description": "$wiki.terms.correlationCausation"
+        },
+        {
+          "name": "Cross-tabulation",
+          "description": "$wiki.terms.crossTabulation"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        }
       ]
     },
     "pivot": {
       "title": "Cross-tabulation of two dimensions",
       "description": "Every other analysis here reads your data along time. This one reads it across the things you collected: put customers down the side and products across the top, or territories against product families, and see how the <b class='color-accent'>performance</b> distributes between them. Cells that are empty are as informative as cells that are full — they are the combinations you are not serving.",
       "terms": [
-        { "name": "Cross-tabulation", "description": "$wiki.terms.crossTabulation" },
-        { "name": "Economic performance", "description": "$wiki.terms.economicPerformance" },
-        { "name": "The objects of economic analysis", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Cross-tabulation",
+          "description": "$wiki.terms.crossTabulation"
+        },
+        {
+          "name": "Economic performance",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "The objects of economic analysis",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "terms": {

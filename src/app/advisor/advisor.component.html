@@ -35,11 +35,24 @@
           </mat-form-field>
         </div>
 
-        <button class="btn btn--solid" (click)="suggest()" [disabled]="thinking || !model || !rowCount">
-          {{ (thinking ? 'advisor.thinking' : 'advisor.ask') | translate }}
+        <!-- Once there is advice on the page, the next step is the report, not
+             asking the same question again. Only one action should look primary. -->
+        <button
+          class="btn"
+          [class.btn--solid]="!askedAt"
+          [class.btn--ghost]="askedAt"
+          (click)="suggest()"
+          [disabled]="thinking || !model || !rowCount"
+        >
+          {{ (thinking ? 'advisor.thinking' : askedAt ? 'advisor.askAgain' : 'advisor.ask') | translate }}
         </button>
         <button class="btn btn--ghost btn--sm" (click)="forgetKey()">{{ 'advisor.forget' | translate }}</button>
       </div>
+
+      <!-- Answers are kept: asking twice costs the user twice, for the same sentence. -->
+      <p class="advisor__note advisor__kept" *ngIf="askedAt && !thinking">
+        {{ 'advisor.asked' | translate: { when: askedAt | date: 'short' } }}
+      </p>
 
       <p class="advisor__note" *ngIf="!models.length && !loadingModels">
         {{ 'advisor.noModels' | translate }}
@@ -62,13 +75,42 @@
 
     <p class="advisor__error" *ngIf="error">{{ error }}</p>
 
+    <!-- The analysis, turned into something that reads like a report. -->
+    <mat-card class="advisor__story" *ngIf="grounded.length && canRenderStory">
+      <div class="advisor__row">
+        <div class="advisor__storytext">
+          <h3 class="advisor__storytitle">{{ 'advisor.storyTitle' | translate }}</h3>
+          <p class="advisor__lede">{{ 'advisor.storyBody' | translate }}</p>
+        </div>
+        <button class="btn btn--ghost btn--sm" *ngIf="hasStory" (click)="openStory()">
+          {{ 'advisor.storyRead' | translate }}
+        </button>
+        <button class="btn btn--solid" (click)="writeStory()" [disabled]="writing">
+          {{ (writing ? 'advisor.storyWriting' : hasStory ? 'advisor.storyRewrite' : 'advisor.storyWrite') | translate }}
+        </button>
+      </div>
+
+      <!-- Chapters the data could not support. Shown, not swallowed. -->
+      <ul class="card__problems" *ngIf="storyProblems.length">
+        <li>{{ 'advisor.storyDropped' | translate }}</li>
+        <li *ngFor="let p of storyProblems">{{ p }}</li>
+      </ul>
+    </mat-card>
+
     <div class="cards" *ngIf="suggestions.length">
       <article class="card" [class.card--ungrounded]="!s.grounded" *ngFor="let s of suggestions">
         <header class="card__head">
           <h3 class="card__title">{{ s.title }}</h3>
           <span class="card__confidence eyebrow">{{ 'advisor.confidence.' + s.confidence | translate }}</span>
         </header>
+        <p class="card__question" *ngIf="s.question">{{ s.question }}</p>
         <p class="card__rationale">{{ s.rationale }}</p>
+
+        <!-- What the result would tell them. The analysis is only half of it. -->
+        <div class="card__reading" *ngIf="s.reading">
+          <span class="card__eyebrow eyebrow">{{ 'advisor.reading' | translate }}</span>
+          <p>{{ s.reading }}</p>
+        </div>
 
         <ul class="card__chips">
           <li *ngIf="s.mode">{{ 'modes.' + s.mode | translate }}</li>

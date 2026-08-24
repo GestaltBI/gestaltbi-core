@@ -21,7 +21,17 @@
       "high": "alta confidenza",
       "medium": "da guardare",
       "low": "un’ipotesi"
-    }
+    },
+    "askAgain": "Chiedi di nuovo",
+    "asked": "Conservato dal {{when}}. Chiedere di nuovo costa un’altra chiamata al tuo provider.",
+    "reading": "Cosa ti direbbe",
+    "storyTitle": "Trasforma tutto in un report",
+    "storyBody": "Scrive queste analisi come un racconto da leggere tutto d’un fiato. Le frasi vengono dal modello; ogni numero al loro interno è calcolato qui, sui tuoi dati.",
+    "storyWrite": "Scrivi il report",
+    "storyRewrite": "Riscrivilo",
+    "storyWriting": "Sto scrivendo…",
+    "storyRead": "Leggilo",
+    "storyDropped": "Escluso, perché questo dataset non lo regge:"
   },
   "common": {
     "close": "Chiudi",
@@ -192,7 +202,9 @@
     "noSourceTitle": "Questo report non ha dati da leggere",
     "noSourceBody": "«{{story}}» indica un passaggio di analisi che questa configurazione non definisce, quindi non c’è nulla da raccontare. Dichiaralo come conf_narrative.source in processing.json.",
     "noStoryTitle": "Questo dataset non ha ancora un racconto",
-    "noStoryBody": "Un racconto è scritto per i dati che legge. Aggiungi un story.json accanto a processing.json in questa configurazione e verrà raccontato qui."
+    "noStoryBody": "Un racconto è scritto per i dati che legge. Aggiungi un story.json accanto a processing.json in questa configurazione e verrà raccontato qui.",
+    "generatedBy": "Scritto sui tuoi dati da un modello",
+    "askAdvisor": "Fanne scrivere uno da questi dati"
   },
   "toolbar": {
     "tagline": "la forma all'origine del significato",
@@ -231,99 +243,198 @@
       "title": "Analisi dinamica delle forze del cambiamento di un determinato oggetto di analisi",
       "description": "Questa analisi consente di individuare gli effetti delle principali forze del cambiamento (costi, prezzi e volumi) e ti spiega perché il margine lordo di un determinato <b class='color-accent'>oggetto</b> di analisi sia cambiato da un periodo all'altro. Ad esempio, in un territorio l'aumento della <b class='color-accent'>performance</b> può essere stato determinato soprattutto da un aumento delle quantità; in un altro potrebbe essere stato generato da una diminuzione dei costi o da una combinazione favorevole di più fattori. Cercare di disporre di questa analisi attraverso interrogazioni multiple al database sarebbe difficile se non impossibile. Uno specifico modello la effettua in modo automatico.",
       "terms": [
-        { "name": "Le forze del cambiamento", "description": "$wiki.terms.changeForces" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Le forze del cambiamento",
+          "description": "$wiki.terms.changeForces"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "diff": {
       "title": "Analisi differenziale",
       "description": "L'analisi differenziale rappresenta le differenze di <b class='color-accent'>performance</b>. Possono essere differenze relative a uno stesso <b class='color-accent'>oggetto</b> di analisi in due periodi diversi, oppure differenze fra due oggetti di analisi distinti nello stesso periodo. Le analisi differenziali sono utili perché presentano esclusivamente ciò che è rilevante: solo quello che è cambiato fra le due unità esaminate.",
       "terms": [
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" },
-        { "name": "I confronti con un oggetto diverso", "description": "$wiki.terms.comparisonsDifferent" }
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        },
+        {
+          "name": "I confronti con un oggetto diverso",
+          "description": "$wiki.terms.comparisonsDifferent"
+        }
       ]
     },
     "long": {
       "title": "Confronto longitudinale di uno stesso oggetto di analisi",
       "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance — margine lordo, prezzi, costi e volumi — per un oggetto liberamente scelto, ma anche di confrontare l'evoluzione di questi risultati su due periodi di tempo diversi. Non più fotogrammi isolati, ma filmati dinamici.",
       "terms": [
-        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Le analisi longitudinali e le analisi sincrone",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "longchange": {
       "title": "Confronto longitudinale di uno stesso oggetto di analisi",
       "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance — margine lordo, prezzi, costi e volumi — per un oggetto liberamente scelto, ma anche di confrontare l'evoluzione di questi risultati su due periodi di tempo diversi. Non più fotogrammi isolati, ma filmati dinamici.",
       "terms": [
-        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Le analisi longitudinali e le analisi sincrone",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "longdiff": {
       "title": "Confronto longitudinale di uno stesso oggetto di analisi",
       "description": "Questa analisi consente non solo di visualizzare i valori assoluti della performance — margine lordo, prezzi, costi e volumi — per un oggetto liberamente scelto, ma anche di confrontare l'evoluzione di questi risultati su due periodi di tempo diversi. Non più fotogrammi isolati, ma filmati dinamici.",
       "terms": [
-        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Le analisi longitudinali e le analisi sincrone",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "point": {
       "title": "Analisi puntuale",
       "description": "La logica di GestaltBI è guidare il management verso la comprensione della <b class='color-accent'>performance</b> e dei suoi cambiamenti. Lo strumento suggerisce una gerarchia delle analisi per evitare la cosiddetta \"paralisi da analisi\". A valle di questa gerarchia ciascun utente prosegue sviluppando le indagini che, di volta in volta, ritiene più opportune. Si tratta di indagini puntuali, mirate, tipiche della business intelligence: si sceglie un determinato <b class='color-accent'>oggetto</b> e lo si analizza, sia per trovare conferme sia per scoprire nuove informazioni da cui ripartire.",
       "terms": [
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "sync": {
       "title": "Confronto sincrono della performance fra due oggetti di analisi diversi",
       "description": "Con questa analisi puoi mettere a confronto, in relazione a un determinato periodo, la <b class='color-accent'>performance</b> di determinati clienti, prodotti o territori (o una combinazione di questi) con quella di un altro insieme. Più gli <b class='color-accent'>oggetti</b> a confronto sono comparabili, maggiore è l'apprendimento. Abbinando questa analisi a quella delle forze del cambiamento puoi capire i motivi che determinano miglioramenti o peggioramenti della performance. In assenza di valori di budget attendibili, i confronti sincroni fra unità di responsabilità diverse possono diventare uno degli elementi su cui distribuire gli incentivi.",
       "terms": [
-        { "name": "Le analisi longitudinali e le analisi sincrone", "description": "$wiki.terms.longitudinalSynchronic" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" },
-        { "name": "I confronti con un oggetto diverso", "description": "$wiki.terms.comparisonsDifferent" }
+        {
+          "name": "Le analisi longitudinali e le analisi sincrone",
+          "description": "$wiki.terms.longitudinalSynchronic"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        },
+        {
+          "name": "I confronti con un oggetto diverso",
+          "description": "$wiki.terms.comparisonsDifferent"
+        }
       ]
     },
     "syncchange": {
       "title": "Analisi dinamica delle forze del cambiamento di un determinato oggetto di analisi",
       "description": "Questa analisi consente di individuare gli effetti delle principali forze del cambiamento (costi, prezzi e volumi) e ti spiega perché il margine lordo di un determinato <b class='color-accent'>oggetto</b> di analisi sia cambiato da un periodo all'altro. Ad esempio, in un territorio l'aumento della <b class='color-accent'>performance</b> può essere stato determinato soprattutto da un aumento delle quantità; in un altro potrebbe essere stato generato da una diminuzione dei costi o da una combinazione favorevole di più fattori. Cercare di disporre di questa analisi attraverso interrogazioni multiple al database sarebbe difficile se non impossibile. Uno specifico modello la effettua in modo automatico.",
       "terms": [
-        { "name": "Le forze del cambiamento", "description": "$wiki.terms.changeForces" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "Le forze del cambiamento",
+          "description": "$wiki.terms.changeForces"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "syncdiff": {
       "title": "Analisi differenziale",
       "description": "L'analisi differenziale rappresenta le differenze di <b class='color-accent'>performance</b>. Possono essere differenze relative a uno stesso <b class='color-accent'>oggetto</b> di analisi in due periodi diversi, oppure differenze fra due oggetti di analisi distinti nello stesso periodo. Le analisi differenziali sono utili perché presentano esclusivamente ciò che è rilevante: solo quello che è cambiato fra le due unità esaminate.",
       "terms": [
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" },
-        { "name": "I confronti con un oggetto diverso", "description": "$wiki.terms.comparisonsDifferent" }
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        },
+        {
+          "name": "I confronti con un oggetto diverso",
+          "description": "$wiki.terms.comparisonsDifferent"
+        }
       ]
     },
     "correlate": {
       "title": "Relazioni fra ciò che misuri",
       "description": "Una tabella incrociata ti mostra due cose alla volta, e tu ne hai molte di più. Questa analisi assegna un punteggio a <b class='color-accent'>ogni coppia</b> di colonne e le ordina, così le relazioni che meritano attenzione arrivano da sole invece di dover essere indovinate. Serve anche a trovare le ridondanze: due colonne che vanno sempre d'accordo sono una sola colonna registrata due volte, e saperlo semplifica tutto il resto.",
       "terms": [
-        { "name": "Correlazione non è causa", "description": "$wiki.terms.correlationCausation" },
-        { "name": "La tabella incrociata", "description": "$wiki.terms.crossTabulation" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" }
+        {
+          "name": "Correlazione non è causa",
+          "description": "$wiki.terms.correlationCausation"
+        },
+        {
+          "name": "La tabella incrociata",
+          "description": "$wiki.terms.crossTabulation"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        }
       ]
     },
     "pivot": {
       "title": "Incrocio di due dimensioni",
       "description": "Tutte le altre analisi leggono i dati lungo il tempo. Questa li legge attraverso le cose che hai raccolto: metti i clienti sulle righe e i prodotti sulle colonne, o i territori contro le famiglie di prodotto, e osserva come si distribuisce la <b class='color-accent'>performance</b>. Le celle vuote dicono quanto quelle piene: sono le combinazioni che non stai servendo.",
       "terms": [
-        { "name": "La tabella incrociata", "description": "$wiki.terms.crossTabulation" },
-        { "name": "La performance economica", "description": "$wiki.terms.economicPerformance" },
-        { "name": "Gli oggetti delle analisi economiche", "description": "$wiki.terms.analysisObjects" }
+        {
+          "name": "La tabella incrociata",
+          "description": "$wiki.terms.crossTabulation"
+        },
+        {
+          "name": "La performance economica",
+          "description": "$wiki.terms.economicPerformance"
+        },
+        {
+          "name": "Gli oggetti delle analisi economiche",
+          "description": "$wiki.terms.analysisObjects"
+        }
       ]
     },
     "terms": {

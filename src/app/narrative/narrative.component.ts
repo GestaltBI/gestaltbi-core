@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { missingColumns, type ResolvedStory, resolveStory, type Story } from '@gestaltbi/storybook';
 import { TranslateService } from '@ngx-translate/core';
-import { missingColumns, resolveStory, type ResolvedStory, type Story } from '@gestaltbi/storybook';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+import { AdvisorStoreService } from '../core/advisor-store.service';
 import { ConfigSourceService } from '../core/config-source.service';
 import { ExploreBaseComponent } from '../explore/explore-base.component';
 import { GraphService } from '../graph/graph.service';
+import { RegistryService } from '../sbi-registry/registry.service';
+import { SmartbiService } from '../smartbi/smartbi.service';
 
 /**
  * A story, read against the data that is loaded.
@@ -41,6 +45,16 @@ export class NarrativeComponent extends ExploreBaseComponent {
     return this.loaded && !this.definition;
   }
 
+  /** True when what is being read was written by a model, not by the config. */
+  generated = false;
+
+  /** Where to go to have one written, or null if the advisor is not registered. */
+  get advisorLink(): any[] | null {
+    const reg = this.injector.get(RegistryService);
+    if (!reg.viewsFor('advisor').length) return null;
+    return [...this.injector.get(SmartbiService).prefix, 'advisor', 'advice'];
+  }
+
   theme: any;
 
   /** ECharts options for the `series` panels, keyed by chapter id. */
@@ -58,11 +72,14 @@ export class NarrativeComponent extends ExploreBaseComponent {
    *
    * A story names the process it reads in the config repo it belongs to; the
    * host's own `conf_narrative.source` overrides it for a repo that renamed
-   * things.
+   * things. A story that names neither — a generated one never does, having
+   * been written from the data rather than for a repo — falls back to the same
+   * candidate stages every other explore view reads.
    */
   protected override sourceProcess(): string | undefined {
     const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
-    return conf.source ?? this.definition?.source;
+    const named = conf.source ?? this.definition?.source;
+    return named ?? super.sourceProcess();
   }
 
   override ngOnInit(): void {
@@ -83,6 +100,17 @@ export class NarrativeComponent extends ExploreBaseComponent {
    * Nothing is compiled in — `conf_narrative.storyUrl` only moves the file.
    */
   private loadStory(): Observable<Story | null> {
+    // `?source=generated` is how the advisor hands over a report it just wrote.
+    // It is explicit on purpose: a config that ships a curated story keeps
+    // telling it, and the generated one is somewhere the user chose to go.
+    if (this.injector.get(ActivatedRoute).snapshot.queryParamMap.get('source') === 'generated') {
+      const written = this.injector.get(AdvisorStoreService).latestStory();
+      if (written) {
+        this.generated = true;
+        return of(written);
+      }
+    }
+
     const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
     const url = this.injector.get(ConfigSourceService).url(conf.storyUrl ?? 'story.json');
     return this.injector.get(HttpClient).get<Story>(url).pipe(

@@ -239,3 +239,10 @@
     text-align: right;
   }
 }
+
+// A generated report says so, above its own title. It should never be mistaken
+// for one a person wrote for this dataset on purpose.
+.story__generated {
+  margin: 0 0 var(--space-xs);
+  color: var(--accent-strong, var(--ink-muted));
+}

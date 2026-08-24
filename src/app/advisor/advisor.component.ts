@@ -1,19 +1,26 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  composeStory,
+  type DataProfile,
   disclosedValues,
   listModels,
+  type ModelInfo,
   profileFrame,
   recommend,
-  type DataProfile,
-  type ModelInfo,
   type Recommendation,
 } from '@gestaltbi/inference';
+import type { Story } from '@gestaltbi/storybook';
+import { TranslateService } from '@ngx-translate/core';
 
+import { AdvisorStoreService } from '../core/advisor-store.service';
 import { ExploreBaseComponent } from '../explore/explore-base.component';
 import { RegistryService } from '../sbi-registry/registry.service';
 import { SmartbiService } from '../smartbi/smartbi.service';
 import { InferenceSettingsService } from './inference-settings.service';
+
+/** What to tell a model to write in. Anything else falls back to English. */
+const LANGUAGES: Record<string, string> = { it: 'Italian', en: 'English' };
 
 /**
  * What is worth looking at, asked of a model the user pays for themselves.
@@ -39,10 +46,23 @@ export class AdvisorComponent extends ExploreBaseComponent {
 
   loadingModels = false;
   thinking = false;
+  writing = false;
   error = '';
 
   /** Exactly what would leave the browser, so it can be shown before it does. */
   disclosed: string[] = [];
+
+  /** When the shown advice was asked for, or null if it was asked for just now. */
+  askedAt: number | null = null;
+
+  /** True once a report has been written for this dataset. */
+  hasStory = false;
+
+  /** Chapters the model wrote that this dataset could not support. */
+  storyProblems: string[] = [];
+
+  /** The dataset the restored run belongs to, so a different one re-reads. */
+  private restoredFor = '';
 
   protected get identifier(): string {
     return 'advisor';
@@ -50,6 +70,20 @@ export class AdvisorComponent extends ExploreBaseComponent {
 
   get settings(): InferenceSettingsService {
     return this.injector.get(InferenceSettingsService);
+  }
+
+  private get store(): AdvisorStoreService {
+    return this.injector.get(AdvisorStoreService);
+  }
+
+  /** Only grounded advice is worth writing a report from. */
+  get grounded(): Recommendation[] {
+    return this.suggestions.filter((s) => s.grounded);
+  }
+
+  /** Whether there is a narrative mode to send a generated report to. */
+  get canRenderStory(): boolean {
+    return this.injector.get(RegistryService).viewsFor('narrative').length > 0;
   }
 
   get hasKey(): boolean {
@@ -62,7 +96,26 @@ export class AdvisorComponent extends ExploreBaseComponent {
 
   /** The op runs on demand here, not on every frame: it costs the user money. */
   protected recompute(): void {
-    this.disclosed = disclosedValues(this.profile());
+    const profile = this.profile();
+    this.disclosed = disclosedValues(profile);
+    this.restore(this.store.fingerprint(profile.columns));
+  }
+
+  /**
+   * Put back the last consultation about this data.
+   *
+   * Keyed on the shape of the dataset, so moving the period filter — which
+   * fires this — does not throw away advice the user has already paid for.
+   */
+  private restore(fingerprint: string): void {
+    if (this.restoredFor === fingerprint) return;
+    this.restoredFor = fingerprint;
+
+    const run = this.store.load(fingerprint);
+    this.suggestions = run?.suggestions ?? [];
+    this.askedAt = run?.at ?? null;
+    this.storyProblems = run?.storyProblems ?? [];
+    this.hasStory = !!run?.story?.chapters?.length;
   }
 
   // --------------------------------------------------------------- the key ---
@@ -126,18 +179,80 @@ export class AdvisorComponent extends ExploreBaseComponent {
     this.error = '';
     this.suggestions = [];
     try {
-      this.suggestions = await recommend(this.profile(), {
+      const profile = this.profile();
+      this.suggestions = await recommend(profile, {
         apiKey: this.settings.apiKey,
         model: this.settings.model,
         // Show what the model got wrong rather than quietly dropping it.
         keepUngrounded: true,
         limit: 8,
       });
+      this.askedAt = Date.now();
+      // A report written from the previous analysis is about a question nobody
+      // is asking any more, so it goes with it.
+      this.hasStory = false;
+      this.storyProblems = [];
+      this.remember(profile, { suggestions: this.suggestions, at: this.askedAt });
     } catch (e: any) {
       this.error = e?.message ?? String(e);
     } finally {
       this.thinking = false;
     }
+  }
+
+  // ------------------------------------------------------------ the report ---
+
+  /**
+   * Turn the analysis into something that reads like a report.
+   *
+   * The model writes the sentences; every number in them is computed here from
+   * the real frame, so it is describing this data rather than recalling it.
+   */
+  async writeStory(): Promise<void> {
+    if (!this.settings.configured || !this.grounded.length) return;
+    this.writing = true;
+    this.error = '';
+    try {
+      const profile = this.profile();
+      const lang = this.injector.get(TranslateService).currentLang;
+      const { story, problems } = await composeStory<Story>(profile, this.grounded, {
+        apiKey: this.settings.apiKey,
+        model: this.settings.model,
+        chapters: 4,
+        language: LANGUAGES[lang] ?? 'English',
+      });
+
+      this.storyProblems = problems;
+      this.hasStory = !!story?.chapters?.length;
+      this.remember(profile, { story, storyProblems: problems });
+      if (this.hasStory) this.openStory();
+    } catch (e: any) {
+      this.error = e?.message ?? String(e);
+    } finally {
+      this.writing = false;
+    }
+  }
+
+  /** Read the generated report in the narrative mode, which knows how to draw it. */
+  openStory(): void {
+    if (!this.canRenderStory) return;
+    const sbi = this.injector.get(SmartbiService);
+    this.injector.get(Router).navigate([...sbi.prefix, 'narrative', 'story'], {
+      queryParams: { source: 'generated' },
+    });
+  }
+
+  /** Merge into whatever is already stored for this dataset. */
+  private remember(profile: DataProfile, patch: Partial<Parameters<AdvisorStoreService['save']>[0]>): void {
+    const fingerprint = this.store.fingerprint(profile.columns);
+    this.restoredFor = fingerprint;
+    this.store.save({
+      ...(this.store.load(fingerprint) ?? { suggestions: [], at: Date.now() }),
+      fingerprint,
+      model: this.settings.model,
+      sampleValues: this.settings.sampleValues,
+      ...patch,
+    } as any);
   }
 
   /** Open a suggestion in the view it recommends, with its axes already set. */

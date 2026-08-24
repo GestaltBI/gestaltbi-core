@@ -8,6 +8,10 @@
   <mat-card class="story__mismatch" *ngIf="noStory">
     <h2>{{ 'narrative.noStoryTitle' | translate }}</h2>
     <p>{{ 'narrative.noStoryBody' | translate }}</p>
+    <!-- No configured story is not a dead end: one can be written from the data. -->
+    <a class="btn btn--solid btn--sm" *ngIf="advisorLink" [routerLink]="advisorLink">
+      {{ 'narrative.askAdvisor' | translate }}
+    </a>
   </mat-card>
 
   <!-- The story asked for does not fit the data that is loaded. -->
@@ -27,6 +31,8 @@
 
   <article class="story__body" *ngIf="story && !sourceMissing">
     <header class="story__head">
+      <!-- Who wrote this. A generated report should never pass for a curated one. -->
+      <p class="story__generated eyebrow" *ngIf="generated">{{ 'narrative.generatedBy' | translate }}</p>
       <h1 class="story__title">{{ story.title }}</h1>
       <p class="story__subtitle" *ngIf="story.subtitle">{{ story.subtitle }}</p>
       <p class="story__standfirst prose" *ngFor="let p of story.standfirst" [innerHtml]="p"></p>
