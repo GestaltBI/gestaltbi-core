@@ -72,14 +72,15 @@
         <table class="dtable" *ngSwitchCase="'pivot'">
           <thead>
             <tr>
-              <th>{{ panel.rowKey }}</th>
-              <th class="dtable__num" *ngFor="let col of panel.columns">{{ col }}</th>
+              <th>{{ label(panel.rowKey) }}</th>
+              <th class="dtable__num" *ngFor="let col of panel.columns">{{ label(col) }}</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let row of panel.rows">
+              <!-- The row key holds a dimension *value*, which is already text. -->
               <th scope="row">{{ row[panel.rowKey] }}</th>
-              <td class="dtable__num" *ngFor="let col of panel.columns">{{ row[col] }}</td>
+              <td class="dtable__num" *ngFor="let col of panel.columns">{{ cell(row[col], panel.format) }}</td>
             </tr>
           </tbody>
         </table>
@@ -94,8 +95,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let a of panel.associations">
-              <th scope="row">{{ a.a }}</th>
-              <td>{{ a.b }}</td>
+              <th scope="row">{{ label(a.a) }}</th>
+              <td>{{ label(a.b) }}</td>
               <td class="dtable__num">{{ a.coefficient === null ? '—' : (a.coefficient | number: '1.2-2') }}</td>
             </tr>
           </tbody>

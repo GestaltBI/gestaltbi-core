@@ -1,7 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { missingColumns, type ResolvedStory, resolveStory, type Story } from '@gestaltbi/storybook';
+import {
+  ABSENT,
+  formatFigure,
+  missingColumns,
+  type ResolvedStory,
+  resolveStory,
+  type Story,
+} from '@gestaltbi/storybook';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -122,7 +129,6 @@ export class NarrativeComponent extends ExploreBaseComponent {
   }
 
   protected recompute(): void {
-    const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
     const story = this.definition;
     this.charts.clear();
 
@@ -145,8 +151,7 @@ export class NarrativeComponent extends ExploreBaseComponent {
     this.story = resolveStory(story, this.source, {
       columnDirectory: this.dataStructureService,
       opContext: this.ps.opContext(),
-      locale: this.injector.get(TranslateService).currentLang ?? 'en',
-      currency: conf.currency ?? 'USD',
+      ...this.formatting,
     });
 
     for (const chapter of this.story.chapters) {
@@ -159,6 +164,39 @@ export class NarrativeComponent extends ExploreBaseComponent {
   /** Label for a verdict row: the check's own label, falling back to its id. */
   verdictLabel(v: any): string {
     return v.label ?? v.id;
+  }
+
+  /**
+   * A column code is not a heading.
+   *
+   * Panel headers come back as the codes the story named — `ks:calc:fail_rate`,
+   * not "Tasso di fallimento" — because the story is written against a dataset
+   * and the labels belong to the configuration reading it.
+   */
+  label(code: string): string {
+    return this.dataStructureService.getLabel(code) || code;
+  }
+
+  /**
+   * A pivot cell, printed the way the story asked for.
+   *
+   * A rate rendered raw is `0.1881408827463219`, which is not a number anybody
+   * can read in a table. Absent stays absent: a gap is not a zero.
+   */
+  cell(value: any, format?: string): string {
+    if (value === null || value === undefined || value === '') return ABSENT;
+    const n = typeof value === 'number' ? value : parseFloat(value);
+    if (!Number.isFinite(n)) return String(value);
+    return formatFigure(n, (format as any) ?? 'number', this.formatting);
+  }
+
+  /** Locale and currency, resolved once so panels and figures agree. */
+  private get formatting(): { locale: string; currency: string } {
+    const conf: any = this.ds.getProcessInfo('conf_narrative') ?? {};
+    return {
+      locale: this.injector.get(TranslateService).currentLang ?? 'en',
+      currency: conf.currency ?? 'USD',
+    };
   }
 
   private seriesOption(panel: any): any {
