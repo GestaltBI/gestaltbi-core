@@ -96,6 +96,22 @@ describe('a process reads what it required', () => {
   });
 });
 
+describe('the graph can say what it built', () => {
+  test('resolvedStreams lists what actually ran, per identifier', async () => {
+    const { proc } = build(DIAMOND);
+    proc.workOn({ data: [{ id: 1 }] });
+    assert.deepEqual(proc.resolvedStreams(), [], 'nothing is built until something asks');
+
+    await firstValueFrom(proc.getProcessed('a', 'view'));
+    assert.deepEqual(proc.resolvedStreams(), ['view::a', 'view::b', 'view::x'],
+      'the leaf and everything it required, and nothing it did not');
+
+    await firstValueFrom(proc.getProcessed('c', 'other'));
+    assert.ok(proc.resolvedStreams().includes('other::c'));
+    assert.ok(proc.resolvedStreams().includes('view::a'), 'one identifier does not clear another');
+  });
+});
+
 describe('a graph that cannot be honoured says so', () => {
   test('a cycle is named rather than overflowing the stack', () => {
     const { proc } = build({ process: {
