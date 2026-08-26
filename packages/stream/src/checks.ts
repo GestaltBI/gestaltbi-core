@@ -11,8 +11,19 @@ import { unitOf } from './tags.js';
 import { resolveTimeColumn } from './resolve.js';
 import type { ColumnDirectory } from './column-directory.js';
 
+/**
+ * The four answers a check can give. `skip` is not a failure: it means the
+ * check could not run.
+ */
 export type CheckStatus = 'pass' | 'fail' | 'warn' | 'skip';
 
+/**
+ * What a check concluded.
+ *
+ * Carries enough to render without re-running anything: a one-line summary,
+ * how many periods were evaluated, how many satisfied it, and the rows that
+ * broke it.
+ */
 export interface Verdict {
   id: string;
   type: string;
@@ -43,6 +54,9 @@ export interface BaseCheck {
   offenderLimit?: number;
 }
 
+/**
+ * Asserts a measure never falls (or never rises) across the ordered periods.
+ */
 export interface MonotonicCheck extends BaseCheck {
   type: 'monotonic';
   measure: string;
@@ -51,6 +65,9 @@ export interface MonotonicCheck extends BaseCheck {
   strict?: boolean;
 }
 
+/**
+ * Asserts a measure keeps its sign.
+ */
 export interface SignCheck extends BaseCheck {
   type: 'sign';
   measure: string;
@@ -59,6 +76,12 @@ export interface SignCheck extends BaseCheck {
   atLeast?: number | 'all';
 }
 
+/**
+ * Asserts one measure is at least as large as another, every period.
+ *
+ * Unit-aware: comparing a column tagged in terabytes against one in dollars
+ * skips rather than answering a question nobody asked.
+ */
 export interface CoversCheck extends BaseCheck {
   type: 'covers';
   /** The measure that must be at least as large as `by`. */
@@ -67,6 +90,12 @@ export interface CoversCheck extends BaseCheck {
   atLeast?: number | 'all';
 }
 
+/**
+ * Asserts two measures stay within a relative gap of each other.
+ *
+ * For the pairs that should track — a cash and an accrual basis of the same
+ * quantity — where the interesting event is them coming apart.
+ */
 export interface DivergenceCheck extends BaseCheck {
   type: 'divergence';
   a: string;
@@ -76,6 +105,12 @@ export interface DivergenceCheck extends BaseCheck {
   fail?: number;
 }
 
+/**
+ * Asserts a period is settled enough to be compared with the others.
+ *
+ * A 30-day-active metric for a cohort that started a week ago is not low, it
+ * is unfinished. This is what stops the newest bar being read as a decline.
+ */
 export interface WindowCompleteCheck extends BaseCheck {
   type: 'window_complete';
   measure: string;
@@ -95,6 +130,11 @@ export interface WindowCompleteCheck extends BaseCheck {
   span?: 'day' | 'week' | 'month' | 'quarter' | 'year' | number;
 }
 
+/**
+ * Asserts a ratio stays inside an expected band.
+ *
+ * A conversion rate above 1 or below 0 is a broken denominator, not a result.
+ */
 export interface RatioBoundsCheck extends BaseCheck {
   type: 'ratio_bounds';
   measure: string;
@@ -102,6 +142,9 @@ export interface RatioBoundsCheck extends BaseCheck {
   max?: number;
 }
 
+/**
+ * Any check, discriminated by `type`.
+ */
 export type Check =
   | MonotonicCheck
   | SignCheck
@@ -110,6 +153,9 @@ export type Check =
   | WindowCompleteCheck
   | RatioBoundsCheck;
 
+/**
+ * What a check is run against, beyond the rows themselves.
+ */
 export interface CheckContext {
   columnDirectory?: ColumnDirectory;
   /** Fallback ordering column when a check does not name one. */
@@ -187,6 +233,13 @@ const unitFor = (col: string, ctx: CheckContext): string | undefined => {
 // the predicates
 // ---------------------------------------------------------------------------
 
+/**
+ * Run one check and return its verdict.
+ *
+ * Never throws: a missing column, an empty frame or a unit mismatch comes
+ * back as `skip` with a reason, because a check that cannot run has not
+ * failed and must not be reported as though it had.
+ */
 export function runCheck(check: Check, rows: any[], ctx: CheckContext = {}): Verdict {
   if (!Array.isArray(rows) || rows.length === 0) return skip(check, 'no rows');
 

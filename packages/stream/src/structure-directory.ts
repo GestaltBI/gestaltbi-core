@@ -17,6 +17,9 @@ export interface StructureColumn {
   }>;
 }
 
+/**
+ * The parsed `structure.json`: what every column is, and how it aggregates.
+ */
 export interface StructureDoc {
   type?: string;
   version?: string;

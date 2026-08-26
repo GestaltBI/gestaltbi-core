@@ -48,6 +48,8 @@ export { Geojsonify } from './ops/geojsonify.js';
 export { GlobalFilter } from './ops/global-filter.js';
 export { Heatmap } from './ops/heatmap.js';
 export { LocalFilter } from './ops/local-filter.js';
+export { Join, type JoinOptions } from './ops/join.js';
 export { Pivot, type PivotOptions } from './ops/pivot.js';
 export { Recognize } from './ops/recognize.js';
 export { Regionify } from './ops/regionify.js';
+export { Union, type UnionOptions } from './ops/union.js';

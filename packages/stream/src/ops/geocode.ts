@@ -2,6 +2,13 @@ import { forkJoin, type Observable } from 'rxjs';
 
 import { AbstractOp } from '../op.js';
 
+/**
+ * Attaches coordinates by looking rows up in external geocoding files.
+ *
+ * The files are named in `options.geocoding` and fetched through the
+ * context's `ExternalFetcher`, so this package never depends on an HTTP
+ * client of its own.
+ */
 export class Geocode extends AbstractOp {
   public getExternal(): Observable<any> {
     const reqs = this.options.geocoding.map((x: any) => this.ctx.fetcher(x.file));

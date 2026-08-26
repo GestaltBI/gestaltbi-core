@@ -1,5 +1,7 @@
 # @gestaltbi/stream
 
+**[Documentation →](https://gestaltbi.github.io/stream/)**
+
 Framework-agnostic streaming data-processing pipeline. Compose named ops over RxJS observables with JSON-defined process graphs.
 
 This package powers the GestaltBI client and is intended for use behind a [rete.js](https://retejs.org/) visual editor for authoring `processing.json` graphs interactively.
@@ -40,6 +42,8 @@ The package's `prepare` script runs `tsc` after install, so a fresh `dist/` is b
   | `assert` | run checks, return verdicts |
   | `pivot` | cross-tabulate: dimensions down the side, dimensions across the top |
   | `correlate` | how strongly columns move together — Pearson/Spearman, eta, Cramér's V |
+  | `join` | bring one frame's columns onto another's rows, matched on a key |
+  | `union` | stack several frames, optionally recording which branch each row came from |
 
 - **OpRegistry** — maps op names to op classes for dynamic instantiation. Pre-populated with the built-in ops; extend with your own.
 - **Processor** — orchestrates streaming data through a graph of named ops. Holds the input dataframe, an OLAP cube derived from it, identifier-keyed filter state, and one Observable per active stream.
@@ -187,7 +191,63 @@ another — a total and its own component — will sit near 1 and mean nothing.
 }
 ```
 
-`require` declares an upstream dependency. The processor walks the graph depth-first.
+`require` is a **dataflow edge**: a process reads the output of what it requires,
+and nothing else.
+
+Fan-out is free. A stage that several branches read is built once and, because
+each node's stream is shared, runs once per emission however many consumers it
+has — so a graph like this evaluates `clean` a single time:
+
+```json
+{
+  "clean":    { "op": "clear",     "require": ["format"] },
+  "by_month": { "op": "aggregate", "require": ["clean"], "options": { "groupby": ["uatu:date"] } },
+  "by_region":{ "op": "aggregate", "require": ["clean"], "options": { "groupby": ["region"] } }
+}
+```
+
+Fan-in needs an op that asks for it. `require` may name several processes, but an
+op only receives more than one frame if it declares that it reads more than one —
+see [Ops that combine frames](#ops-that-combine-frames). Wiring two inputs into an
+op that reads one is an error rather than a silently discarded branch, and a cycle
+is reported by name instead of overflowing the stack.
+
+Each process is resolved per stream identifier, so two views reading the same
+graph through different filters never share a cached frame.
+
+## Ops that combine frames
+
+`join` and `union` read two or more processes:
+
+```json
+{
+  "actuals":  { "op": "aggregate", "require": ["clean"], "options": { "groupby": ["sku"] } },
+  "targets":  { "op": "clear",     "require": ["target_import"] },
+  "vs_target":{ "op": "join", "require": ["actuals", "targets"],
+                "options": { "on": "sku", "prefix": "target:" } }
+}
+```
+
+The frames arrive in the order `require` names them. `join` is a left join by
+default — enrichment should not drop the rows that failed to match — and takes
+only the first match on a duplicated key, because a join that quietly multiplies
+rows breaks every sum below it. `union` stacks frames and can record which branch
+each row came from, which is usually the point: it turns the origin into a
+dimension you can group by.
+
+To write your own, override `runAll` instead of `run` and declare the arity:
+
+```ts
+export class Interleave extends AbstractOp {
+  public override readonly inputs = 2;
+  public override runAll([left, right]) {
+    return left.flatMap((row, i) => (right[i] ? [row, right[i]] : [row]));
+  }
+}
+```
+
+An op that does not implement `runAll` keeps the original contract untouched:
+`df[0]` is the upstream frame, `df[1]` the external resources.
 
 ## The Everpix fixture
 
@@ -208,7 +268,14 @@ The dataset carries no explicit license grant, so it is read from your own check
 npm install          # peer deps double as the test toolchain
 npm run build        # tsc -> dist/
 npm test             # builds, then runs the node:test suite
+npm run docs         # regenerate docs/index.html
 ```
+
+The documentation page is one self-contained file. Its prose lives in
+`tools/docs/content.mjs`; the API reference is read out of `src/index.ts` by the
+TypeScript compiler at build time, so it cannot describe an export the package
+no longer has — and an export with no JSDoc shows up on the page saying so.
+GitHub Actions rebuilds and publishes it on every push to `master`.
 
 Requires Node ≥ 20.19. Tests run against the built `dist/`, so `npm test` builds first.
 

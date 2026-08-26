@@ -105,8 +105,9 @@ export class ProcessorService {
     return this.proc.start;
   }
 
-  get done(): string[] {
-    return this.proc.done;
+  /** Streams the graph has actually built, as `identifier::process`. */
+  get resolved(): string[] {
+    return this.proc.resolvedStreams();
   }
 
   initializeAggregator(data: any): void {

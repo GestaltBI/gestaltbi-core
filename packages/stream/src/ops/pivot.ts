@@ -2,6 +2,9 @@ import { finalize, neuter, step, type AggKind, type AggSpec } from '../agg.js';
 import { AbstractOp } from '../op.js';
 import { dimensionColumns } from '../resolve.js';
 
+/**
+ * How to lay out a cross-tab, and how to fold the measure in its cells.
+ */
 export interface PivotOptions extends AggSpec {
   /** Dimensions down the side. Defaults to every dimension not used as a column. */
   rows?: string[];

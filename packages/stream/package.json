@@ -28,7 +28,8 @@
     "fixture:everpix": "node fixtures/everpix/build.mjs",
     "demo:everpix": "npm run build && node examples/everpix.mjs",
     "prepare": "npm run build",
-    "prepack": "npm run clean && npm run build"
+    "prepack": "npm run clean && npm run build",
+    "docs": "node tools/docs/build.mjs"
   },
   "peerDependencies": {
     "moment": "^2.30.1",
@@ -36,16 +37,20 @@
     "rxjs": "^7.8.2"
   },
   "devDependencies": {
-    "typescript": "~5.9.0"
+    "moment": "^2.30.1",
+    "olap-cube-js": "^0.16.1",
+    "rxjs": "^7.8.2",
+    "typescript": "5.9"
   },
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GestaltBI/gestaltbi-core.git",
-    "directory": "packages/stream"
+    "url": "git+https://github.com/GestaltBI/stream.git"
   },
+  "homepage": "https://github.com/GestaltBI/stream",
+  "bugs": "https://github.com/GestaltBI/stream/issues",
   "keywords": [
     "rxjs",
     "pipeline",
@@ -54,7 +59,5 @@
     "etl",
     "dataflow",
     "gestaltbi"
-  ],
-  "homepage": "https://github.com/GestaltBI/stream",
-  "bugs": "https://github.com/GestaltBI/stream/issues"
+  ]
 }

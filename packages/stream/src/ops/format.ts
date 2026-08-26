@@ -2,6 +2,13 @@ import moment from 'moment';
 
 import { AbstractOp } from '../op.js';
 
+/**
+ * Parses the frame into the types the rest of the graph assumes.
+ *
+ * A CSV arrives as strings. Dates are parsed with `options.dateFormat` for
+ * every column carrying `options.dateTag`, numbers for every column carrying
+ * `options.numberTag` — by tag, so the same op serves any structure.
+ */
 export class Format extends AbstractOp {
   public run(df: any): any {
     const ret = df[0];

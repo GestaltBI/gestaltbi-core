@@ -1,5 +1,12 @@
 import { AbstractOp } from '../op.js';
 
+/**
+ * Turns rows into a GeoJSON `FeatureCollection`.
+ *
+ * Coordinates come from the columns tagged `gcx:lat` and `gcx:lon`, and every
+ * other field rides along as a feature property. Also records each numeric
+ * property's range, which is what a choropleth needs to pick a scale.
+ */
 export class Geojsonify extends AbstractOp {
   geoj: any;
 

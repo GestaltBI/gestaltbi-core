@@ -20,9 +20,33 @@ export interface OpContext {
   getFilter: (identifier?: string) => any;
 }
 
+/**
+ * The contract an op implements: run over a frame, and say what it needs
+ * loaded first.
+ */
 export interface Op {
   /** Run the op synchronously over `df`, where `df[0]` is upstream data and `df[1]+` are external resources. */
   run(df: any): any;
+
+  /**
+   * Run over every input, for an op that reads more than one process.
+   *
+   * Optional, and the reason the single-input contract never had to change:
+   * an op that does not implement it is called through `run` with its first
+   * input exactly as before. An op that does — a join, a union — receives the
+   * frames in the order its `require` array named them.
+   */
+  runAll?(inputs: any[], externals: any): any;
+
+  /**
+   * How many processes this op reads. One unless it combines frames.
+   *
+   * Declared rather than inferred so it can be checked before anything runs —
+   * a graph that wires two inputs into an op that reads one is a mistake worth
+   * a message, not a silently discarded branch. A visual editor reads the same
+   * number to know how many input sockets to draw.
+   */
+  readonly inputs?: number;
 
   /** Return any external resources the op needs combined with upstream data before `run`. */
   getExternal(): Observable<any>;
@@ -53,7 +77,18 @@ const DETACHED_CONTEXT: OpContext = {
   getFilter: () => ({}),
 };
 
+/**
+ * Base class for every op.
+ *
+ * Holds the options and the context, and passes the frame straight through
+ * until a subclass overrides `run`. Constructed without a context it falls
+ * back to one that knows no columns, so an op built outside a process graph
+ * runs rather than throwing on first access.
+ */
 export abstract class AbstractOp implements Op {
+  /** See {@link Op.inputs}. Raised by ops that combine frames. */
+  public readonly inputs: number = 1;
+
   protected options: any;
   protected ctx: OpContext;
 
@@ -77,5 +112,15 @@ export abstract class AbstractOp implements Op {
 
   public run(df: any): any {
     return df[0];
+  }
+
+  /**
+   * Default multi-input behaviour: read the first input, ignore the rest.
+   *
+   * Which is what an op written against the single-input contract means. An op
+   * that genuinely combines inputs overrides this instead of `run`.
+   */
+  public runAll(inputs: any[], externals: any): any {
+    return this.run([inputs[0], externals]);
   }
 }

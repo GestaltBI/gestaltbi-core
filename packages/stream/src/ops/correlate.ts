@@ -6,6 +6,10 @@ import { MEASURE } from '../tags.js';
 /** What kind of pair a coefficient describes. */
 export type PairKind = 'measure-measure' | 'dimension-measure' | 'dimension-dimension';
 
+/**
+ * One scored pair: which two columns, how strongly they move together, and
+ * by what method.
+ */
 export interface Association {
   a: string;
   b: string;
@@ -23,6 +27,10 @@ export interface Association {
   reason?: string;
 }
 
+/**
+ * Which pairs to score, and how strong a result has to be to be worth
+ * reporting.
+ */
 export interface CorrelateOptions {
   /** Numeric columns. Defaults to everything tagged `uatu:measure` and present in the frame. */
   measures?: string[];

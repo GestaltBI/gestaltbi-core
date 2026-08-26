@@ -1,6 +1,14 @@
 import { AbstractOp } from '../op.js';
 import { resolveTimeColumn } from '../resolve.js';
 
+/**
+ * Adds derived columns.
+ *
+ * Each entry names the column to write and how to compute it: `expr` for a
+ * Polish-notation expression over other columns, or `func` for a windowed
+ * function such as `cumsum` accumulated along `cumulateOn`. With `nullSafe`
+ * a missing input yields an absent result rather than a spurious zero.
+ */
 export class Enhance extends AbstractOp {
   public run(df: any): any {
     const data = df[0];

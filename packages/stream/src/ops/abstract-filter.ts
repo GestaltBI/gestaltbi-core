@@ -1,5 +1,13 @@
 import { AbstractOp } from '../op.js';
 
+/**
+ * The predicate shared by the filter ops.
+ *
+ * A filter is an object keyed by column: an array means "one of these", and
+ * an object means a comparison — `between`, `gt`, `lt` and friends. Absent
+ * or empty entries match everything, so a partly-filled filter narrows
+ * rather than excludes.
+ */
 export abstract class AbstractFilter extends AbstractOp {
   protected doFilter(x: any, filter: any): boolean {
     let go = true;

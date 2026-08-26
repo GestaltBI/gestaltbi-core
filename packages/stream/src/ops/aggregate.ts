@@ -1,6 +1,14 @@
 import { finalize, neuter, step, type AggSpec } from '../agg.js';
 import { AbstractOp } from '../op.js';
 
+/**
+ * Rolls the frame up along `options.groupby`.
+ *
+ * How each measure folds comes from the structure, not from here: a column
+ * declares its own `aggregation` specs, so one op produces `:sum`, `:avg`,
+ * `:last` and ratio columns together, and a rate is accumulated as numerator
+ * and denominator and divided once.
+ */
 export class Aggregate extends AbstractOp {
   ac = '__aggregate_col__';
 

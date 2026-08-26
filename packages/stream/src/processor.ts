@@ -1,7 +1,7 @@
 // @ts-ignore — olap-cube-js ships no types
 import Cube from 'olap-cube-js';
 import { BehaviorSubject, combineLatest, type Observable, of, Subject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 
 import type { ColumnDirectory } from './column-directory.js';
 import type { ExternalFetcher, OpContext } from './op.js';
@@ -18,10 +18,12 @@ import { Geocode } from './ops/geocode.js';
 import { Geojsonify } from './ops/geojsonify.js';
 import { GlobalFilter } from './ops/global-filter.js';
 import { Heatmap } from './ops/heatmap.js';
+import { Join } from './ops/join.js';
 import { LocalFilter } from './ops/local-filter.js';
 import { Pivot } from './ops/pivot.js';
 import { Recognize } from './ops/recognize.js';
 import { Regionify } from './ops/regionify.js';
+import { Union } from './ops/union.js';
 
 /** A single named transformation step in a process graph. */
 export interface ProcessSpec {
@@ -38,6 +40,9 @@ export interface ProcessConfig {
   process: Record<string, ProcessSpec>;
 }
 
+/**
+ * Everything a {@link Processor} needs to run a graph.
+ */
 export interface ProcessorOptions {
   /** Column metadata source. */
   columnDirectory: ColumnDirectory;
@@ -71,6 +76,8 @@ export function buildDefaultRegistry(): OpRegistry {
   r.register('assert', Assert);
   r.register('pivot', Pivot);
   r.register('correlate', Correlate);
+  r.register('join', Join);
+  r.register('union', Union);
   return r;
 }
 
@@ -97,7 +104,25 @@ export class Processor {
 
   workObs: Observable<any> | undefined;
 
-  done: string[] = [];
+  /**
+   * One observable per (identifier, process), so a node that several others
+   * read is built once and run once.
+   *
+   * This is what makes the graph a graph. Without it, two processes requiring
+   * the same upstream would each rebuild — and re-execute — everything above
+   * them.
+   */
+  private streams = new Map<string, Observable<any>>();
+
+  /**
+   * The raw frame each identifier reads from, before any process touches it.
+   *
+   * Kept apart from `localFilterObs`, which holds what that identifier's
+   * consumer subscribes to — the resolved leaf. Reading the root from there
+   * would make the second process built for an identifier treat the first
+   * one's output as the source.
+   */
+  private roots = new Map<string, Observable<any>>();
 
   private localFilterSet = new Map<string, any>();
   localFilterObs = new Map<string, Observable<any>>();
@@ -140,7 +165,6 @@ export class Processor {
     this.work = dataframe;
     this.workObs = of(this.work.data);
     this.initializeAggregator(dataframe.data);
-    this.done = [];
     // A consumer that called `getProcessed` before the data landed is holding a
     // plain Subject with nothing in it. Without this push it stays silent for
     // good and the view never renders. Re-importing a file has to reach the
@@ -161,47 +185,110 @@ export class Processor {
   }
 
   clear(): void {
-    this.done = [];
     this.work = this.start;
+  }
+
+  /**
+   * Which streams are currently built, as `identifier::process`.
+   *
+   * The live shape of the graph rather than its declared shape — useful for a
+   * debug view, and for an editor that wants to show what a given view actually
+   * caused to run.
+   */
+  resolvedStreams(): string[] {
+    return [...this.streams.keys()].map((k) => k.replace('\u0000', '::')).sort();
   }
 
   getProcesses(): string[] {
     return Object.keys(this.processes.process);
   }
 
+  /**
+   * Build (or reuse) the stream for one process, and leave it where this
+   * identifier's consumer will find it.
+   */
   process(name: string, identifier = 'default'): void {
-    const spec = this.processes?.process[name];
-    if (spec?.require) {
-      spec.require.forEach((req) => {
-        if (this.done.indexOf(req) < 0) {
-          this.process(req, identifier);
-        }
-      });
-    }
-    const obs = this.doProcess(name, identifier);
+    const obs = this.resolve(name, identifier, []);
     if (obs) this.localFilterObs.set(identifier, obs);
   }
 
-  private doProcess(name: string, identifier = 'default'): Observable<any> | undefined {
+  /**
+   * The observable for one process, built from the processes it names.
+   *
+   * `require` is a dataflow edge: a process reads the output of what it
+   * requires, and nothing else. Fan-out is free — a stage several others read
+   * is memoised, so it is built once and, thanks to `shareReplay`, runs once
+   * per emission however many consumers it has.
+   *
+   * `path` carries the chain currently being resolved so a cycle is reported
+   * by name instead of overflowing the stack.
+   */
+  private resolve(name: string, identifier: string, path: string[]): Observable<any> | undefined {
     if (!name) return undefined;
+
+    const key = `${identifier}\u0000${name}`;
+    const memo = this.streams.get(key);
+    if (memo) return memo;
+
+    if (path.includes(name)) {
+      throw new Error(`process graph has a cycle: ${[...path, name].join(' -> ')}`);
+    }
 
     const spec = this.processes?.process[name];
     if (!spec) return undefined;
 
-    let processOpts = spec.options;
-    if (processOpts) {
-      processOpts.identifier = identifier;
-    } else {
-      processOpts = { identifier };
-    }
+    // Options are handed to the op, so the identifier has to reach it — but
+    // writing it onto the shared spec would leak one stream's identifier into
+    // every other stream reading the same process.
+    const processOpts = { ...(spec.options ?? {}), identifier };
 
     const inst = spec.op ? this.registry.instantiate(spec.op, processOpts, this.opContext()) : null;
-    if (!inst) return undefined;
+    // No op — a `conf_*` settings carrier. It contributes nothing to the graph;
+    // whatever required it reads straight through to what it required.
+    if (!inst) return this.upstreams(spec, identifier, path, name)[0];
 
-    const upstream = this.localFilterObs.get(identifier);
-    if (!upstream) return undefined;
+    const inputs = this.upstreams(spec, identifier, path, name);
+    if (!inputs.length) return undefined;
 
-    return combineLatest([upstream, inst.getExternal()]).pipe(map((data) => inst.run(data)));
+    // Better to say so than to compute a branch and drop it on the floor.
+    const accepts = inst.inputs ?? 1;
+    if (inputs.length > accepts) {
+      throw new Error(
+        `process "${name}" wires ${inputs.length} inputs into op "${spec.op}", which reads ${accepts}`,
+      );
+    }
+
+    const built = combineLatest([...inputs, inst.getExternal()]).pipe(
+      map((values) => {
+        const externals = values[values.length - 1];
+        const frames = values.slice(0, -1);
+        // `runAll` is how an op opts into more than one input. Everything else
+        // keeps the original contract exactly: df[0] rows, df[1] externals.
+        return inst.runAll ? inst.runAll(frames, externals) : inst.run([frames[0], externals]);
+      }),
+      // Without this a diamond re-runs its shared upstream once per branch.
+      shareReplay({ bufferSize: 1, refCount: false }),
+    );
+
+    this.streams.set(key, built);
+    return built;
+  }
+
+  /** What a process reads: the processes it requires, or the raw frame. */
+  private upstreams(
+    spec: ProcessSpec,
+    identifier: string,
+    path: string[],
+    name: string,
+  ): Observable<any>[] {
+    const required = spec.require ?? [];
+    if (!required.length) {
+      const root = this.roots.get(identifier);
+      return root ? [root] : [];
+    }
+    return required
+      .map((req) => this.resolve(req, identifier, [...path, name]))
+      .filter((o): o is Observable<any> => !!o);
   }
 
   getProcessed(processed: string | null = null, identifier = 'default'): Observable<any> {
@@ -209,18 +296,32 @@ export class Processor {
     if (this.start) {
       bs = new BehaviorSubject<any>(this.start.data);
     }
+    const root = bs.asObservable();
     this.localFilterSub.set(identifier, bs);
-    this.localFilterObs.set(identifier, bs.asObservable());
+    this.roots.set(identifier, root);
+    this.localFilterObs.set(identifier, root);
     this.localFilterSet.set(identifier, {});
     this.localFilterSet.set('default', {});
+    // Everything memoised for this identifier was built on the previous root.
+    this.invalidate(identifier);
     if (processed) this.process(processed, identifier);
     return this.localFilterObs.get(identifier)!;
+  }
+
+  /** Drop the memoised streams for one identifier. */
+  private invalidate(identifier: string): void {
+    const prefix = `${identifier}\u0000`;
+    for (const key of [...this.streams.keys()]) {
+      if (key.startsWith(prefix)) this.streams.delete(key);
+    }
   }
 
   clearStreams(): void {
     this.localFilterSub.clear();
     this.localFilterObs.clear();
     this.localFilterSet.clear();
+    this.roots.clear();
+    this.streams.clear();
   }
 
   getDimensionMembers(dimension: string): any[] {
