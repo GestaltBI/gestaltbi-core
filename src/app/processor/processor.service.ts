@@ -126,6 +126,11 @@ export class ProcessorService {
     return this.proc.getProcesses();
   }
 
+  /** The process graph as loaded, for anything that wants to show its shape. */
+  get processes(): any {
+    return this.proc.processes;
+  }
+
   /** Whether the loaded graph defines a process by this name. */
   hasProcess(name: string | undefined | null): boolean {
     return !!name && this.getProcesses().indexOf(name) >= 0;

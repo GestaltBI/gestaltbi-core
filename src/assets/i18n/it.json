@@ -172,7 +172,8 @@
     "graph": "Grafico",
     "table": "Tabella",
     "story": "Racconto",
-    "advice": "Consigli"
+    "advice": "Consigli",
+    "flow": "Pipeline"
   },
   "modes": {
     "long": "Longitudinale",
@@ -185,7 +186,8 @@
     "correlate": "Relazioni",
     "pivot": "Tabella pivot",
     "narrative": "Il racconto",
-    "advisor": "Cosa guardo?"
+    "advisor": "Cosa guardo?",
+    "pipeline": "Come nascono questi dati"
   },
   "narrative": {
     "rows": "letto su {{count}} righe",
@@ -445,6 +447,48 @@
       "comparisonsDifferent": "Quando un oggetto di analisi è confrontato con un altro, le loro differenze possono sollevare seri problemi di comparabilità. Se però l'analista è in grado di tenere conto di queste differenze, i dati esterni forniscono un riferimento per la valutazione della performance — una fonte importante per comprendere le forze del miglioramento o del peggioramento. Le analisi comparative, per definizione, contengono più elementi di diversità di quelle longitudinali (che si riferiscono a un solo oggetto) e quindi consentono potenzialmente un apprendimento più ricco, con riflessioni che da una sola analisi longitudinale non potrebbero emergere. Interventi preliminari di normalizzazione possono essere utili (ad esempio, comparare due aree geografiche con numeri diversi di clienti e venditori attraverso quozienti).",
       "crossTabulation": "Una tabella incrociata mette una dimensione sulle righe e un'altra sulle colonne, e riempie le celle con una misura. Sommare i ricavi per territorio ti dice dove vendi; sommarli per prodotto ti dice cosa vendi. Solo incrociando i due sai <b class='color-accent'>quale prodotto vende dove</b> — ed è lì che di solito sta la decisione.",
       "correlationCausation": "Una relazione dice che due valori si muovono insieme. Non dice che uno causa l'altro, e non può dirlo: un terzo fattore può guidarli entrambi, oppure la coppia è semplicemente lo stesso fatto scritto due volte. Tratta un punteggio alto come una domanda da porsi, non come una risposta."
+    }
+  },
+  "pipeline": {
+    "title": "Come nascono questi dati",
+    "lede": "Ogni numero di questa dashboard parte da una riga di un CSV e attraversa queste fasi. Selezionane una per vedere cosa fa.",
+    "stages": "{{count}} fasi",
+    "hint": "Seleziona una fase per vedere cosa fa e da dove legge.",
+    "reads": "Legge",
+    "rawFrame": "Il file come è stato caricato, prima di ogni elaborazione",
+    "endsHere": "Finisce qui",
+    "endsHereBody": "Una vista legge direttamente questa fase: quelle segnate sono l’origine dei grafici.",
+    "emptyTitle": "Questa configurazione non ha una pipeline",
+    "emptyBody": "processing.json non dichiara nulla, quindi i dati vengono mostrati esattamente come stanno nel file.",
+    "kind": {
+      "prepare": "Prepara",
+      "narrow": "Restringe",
+      "derive": "Deriva",
+      "summarise": "Sintetizza",
+      "combine": "Combina",
+      "relate": "Correla",
+      "place": "Colloca",
+      "check": "Verifica",
+      "settings": "Impostazioni",
+      "unknown": "Sconosciuto"
+    },
+    "op": {
+      "format": "Legge date e numeri dal testo con cui arriva un CSV",
+      "clear": "Elimina le righe senza identità, così il riempimento non viene contato",
+      "globalfilter": "Applica il filtro condiviso da tutte le viste della pagina",
+      "localfilter": "Applica il filtro che appartiene solo a questa vista",
+      "enhance": "Aggiunge colonne calcolate da quelle già presenti",
+      "diffcalc": "Trasforma i livelli nella variazione tra un periodo e il successivo",
+      "recognize": "Distribuisce un importo sui periodi che effettivamente copre",
+      "aggregate": "Raggruppa le righe, una per gruppo",
+      "pivot": "Tabella incrociata: gruppi in riga, gruppi in colonna",
+      "cohort": "Allinea i gruppi per età invece che per data",
+      "join": "Porta le colonne di un’altra tabella su queste righe, unite da una chiave",
+      "union": "Impila più tabelle in una sola",
+      "correlate": "Misura quanto le colonne si muovono insieme",
+      "geocode": "Aggiunge le coordinate cercando le righe in un file di riferimento",
+      "geojsonify": "Trasforma le righe in elementi da mappa",
+      "assert": "Verifica le affermazioni che questi dati dovrebbero sostenere"
     }
   }
 }

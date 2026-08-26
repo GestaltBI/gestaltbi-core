@@ -74,21 +74,25 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
         this.portal?.attached.subscribe((_) => {
           this.portalFilter = (this.portal.attachedRef as any).instance;
         });
-        this.selectedPortal = new ComponentPortal(this.frs.for(this.mode, this.vis, this.filterScope));
+        // A mode may have nothing to filter — the pipeline view draws the
+        // config, not the data. Portalling `undefined` throws, and then every
+        // later call finds `portalFilter` unset, so check before attaching.
+        const filter = this.frs.for(this.mode, this.vis, this.filterScope);
+        this.selectedPortal = filter ? new ComponentPortal(filter) : undefined;
       });
     }
     setTimeout((_) => {
       if (this.isGlobal) {
-        this.portalFilter.configure(this.gfs.getFilter());
+        this.portalFilter?.configure(this.gfs.getFilter());
       } else {
-        this.children.configure(this.gfs.getFilter(this.localState));
+        this.children?.configure(this.gfs.getFilter(this.localState));
       }
     }, 50);
   }
 
   ngAfterViewInit() {
     if (this.isGlobal) {
-      this.portalFilter = (this.portal.attachedRef as any).instance;
+      this.portalFilter = (this.portal?.attachedRef as any)?.instance;
     }
 
     // Apply the declared defaults (e.g. <sbi-periodfilter span="first">) so a
@@ -124,15 +128,21 @@ export class FilterComponent implements OnInit, AfterViewInit, OnDestroy {
     return null === this.localFilter || undefined === this.localFilter;
   }
 
+  /** True when this bar has a filter to drive. */
+  get active(): boolean {
+    return this.isGlobal ? !!this.portalFilter : !!this.children;
+  }
+
   set(value) {
     if (this.isGlobal) {
-      this.portalFilter.configure(value);
+      this.portalFilter?.configure(value);
     } else {
-      this.children.configure(value);
+      this.children?.configure(value);
     }
   }
 
   save() {
+    if (!this.active) return;
     if (this.isGlobal) {
       const filter = this.portalFilter.save();
       this.gfs.setFilter(filter);

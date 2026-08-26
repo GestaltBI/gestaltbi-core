@@ -72,7 +72,7 @@ export class RegistryService {
    * map has nothing to plot on this particular dataset.
    */
   viewsFor(mode: string): string[] {
-    const order = ['map', 'graph', 'table', 'story', 'advice'];
+    const order = ['map', 'graph', 'table', 'story', 'advice', 'flow'];
     const found = [...this.components.keys()]
       .filter((key) => key.startsWith(`${mode}::`))
       .map((key) => key.split('::')[1]);

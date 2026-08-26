@@ -25,7 +25,7 @@ export class ToolbarComponent implements OnInit {
   mode$: Observable<any>;
   views$: Observable<string[]>;
 
-  readonly viewIcons: Record<string, string> = { map: 'map', graph: 'monitoring', table: 'view_list', story: 'auto_stories', advice: 'auto_awesome' };
+  readonly viewIcons: Record<string, string> = { map: 'map', graph: 'monitoring', table: 'view_list', story: 'auto_stories', advice: 'auto_awesome', flow: 'account_tree' };
   projectInfo$: Observable<ProjectInfo>;
 
   constructor(

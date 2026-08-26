@@ -172,7 +172,8 @@
     "graph": "Chart",
     "table": "Table",
     "story": "Story",
-    "advice": "Advice"
+    "advice": "Advice",
+    "flow": "Pipeline"
   },
   "modes": {
     "long": "Longitudinal",
@@ -185,7 +186,8 @@
     "correlate": "Relationships",
     "pivot": "Pivot table",
     "narrative": "The story",
-    "advisor": "What should I look at?"
+    "advisor": "What should I look at?",
+    "pipeline": "How this data is made"
   },
   "narrative": {
     "rows": "read against {{count}} rows",
@@ -445,6 +447,48 @@
       "comparisonsDifferent": "When one analysis object is compared with another, their differences can raise serious comparability issues. But if the analyst can account for those differences, external data provides a reference point for performance evaluation that becomes an important source for understanding the forces driving improvement or decline. Comparative analyses, by definition, contain more elements of difference than longitudinal ones (which refer to a single object), and so potentially enable richer learning, with reflections that wouldn't surface from a longitudinal view alone. Preliminary normalization can be very useful (for example, comparing two geographic areas with different numbers of customers and salespeople through ratios).",
       "crossTabulation": "A cross-tab puts one dimension down the side and another across the top, and fills the cells with a measure. Totalling revenue by region tells you where you sell; totalling it by product tells you what you sell. Only crossing the two tells you <b class='color-accent'>which product sells where</b> — and that is usually where the decision is.",
       "correlationCausation": "A relationship says two figures move together. It does not say one causes the other, and it cannot: a third thing may drive both, or the pair may simply be the same fact written twice. Treat a strong score as a question worth asking, not an answer."
+    }
+  },
+  "pipeline": {
+    "title": "How this data is made",
+    "lede": "Every number in this dashboard starts as a row in a CSV and passes through these stages. Select one to see what it does.",
+    "stages": "{{count}} stages",
+    "hint": "Select a stage to see what it does and where it reads from.",
+    "reads": "Reads",
+    "rawFrame": "The file as loaded, before anything touches it",
+    "endsHere": "Ends here",
+    "endsHereBody": "A view reads this stage directly — the marked ones are where the charts come from.",
+    "emptyTitle": "This configuration has no pipeline",
+    "emptyBody": "Nothing is declared in processing.json, so the data is shown exactly as the file holds it.",
+    "kind": {
+      "prepare": "Prepare",
+      "narrow": "Narrow",
+      "derive": "Derive",
+      "summarise": "Summarise",
+      "combine": "Combine",
+      "relate": "Relate",
+      "place": "Place",
+      "check": "Check",
+      "settings": "Settings",
+      "unknown": "Unknown"
+    },
+    "op": {
+      "format": "Reads the dates and numbers out of the text a CSV arrives as",
+      "clear": "Drops rows with no identity, so padding is not counted as data",
+      "globalfilter": "Applies the filter every view on the page shares",
+      "localfilter": "Applies the filter belonging to this view alone",
+      "enhance": "Adds columns worked out from the ones already there",
+      "diffcalc": "Turns levels into the change between one period and the next",
+      "recognize": "Spreads an amount across the periods it actually pays for",
+      "aggregate": "Rolls the rows up, one per group",
+      "pivot": "Cross-tabulates: groups down the side, groups across the top",
+      "cohort": "Lines groups up by age rather than by date",
+      "join": "Brings a second frame’s columns onto these rows, matched on a key",
+      "union": "Stacks several frames into one",
+      "correlate": "Scores how strongly columns move together",
+      "geocode": "Attaches coordinates by looking rows up in a reference file",
+      "geojsonify": "Turns rows into map features",
+      "assert": "Tests the claims this data is supposed to support"
     }
   }
 }

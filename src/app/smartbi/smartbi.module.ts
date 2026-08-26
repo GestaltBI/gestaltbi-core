@@ -9,6 +9,7 @@ import { TimedmapModule } from './../timedmap/timedmap.module';
 import { FilterModule } from '../filter/filter.module';
 import { GraphModule } from '../graph/graph.module';
 import { AdvisorModule } from './../advisor/advisor.module';
+import { PipelineModule } from './../pipeline/pipeline.module';
 import { MapModule } from '../map/map.module';
 import { TableModule } from '../table/table.module';
 import { MainComponent } from './main/main.component';
@@ -36,6 +37,7 @@ import { SmartbiRoutingModule } from './smartbi-routing.module';
     MapModule,
     NarrativeModule,
     AdvisorModule,
+    PipelineModule,
   ],
 })
 export class SmartbiModule {}

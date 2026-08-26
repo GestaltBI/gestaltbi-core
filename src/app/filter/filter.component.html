@@ -6,7 +6,7 @@
     <ng-template [cdkPortalOutlet]="selectedPortal"></ng-template>
     <ng-content></ng-content>
   </div>
-  <div class="filter__actions">
+  <div class="filter__actions" *ngIf="active">
     <button class="btn btn--ghost btn--sm" (click)="reset()">
       <mat-icon>refresh</mat-icon>
       <span>{{ 'common.reset' | translate }}</span>

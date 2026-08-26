@@ -1,0 +1,218 @@
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  overflow-y: auto;
+  height: calc(100vh - var(--shell-toolbar-h) - var(--shell-statusbar-h) - var(--space-xl));
+  padding-bottom: var(--space-xl);
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: var(--text-2xl, 1.6rem);
+    line-height: var(--leading-snug, 1.25);
+  }
+
+  &__lede {
+    margin: var(--space-xs) 0 0;
+    max-width: 62ch;
+    color: var(--ink-muted);
+  }
+
+  &__source {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--ink-faint);
+    text-align: right;
+
+    code {
+      display: block;
+      word-break: break-all;
+    }
+  }
+
+  &__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  &__problems {
+    margin: 0;
+    padding: var(--space-sm) var(--space-md) var(--space-sm) 2em;
+    border-radius: var(--radius-md, 10px);
+    background: rgba(194, 53, 42, 0.07);
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+
+    .is-error { color: #c2352a; }
+  }
+
+  // The graph is wider than the pane on any real config, so it scrolls in its
+  // own box rather than pushing the page sideways.
+  &__canvas {
+    overflow: auto;
+    padding: var(--space-md);
+    border: 1px solid var(--rule, rgba(0, 0, 0, 0.08));
+    border-radius: var(--radius-md, 10px);
+    background: var(--surface);
+  }
+
+  &__detail {
+    flex: 0 0 auto;
+  }
+
+  &__detailhead {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+
+    h2 {
+      margin: 0;
+      font-size: var(--text-lg, 1.15rem);
+    }
+  }
+
+  &__what {
+    margin: var(--space-sm) 0 0;
+    max-width: 66ch;
+  }
+
+  &__facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 4px var(--space-md);
+    margin: var(--space-md) 0 0;
+    font-size: var(--text-sm);
+
+    dt { color: var(--ink-muted); }
+    dd { margin: 0; }
+    dd code { margin-right: 6px; }
+  }
+
+  &__options {
+    margin: var(--space-md) 0 0;
+    padding: var(--space-sm) var(--space-md);
+    max-height: 220px;
+    overflow: auto;
+    border-radius: var(--radius-sm, 8px);
+    background: var(--surface-2, rgba(0, 0, 0, 0.04));
+    font-size: var(--text-xs);
+  }
+
+  &__hint,
+  &__empty p {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: var(--text-sm);
+  }
+
+  &__empty {
+    flex: 0 0 auto;
+    max-width: 62ch;
+
+    h2 { margin: 0 0 var(--space-xs); font-size: var(--text-lg, 1.15rem); }
+  }
+}
+
+// Kind is the one thing carrying colour here: it is what the reader is being
+// taught, so it encodes and nothing else does.
+.chip {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  background: var(--surface-2, rgba(0, 0, 0, 0.05));
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+$kinds: (
+  prepare: var(--brand-blue),
+  narrow: var(--brand-teal),
+  derive: var(--brand-green),
+  summarise: var(--brand-orange),
+  combine: var(--brand-yellow),
+  relate: var(--brand-deep),
+  place: var(--brand-red),
+  check: var(--accent),
+  settings: var(--ink-faint),
+  unknown: var(--ink-faint)
+);
+
+@each $kind, $colour in $kinds {
+  .chip--#{$kind} {
+    background: color-mix(in oklch, #{$colour} 16%, transparent);
+    color: #{$colour};
+  }
+  .node--#{$kind} .node__box {
+    stroke: #{$colour};
+    fill: color-mix(in oklch, #{$colour} 7%, var(--bg));
+  }
+  .node--#{$kind} .node__kind { fill: #{$colour}; }
+}
+
+svg { display: block; }
+
+.edges path {
+  fill: none;
+  stroke: var(--rule-strong, rgba(0, 0, 0, 0.22));
+  stroke-width: 1.5;
+
+  &.is-lit {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+  }
+}
+
+.node {
+  cursor: pointer;
+
+  &__box {
+    stroke-width: 1.5;
+    transition: filter 120ms ease-out;
+  }
+
+  &:hover .node__box,
+  &:focus-visible .node__box {
+    filter: brightness(0.97);
+  }
+
+  &.is-selected .node__box {
+    stroke-width: 3;
+  }
+
+  &__kind {
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  &__name {
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--ink);
+  }
+
+  &__op {
+    font-size: 10.5px;
+    font-family: ui-monospace, monospace;
+    fill: var(--ink-muted);
+  }
+
+  // A filled dot marks a stage a view actually subscribes to.
+  &__leaf { fill: var(--accent); }
+
+  &:focus-visible {
+    outline: none;
+    .node__box { stroke: var(--focus, #06c); stroke-width: 3; }
+  }
+}
