@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { type Graph, type GraphNode, type NodeKind,readGraph } from '@gestaltbi/editor';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 import { ConfigSourceService } from '../core/config-source.service';
 import { ProcessorService } from '../processor/processor.service';
@@ -35,8 +36,10 @@ interface Placed extends GraphNode {
   templateUrl: './pipeline.component.html',
   styleUrls: ['./pipeline.component.scss'],
 })
-export class PipelineComponent implements OnInit {
+export class PipelineComponent implements OnInit, OnDestroy {
   graph: Graph | undefined;
+
+  private sub: Subscription | undefined;
   nodes: Placed[] = [];
   edges: { d: string; from: string; to: string }[] = [];
 
@@ -57,9 +60,14 @@ export class PipelineComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // The graph arrives with the config, which is fetched — so wait for it
-    // rather than drawing an empty canvas and never redrawing.
-    this.ps.ready.then(() => this.draw());
+    // Follow the config rather than waiting on `ready`: that promise resolves
+    // on the first fetch, which is the bundled graph even when the route is
+    // /gh/<org>/<repo>, because the source switches after startup.
+    this.sub = this.ps.processes$.subscribe((config) => this.draw(config));
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 
   get empty(): boolean {
@@ -94,8 +102,8 @@ export class PipelineComponent implements OnInit {
     return translated === key ? kind : translated;
   }
 
-  private draw(): void {
-    const graph = readGraph(this.ps.processes);
+  private draw(config: any): void {
+    const graph = readGraph(config);
     this.graph = graph;
 
     this.nodes = graph.nodes.map((n) => ({

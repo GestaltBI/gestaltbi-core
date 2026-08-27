@@ -7,7 +7,7 @@ import {
   type ProcessConfig,
   Processor,
 } from '@gestaltbi/stream';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { ConfigSourceService } from '../core/config-source.service';
@@ -37,6 +37,9 @@ export class ProcessorService {
    * APP_INITIALIZER.
    */
   readonly ready: Promise<void>;
+
+  /** Latest loaded process graph, re-emitted on every config source change. */
+  private readonly loadedConfig = new BehaviorSubject<any>({ process: {} });
   private markReady: () => void;
 
   fs: FilterService | undefined;
@@ -73,6 +76,7 @@ export class ProcessorService {
       .subscribe({
         next: (data) => {
           this.proc.processes = data;
+          this.loadedConfig.next(data);
           this.markReady();
         },
         // A missing or malformed processing.json must not wedge startup: the
@@ -129,6 +133,18 @@ export class ProcessorService {
   /** The process graph as loaded, for anything that wants to show its shape. */
   get processes(): any {
     return this.proc.processes;
+  }
+
+  /**
+   * The graph, re-emitted every time one is loaded.
+   *
+   * `ready` resolves once, on the first fetch — which is the bundled config
+   * even when the route is `/gh/<org>/<repo>`, because the source switches
+   * after startup. Anything drawing the graph has to follow it, not the
+   * one-shot promise.
+   */
+  get processes$(): Observable<any> {
+    return this.loadedConfig.asObservable();
   }
 
   /** Whether the loaded graph defines a process by this name. */
